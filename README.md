@@ -5,3 +5,7 @@
 - William Chhiv
 - Ashley Timko
 - Bao Trinh
+
+# First Iteration Deliverables [April/20/2024 - April/23/2024]
+### Discussed issues in the project:
+- None at the moment
