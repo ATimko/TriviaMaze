@@ -1,6 +1,6 @@
 public class Player {
 
-    int currentRoom(int currentRoom){
+    public int currentRoom(int currentRoom){
         return currentRoom;
     }
     int questionAnswered (int answerNum){
