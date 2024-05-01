@@ -1,4 +1,7 @@
 public class Door {
+    public Door Door(Maze pattern, String questionText){
+
+    }
     boolean lockedDoors(boolean bool){
         System.out.println("hello");
         return true; // COME BACK TO THIS

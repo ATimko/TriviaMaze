@@ -6,4 +6,8 @@ public class Player {
     int questionAnswered (int answerNum){
         return answerNum;
     }
+
+    public String getName() {
+        return "hi";
+    }
 }

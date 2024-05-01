@@ -17,4 +17,7 @@ public class gameState {
     void instructionsMenu() {
 
     }
+
+    public void setCurrentRoom(double v) {
+    }
 }

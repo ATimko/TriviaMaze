@@ -33,4 +33,8 @@ public class Maze {
         String type = "multiple_choice";
         return new Question(question, options, correctAnswer, type);
     }
+
+    public double[][] getRooms() {
+        return new double[0][];
+    }
 }
