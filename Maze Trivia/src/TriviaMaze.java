@@ -2,12 +2,12 @@
 // This connects with the main class for now and can be moved around later
 public class TriviaMaze {
     private Maze maze;
-    private GameState gameState;
+    private gameState gameState;
     private Player player;
 
     public TriviaMaze() {
         maze = new Maze(4); // 4 At the moment
-        gameState = new GameState();
+        gameState = new gameState();
         player = new Player("Player 1");
     }
 
