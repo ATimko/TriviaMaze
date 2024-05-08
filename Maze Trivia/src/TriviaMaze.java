@@ -14,6 +14,7 @@ public class TriviaMaze {
 
     public void startGame() {
         System.out.println("Welcome to the Trivia Maze, " + player.getName() + "!");
+        System.out.println("++++++++++++++++++++++++++++++++++++delete this");
         maze.setupMaze();
         // Set player's position
         // Can be moved later
