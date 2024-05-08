@@ -13,3 +13,7 @@
 # Second Iteration Deliverables [April/24/2024 - April/25/2024]
 ### Discussed issues in the project:
 - None at the moment
+
+# Third Iteration Deliverables [May/01/2024 - May/02/2024]
+### Discussed issues in the project:
+- None at the moment
