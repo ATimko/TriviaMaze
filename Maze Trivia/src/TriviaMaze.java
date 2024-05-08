@@ -5,6 +5,7 @@ public class TriviaMaze {
     private gameState gameState;
     private Player player;
 //dhafajdsakdlw fa
+    // testing
     public TriviaMaze() {
         maze = new Maze(4); // 4 At the moment
         gameState = new gameState();
