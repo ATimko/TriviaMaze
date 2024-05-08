@@ -4,7 +4,7 @@ public class TriviaMaze {
     private Maze maze;
     private gameState gameState;
     private Player player;
-
+//dhafajdsakdlw fa
     public TriviaMaze() {
         maze = new Maze(4); // 4 At the moment
         gameState = new gameState();
