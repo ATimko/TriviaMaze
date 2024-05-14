@@ -8,40 +8,57 @@ public class gameWindow extends JFrame {
     public gameWindow() {
         setTitle("Trivia Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1432, 768);  // Appropriately size the window to fit the background
+        setSize(1200, 900);
+        setResizable(false);
 
         // Setup the background image
-        URL imageUrl = getClass().getResource("Mazebackground.png"); // Adjusted path
+        URL imageUrl = getClass().getResource("Mazebackground.png"); // Adjusted path to the uploaded image
         if (imageUrl == null) {
             System.out.println("Image not found");
             return;
         }
         ImageIcon image = new ImageIcon(imageUrl);
-        JLabel backgroundLabel = new JLabel(image);
-        backgroundLabel.setSize(1432, 768); // Ensure the label completely covers the frame
-        setContentPane(backgroundLabel);
-        setLayout(new BorderLayout());
+        JLabel imageLabel = new JLabel(image);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel label = new JLabel("Trivia Maze", SwingConstants.CENTER);
-        label.setHorizontalTextPosition(JLabel.CENTER);
-        label.setVerticalTextPosition(JLabel.BOTTOM);
-        label.setFont(new Font("Serif", Font.BOLD, 50));
-        label.setForeground(Color.BLUE);
-        label.setOpaque(true);
-        label.setBackground(Color.LIGHT_GRAY);
-        label.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        // Create a panel to hold the image and add padding
+        JPanel imagePanel = new JPanel(new BorderLayout());
+        imagePanel.add(imageLabel, BorderLayout.CENTER);
+        imagePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // Padding to move the image higher
+
+        // Create and style the title label
+        JLabel titleLabel = new JLabel("Trivia Maze", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 50));
+        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(Color.LIGHT_GRAY);
+        titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         // Panel for buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false); // Make the panel transparent
+        buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        // Create buttons
+        // Create buttons with improved styling
         JButton newGameButton = new JButton("New Game");
         JButton loadGameButton = new JButton("Load Game");
         JButton exitButton = new JButton("Exit");
 
-        // Styling buttons
+        Font buttonFont = new Font("Arial", Font.BOLD, 25);
+        newGameButton.setFont(buttonFont);
+        loadGameButton.setFont(buttonFont);
+        exitButton.setFont(buttonFont);
+
+        // Remove focus rectangle
+        newGameButton.setFocusable(false);
+        loadGameButton.setFocusable(false);
+        exitButton.setFocusable(false);
+
+        // Add margins and borders to the buttons
+        newGameButton.setMargin(new Insets(20, 50, 20, 50));
+        loadGameButton.setMargin(new Insets(20, 50, 20, 50));
+        exitButton.setMargin(new Insets(20, 50, 20, 50));
+
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -49,21 +66,22 @@ public class gameWindow extends JFrame {
         // Add buttons to the panel
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(newGameButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(Box.createRigidArea(new Dimension(5, 20)));
         buttonPanel.add(loadGameButton);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttonPanel.add(Box.createRigidArea(new Dimension(5, 20)));
         buttonPanel.add(exitButton);
         buttonPanel.add(Box.createVerticalGlue());
 
         // Add the menu
         configureMenu();
 
-        // Add the button panel and title label
+        // Add the image panel, button panel, and title label
+        add(imagePanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        add(label, BorderLayout.NORTH);
+        add(titleLabel, BorderLayout.NORTH);
 
         // Ensure the window is visible
-        setLocationRelativeTo(null);  // Center on screen
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
