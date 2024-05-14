@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class gameWindow extends JFrame implements ActionListener {
-    JMenuItem startMenuItem;
+    JMenuItem saveGameStatus;
 
     /**
      * Menu item to reset the game.
      */
-    JMenuItem resetMenuItem;
+    JMenuItem loadSavedGame;
     JLabel gameTitle = new JLabel();
     public gameWindow() throws HeadlessException {
         setTitle("Trivia Maze");
@@ -19,17 +19,17 @@ public class gameWindow extends JFrame implements ActionListener {
         setLayout(new FlowLayout(FlowLayout.CENTER, 50, 20));
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu gameMenu = new JMenu("Game");
+        JMenu gameMenu = new JMenu("File");
 
-        startMenuItem = new JMenuItem("Start");
-        resetMenuItem = new JMenuItem("Reset");
+        saveGameStatus = new JMenuItem("Save Game");
+        loadSavedGame = new JMenuItem("Load Game");
         /**
          * Menu item to exit the game.
          */
         JMenuItem exitMenuItem = new JMenuItem("Exit");
 
-        gameMenu.add(startMenuItem);
-        gameMenu.add(resetMenuItem);
+        gameMenu.add(saveGameStatus);
+        gameMenu.add(loadSavedGame);
         gameMenu.add(exitMenuItem);
 
 
@@ -37,11 +37,11 @@ public class gameWindow extends JFrame implements ActionListener {
 
         JMenuItem aboutMenuItem = new JMenuItem("About");
         JMenuItem rulesMenuItem = new JMenuItem("Rules");
-        JMenuItem shortcutsMenuItem = new JMenuItem("Shortcuts");
+
 
         helpMenu.add(aboutMenuItem);
         helpMenu.add(rulesMenuItem);
-        helpMenu.add(shortcutsMenuItem);
+
 
         menuBar.add(gameMenu);
         menuBar.add(helpMenu);
