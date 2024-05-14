@@ -2,9 +2,14 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 public class gameWindow extends JFrame {
+    JButton newGameButton;
+    JButton loadGameButton;
+    JButton exitButton;
     public gameWindow() {
         setTitle("Trivia Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,9 +45,9 @@ public class gameWindow extends JFrame {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         // Create buttons with improved styling
-        JButton newGameButton = new JButton("New Game");
-        JButton loadGameButton = new JButton("Load Game");
-        JButton exitButton = new JButton("Exit");
+        newGameButton = new JButton("New Game");
+        loadGameButton = new JButton("Load Game");
+        exitButton = new JButton("Exit");
 
         Font buttonFont = new Font("Arial", Font.BOLD, 25);
         newGameButton.setFont(buttonFont);
@@ -62,6 +67,8 @@ public class gameWindow extends JFrame {
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        newGameButton.addActionListener(e -> System.out.println("poo"));
 
         // Add buttons to the panel
         buttonPanel.add(Box.createVerticalGlue());
