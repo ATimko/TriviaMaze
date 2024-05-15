@@ -2,52 +2,49 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URL;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
-public class gameWindow extends JFrame implements PropertyChangeListener{
+public class gameWindow extends JFrame {
 
-    /**
-     * JMenu option for opening the about menu.
-     *
-     */
-    private static final String MENU_ABOUT = "About";
-    JButton newGameButton;
-    JButton loadGameButton;
-    JButton exitButton;
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+
     public gameWindow() {
         setTitle("Trivia Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1200, 900);
         setResizable(false);
 
-        // Setup the background image
-        URL imageUrl = getClass().getResource("Mazebackground.png"); // Adjusted path to the uploaded image
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        mainPanel.add(createMainMenuPanel(), "Main Menu");
+        mainPanel.add(createGamePanel(), "Game");
+
+        setJMenuBar(createMenuBar());
+
+        add(mainPanel);
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private JPanel createMainMenuPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        URL imageUrl = getClass().getResource("Mazebackground.png");
         if (imageUrl == null) {
             System.out.println("Image not found");
-            return;
+            return panel;
         }
         ImageIcon image = new ImageIcon(imageUrl);
         JLabel imageLabel = new JLabel(image);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Create a panel to hold the image and add padding
         JPanel imagePanel = new JPanel(new BorderLayout());
         imagePanel.add(imageLabel, BorderLayout.CENTER);
-        imagePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // Padding to move the image higher
+        imagePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        // Create and style the title label
         JLabel titleLabel = new JLabel("Trivia Maze", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 50));
         titleLabel.setForeground(Color.BLACK);
@@ -55,27 +52,23 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
         titleLabel.setBackground(Color.LIGHT_GRAY);
         titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        // Panel for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
-        // Create buttons with improved styling
-        newGameButton = new JButton("New Game");
-        loadGameButton = new JButton("Load Game");
-        exitButton = new JButton("Exit");
+        JButton newGameButton = new JButton("New Game");
+        JButton loadGameButton = new JButton("Load Game");
+        JButton exitButton = new JButton("Exit");
 
         Font buttonFont = new Font("Arial", Font.BOLD, 25);
         newGameButton.setFont(buttonFont);
         loadGameButton.setFont(buttonFont);
         exitButton.setFont(buttonFont);
 
-        // Remove focus rectangle
         newGameButton.setFocusable(false);
         loadGameButton.setFocusable(false);
         exitButton.setFocusable(false);
 
-        // Add margins and borders to the buttons
         newGameButton.setMargin(new Insets(20, 50, 20, 50));
         loadGameButton.setMargin(new Insets(20, 50, 20, 50));
         exitButton.setMargin(new Insets(20, 50, 20, 50));
@@ -84,10 +77,9 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
         loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        newGameButton.addActionListener(e -> System.out.println("poo"));
+        newGameButton.addActionListener(e -> cardLayout.show(mainPanel, "Game"));
         exitButton.addActionListener(e -> System.exit(0));
 
-        // Add buttons to the panel
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(newGameButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(5, 20)));
@@ -96,21 +88,25 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
         buttonPanel.add(exitButton);
         buttonPanel.add(Box.createVerticalGlue());
 
-        // Add the menu
-        configureMenu();
+        panel.add(imagePanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+        panel.add(titleLabel, BorderLayout.NORTH);
 
-        // Add the image panel, button panel, and title label
-        add(imagePanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-        add(titleLabel, BorderLayout.NORTH);
-
-        // Ensure the window is visible
-        setLocationRelativeTo(null);
-        setVisible(true);
+        return panel;
     }
 
-    private void configureMenu() {
+    private JPanel createGamePanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel gameLabel = new JLabel("Game Panel", SwingConstants.CENTER);
+        gameLabel.setFont(new Font("Serif", Font.BOLD, 50));
+        panel.add(gameLabel, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+
         JMenu gameMenu = new JMenu("File");
         JMenuItem saveGameStatus = new JMenuItem("Save Game");
         JMenuItem loadSavedGame = new JMenuItem("Load Game");
@@ -129,11 +125,7 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
 
         menuBar.add(gameMenu);
         menuBar.add(helpMenu);
-        setJMenuBar(menuBar);
-    }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // This can be used to handle sound effects in the future
+        return menuBar;
     }
 }
