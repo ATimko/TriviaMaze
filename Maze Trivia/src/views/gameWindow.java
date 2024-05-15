@@ -122,6 +122,7 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
         JMenu helpMenu = new JMenu("Help");
         JMenuItem aboutMenuItem = new JMenuItem("About");
         JMenuItem rulesMenuItem = new JMenuItem("Rules");
+        aboutMenuItem.addActionListener(e -> new aboutUI());
         helpMenu.add(aboutMenuItem);
         helpMenu.add(rulesMenuItem);
 
