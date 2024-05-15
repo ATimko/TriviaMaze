@@ -18,3 +18,8 @@
 ### Discussed issues in the project:
 - None at the moment
 
+# Fourth Iteration Deliverables [May/13/2024 - May/14/2024]
+### Discussed issues in the project:
+- There's a problem in the code with the image location breaking (ex: if its in the src folder or view folder)
+- Another problem in the code is a broken window in the aboutUI
+- We would like the front UI to look nicer
