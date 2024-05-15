@@ -1,7 +1,13 @@
 package views;
 
+import Common.mazeConstants;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class aboutUI extends JFrame {
 
@@ -10,6 +16,7 @@ public class aboutUI extends JFrame {
     public aboutUI() {
         super("About");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.setSize(mazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
@@ -48,13 +55,20 @@ public class aboutUI extends JFrame {
                     <h2 style="text-align: center;">
                         <u>Spring 2024 - Group 12</u>
                     </h2>
+
                     <div class="name-list">
                         <h1>Made by:</h1>
                         <p>William Chhiv</p>
                         <p>Ashley Timko</p>
                         <p>Bao Trinh</p>
                     </div>
-                    <br><br>
+                <br><br>
+                <div class="equation">
+                        <h1>Trivia Maze</h1>
+                        <h2>This group assignment is about making\s
+                        a trivia maze using GUI and working from scratch.</h2>
+                        <br>
+                </div>
                 </body>
                 </html>
                 """);
