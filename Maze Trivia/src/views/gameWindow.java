@@ -32,6 +32,8 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
         setResizable(false);
 
         // Setup the background image
+        // The out image file has been added into in view folder as it cannot fine the
+        // image file without it for some reason
         URL imageUrl = getClass().getResource("Mazebackground.png"); // Adjusted path to the uploaded image
         if (imageUrl == null) {
             System.out.println("Image not found");
