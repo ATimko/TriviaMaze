@@ -20,6 +20,7 @@ public class gameWindow extends JFrame implements PropertyChangeListener{
 
     /**
      * JMenu option for opening the about menu.
+     *
      */
     private static final String MENU_ABOUT = "About";
     JButton newGameButton;
