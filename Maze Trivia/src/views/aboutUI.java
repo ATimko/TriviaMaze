@@ -26,7 +26,38 @@ public class aboutUI extends JFrame {
 
         final JLabel creditsTextLabel = new JLabel();
         creditsTextLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        creditsTextLabel.setText("Credits: Developed by [Your Name]");
+        creditsTextLabel.setText("""
+                <html>
+                <style>
+                    body {
+                      font-family: Verdana, sans-serif;
+                    }
+                    .name-list {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        font-size: 12px;
+                    }
+                    .equation {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        font-size: 10px;
+                    }
+                </style>
+
+                <body>
+                    <h2 style="text-align: center;">
+                        <u>Spring 2024 - Group 12</u>
+                    </h2>
+                    <div class="name-list">
+                        <h1>Made by:</h1>
+                        <p>William Chhiv</p>
+                        <p>Ashley Timko</p>
+                        <p>Bao Trinh</p>
+                    </div>
+                    <br><br>
+                </body>
+                </html>
+                """);
         myContainer.add(creditsTextLabel);
     }
 }
