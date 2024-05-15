@@ -69,6 +69,7 @@ public class gameWindow extends JFrame {
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         newGameButton.addActionListener(e -> System.out.println("poo"));
+        exitButton.addActionListener(e -> System.exit(0));
 
         // Add buttons to the panel
         buttonPanel.add(Box.createVerticalGlue());
@@ -98,6 +99,7 @@ public class gameWindow extends JFrame {
         JMenuItem saveGameStatus = new JMenuItem("Save Game");
         JMenuItem loadSavedGame = new JMenuItem("Load Game");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(e -> System.exit(0));
         gameMenu.add(saveGameStatus);
         gameMenu.add(loadSavedGame);
         gameMenu.add(exitMenuItem);
