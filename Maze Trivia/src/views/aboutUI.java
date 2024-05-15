@@ -1,8 +1,3 @@
-/*
- *  TCSS 305 - Winter 2023
- *  Group 2 - Tetris
- */
-
 package views;
 
 import Common.mazeConstants;
@@ -49,6 +44,4 @@ public class aboutUI extends JFrame {
         myContainer.add(creditsTextLabel);
 
     }
-
-
 }
