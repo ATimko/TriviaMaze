@@ -5,8 +5,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
-public class gameWindow extends JFrame {
+public class gameWindow extends JFrame implements PropertyChangeListener{
+
+    /**
+     * JMenu option for opening the about menu.
+     */
+    private static final String MENU_ABOUT = "About";
     JButton newGameButton;
     JButton loadGameButton;
     JButton exitButton;
@@ -113,5 +128,10 @@ public class gameWindow extends JFrame {
         menuBar.add(gameMenu);
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // This can be used to handle sound effects in the future
     }
 }
