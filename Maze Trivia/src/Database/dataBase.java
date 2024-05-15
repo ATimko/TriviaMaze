@@ -25,7 +25,7 @@ public class dataBase {
         System.out.println( "Opened database successfully" );
 
 
-        //now create a table
+        // now create a table
         String query = "CREATE TABLE IF NOT EXISTS questions ( " +
                 "QUESTION TEXT NOT NULL, " +
                 "ANSWER TEXT NOT NULL )";
