@@ -19,7 +19,7 @@ public class gameWindow extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         mainPanel.add(createMainMenuPanel(), "Main Menu");
-        mainPanel.add(createGamePanel(), "Game");
+        mainPanel.add(new roomUI(), "Game");
 
         setJMenuBar(createMenuBar());
 
@@ -91,15 +91,6 @@ public class gameWindow extends JFrame {
         panel.add(imagePanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
         panel.add(titleLabel, BorderLayout.NORTH);
-
-        return panel;
-    }
-
-    private JPanel createGamePanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel gameLabel = new JLabel("Game Panel", SwingConstants.CENTER);
-        gameLabel.setFont(new Font("Serif", Font.BOLD, 50));
-        panel.add(gameLabel, BorderLayout.CENTER);
 
         return panel;
     }
