@@ -10,6 +10,6 @@ public class Main {
         databaseManager.createTable();
         //questionImporter.importQuestions("Database/questions.txt");
 
-        //SwingUtilities.invokeLater(gameWindow::new);
+        SwingUtilities.invokeLater(gameWindow::new);
     }
 }
