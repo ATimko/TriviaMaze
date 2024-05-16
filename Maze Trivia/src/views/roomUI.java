@@ -39,7 +39,7 @@ public class roomUI extends JPanel {
         JButton button = new JButton();
         button.setBounds(x, y, width, height);
         button.setContentAreaFilled(false); // Make the button invisible
-        button.setBorderPainted(false); // Remove the border
+        button.setBorderPainted(true); // Remove the border
         button.setFocusPainted(true); // Remove the focus outline but I set this for true to see the button
         return button;
     }
