@@ -14,7 +14,7 @@ public class dataBase {
     public static void main(String[] args) {
         SQLiteDataSource ds = null;
 
-        //establish connection (creates db file if it does not exist :-)
+        //establish connection (creates db file if it does not exist
         try {
             ds = new SQLiteDataSource();
             ds.setUrl("jdbc:sqlite:questions.db");
@@ -22,7 +22,6 @@ public class dataBase {
             e.printStackTrace();
             System.exit(0);
         }
-
         System.out.println( "Opened database successfully" );
 
 
@@ -50,7 +49,6 @@ public class dataBase {
               Statement stmt = conn.createStatement(); ) {
             int rv = stmt.executeUpdate( query1 );
             System.out.println( "1st executeUpdate() returned " + rv );
-
             rv = stmt.executeUpdate( query2 );
             System.out.println( "2nd executeUpdate() returned " + rv );
         } catch ( SQLException e ) {

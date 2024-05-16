@@ -1,5 +1,7 @@
 package views;
 
+import Maze.room;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -7,8 +9,11 @@ import java.net.URL;
 public class roomUI extends JPanel {
 
     private Image backgroundImage;
+    private room room;
 
     public roomUI() {
+        room = new room();
+
         // Load the image
         URL imageUrl = getClass().getClassLoader().getResource("views/fiveDoors.png");
         if (imageUrl == null) {
@@ -21,27 +26,12 @@ public class roomUI extends JPanel {
 
         setLayout(null); // Use absolute positioning for custom layout
 
-        // Create invisible buttons and position them over the doors
-        JButton door1Button = createInvisibleButton(10, 150, 150, 310); // Adjust the coordinates and size
-        JButton door2Button = createInvisibleButton(260, 150, 150, 310); // Adjust the coordinates and size
-        JButton door3Button = createInvisibleButton(515, 150, 150, 310); // Adjust the coordinates and size
-        JButton door4Button = createInvisibleButton(760, 150, 150, 310); // Adjust the coordinates and size
-        JButton door5Button = createInvisibleButton(1012, 150, 150, 310); // Adjust the coordinates and size
-
-        add(door1Button);
-        add(door2Button);
-        add(door3Button);
-        add(door4Button);
-        add(door5Button);
-    }
-
-    private JButton createInvisibleButton(int x, int y, int width, int height) {
-        JButton button = new JButton();
-        button.setBounds(x, y, width, height);
-        button.setContentAreaFilled(false); // Make the button invisible
-        button.setBorderPainted(true); // Remove the border
-        button.setFocusPainted(true); // Remove the focus outline but I set this for true to see the button
-        return button;
+        // Add the door buttons from the Room class
+        JButton[] doors = room.getDoors();
+        for (int i = 0; i < doors.length; i++) {
+            JButton doorButton = doors[i];
+            add(doorButton);
+        }
     }
 
     @Override
