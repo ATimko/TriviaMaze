@@ -112,6 +112,7 @@ public class gameWindow extends JFrame {
         JMenuItem rulesMenuItem = new JMenuItem("Rules");
         aboutMenuItem.addActionListener(e -> new aboutUI());
         helpMenu.add(aboutMenuItem);
+        rulesMenuItem.addActionListener(e -> new ruleUI());
         helpMenu.add(rulesMenuItem);
 
         menuBar.add(gameMenu);
