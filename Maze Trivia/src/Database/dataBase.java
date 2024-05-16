@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+// Database SQL
 public class dataBase {
 
     public static void main(String[] args) {
