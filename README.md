@@ -23,3 +23,8 @@
 - There's a problem in the code with the image location breaking (ex: if its in the src folder or view folder)
 - Another problem in the code is a broken window in the aboutUI
 - We would like the front UI to look nicer
+
+# Fifth Iteration Deliverables [May/15/2024, May/16/2024, May/21/2024]
+### Discussed issues in the project:
+- Fixed previous issues
+- None at the moment
