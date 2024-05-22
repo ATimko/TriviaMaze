@@ -1,6 +1,7 @@
 package controller;
 
 import database.DatabaseManager;
+import database.QuestionImporter;
 import views.GameWindow;
 import javax.swing.*;
 
