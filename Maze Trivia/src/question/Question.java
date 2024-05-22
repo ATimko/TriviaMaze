@@ -1,8 +1,8 @@
-package Question;
+package question;
 
 import java.io.Serializable;
 
-public interface question extends Serializable {
+public interface Question extends Serializable {
     enum questionType { multipleChoice, trueFalse, shortAnswer }
     questionType getType();
     String getQuestion();

@@ -1,20 +1,20 @@
 package views;
 
-import Maze.room;
-import Maze.Door;
+import maze.Room;
+import maze.Door;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class roomUI extends JPanel {
+public class RoomUI extends JPanel {
 
     private Image backgroundImage;
-    private room room;
+    private Room room;
     private JButton[] doorButtons;
 
-    public roomUI() {
-        room = new room();
+    public RoomUI() {
+        room = new Room();
 
         // Load the image
         URL imageUrl = getClass().getClassLoader().getResource("views/fiveDoors.png");

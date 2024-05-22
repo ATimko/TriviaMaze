@@ -1,13 +1,13 @@
-package Question;
+package question;
 
-public class abstractedQuestion implements question {
+public class AbstractedQuestion implements Question {
     private final questionType type;
     private final String question;
     private final String[] choices;
     private final String answer;
     private final String[] subject;
 
-    protected abstractedQuestion(questionType type, String[] subject, String question, String[] choices, String answer) {
+    protected AbstractedQuestion(questionType type, String[] subject, String question, String[] choices, String answer) {
         if (type == null || subject == null || question == null || choices == null || answer == null) {
             throw new IllegalArgumentException("You cannot have null Question parameters!");
         }

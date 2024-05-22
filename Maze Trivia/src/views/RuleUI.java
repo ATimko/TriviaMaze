@@ -1,6 +1,6 @@
 package views;
 
-import Common.mazeConstants;
+import constants.MazeConstants;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -8,14 +8,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class ruleUI extends JFrame {
+public class RuleUI extends JFrame {
 
     private final JPanel myContainer;
 
-    public ruleUI() {
+    public RuleUI() {
         super("Rules");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setSize(mazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
+        this.setSize(MazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);

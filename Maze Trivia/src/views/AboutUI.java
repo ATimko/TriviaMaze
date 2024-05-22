@@ -1,22 +1,21 @@
 package views;
 
-import Common.mazeConstants;
-import javax.swing.*;
-import java.awt.*;
+import constants.MazeConstants;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class aboutUI extends JFrame {
+public class AboutUI extends JFrame {
 
     private final JPanel myContainer;
 
-    public aboutUI() {
+    public AboutUI() {
         super("About");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setSize(mazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
+        this.setSize(MazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);

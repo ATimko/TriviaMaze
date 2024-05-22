@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class questionImporter {
+public class QuestionImporter {
 
     private static final String INSERT_SQL = """
         INSERT INTO questions(type, subject, question, choices, answer) VALUES(?, ?, ?, ?, ?)
@@ -15,7 +15,7 @@ public class questionImporter {
 
     public static void importQuestions(String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath));
-             Connection conn = databaseManager.connect();
+             Connection conn = DatabaseManager.connect();
              PreparedStatement prep = conn.prepareStatement(INSERT_SQL)) {
 
             String line;

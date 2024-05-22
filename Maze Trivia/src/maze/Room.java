@@ -1,9 +1,9 @@
-package Maze;
+package maze;
 
-public class room {
+public class Room {
     private Door[] doors;
 
-    public room() {
+    public Room() {
         doors = new Door[5];
         initializeDoors();
     }
