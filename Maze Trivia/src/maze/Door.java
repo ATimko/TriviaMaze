@@ -1,31 +1,40 @@
 package maze;
 
-import javax.swing.*;
+import java.util.Scanner;
 
 public class Door {
     private boolean isLocked;
+    private boolean isUnlocked;
 
     public Door() {
         isLocked = false;
+        isUnlocked = false;
     }
 
     public boolean isLocked() {
         return isLocked;
     }
 
+    public boolean isUnlocked() {
+        return isUnlocked;
+    }
+
     public void lock() {
         isLocked = true;
     }
 
+    public void unlock() {
+        isUnlocked = true;
+    }
+
     public boolean askQuestion() {
-        // Placeholder for question logic
-        // Replace this with actual question and answer checking logic
-        int response = JOptionPane.showConfirmDialog(null, "Is this a correct answer?", "question", JOptionPane.YES_NO_OPTION);
-        return response == JOptionPane.YES_OPTION;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What is the capital of France?");
+        String answer = scanner.nextLine();
+        return "Paris".equalsIgnoreCase(answer);
     }
 
     public void enterNewRoom() {
-        // Placeholder for entering a new room
-        JOptionPane.showMessageDialog(null, "You entered a new room!");
+        System.out.println("You entered a new room!");
     }
 }
