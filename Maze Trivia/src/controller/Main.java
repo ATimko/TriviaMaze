@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         DatabaseManager.createTable();
-        //questionImporter.importQuestions("Database/questions.txt");
+        QuestionImporter.importQuestions("questions.txt");
 
         SwingUtilities.invokeLater(GameWindow::new);
     }

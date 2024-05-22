@@ -26,7 +26,7 @@ public class RoomUI extends JPanel {
             backgroundImage = originalImage.getImage().getScaledInstance(1100, 800, Image.SCALE_SMOOTH);
         }
 
-        setLayout(null); // Use absolute positioning for custom layout
+        setLayout(null);
 
         // Initialize the door buttons
         initializeDoorButtons();
@@ -58,12 +58,10 @@ public class RoomUI extends JPanel {
         } else {
             // Ask a question
             boolean correctAnswer = door.askQuestion();
-            if (correctAnswer) {
-                // Unlock the door and enter a new room
+            if (correctAnswer) {// Unlock the door and enter a new room
                 door.enterNewRoom();
             } else {
-                // Lock the door permanently
-                door.lock();
+                door.lock(); // Lock the door permanently
                 doorButtons[doorIndex].setEnabled(false); // Disable the button to indicate it's locked
                 JOptionPane.showMessageDialog(null, "Incorrect! This door is now locked.");
             }
