@@ -1,6 +1,6 @@
 package views;
 
-import common.MazeConstants;
+import constants.MazeConstants;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
