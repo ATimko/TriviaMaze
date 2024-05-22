@@ -1,15 +1,14 @@
-package Common;
+package common;
 
-import java.awt.*;
 import java.awt.Dimension;
 
 // Contains all constants and static values.
-public class mazeConstants {
+public class MazeConstants {
 
     /**
      * Private constructor so this class can't be instantiated.
      */
-    private mazeConstants() {
+    private MazeConstants() {
 
     }
     public static final class Dimensions {

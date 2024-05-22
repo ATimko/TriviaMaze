@@ -1,4 +1,4 @@
-package Maze;
+package maze;
 
 import javax.swing.*;
 
@@ -20,7 +20,7 @@ public class Door {
     public boolean askQuestion() {
         // Placeholder for question logic
         // Replace this with actual question and answer checking logic
-        int response = JOptionPane.showConfirmDialog(null, "Is this a correct answer?", "Question", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Is this a correct answer?", "question", JOptionPane.YES_NO_OPTION);
         return response == JOptionPane.YES_OPTION;
     }
 

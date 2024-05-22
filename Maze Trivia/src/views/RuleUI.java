@@ -1,22 +1,21 @@
 package views;
 
-import Common.mazeConstants;
-import javax.swing.*;
-import java.awt.*;
+import common.MazeConstants;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class aboutUI extends JFrame {
+public class RuleUI extends JFrame {
 
     private final JPanel myContainer;
 
-    public aboutUI() {
-        super("About");
+    public RuleUI() {
+        super("Rules");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setSize(mazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
+        this.setSize(MazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
@@ -53,20 +52,22 @@ public class aboutUI extends JFrame {
 
                 <body>
                     <h2 style="text-align: center;">
-                        <u>Spring 2024 - Group 12</u>
+                        <u>Information about the Trivia Maze Game!</u>
                     </h2>
 
-                    <div class="name-list">
-                        <h1>Made by:</h1>
-                        <p>William Chhiv</p>
-                        <p>Ashley Timko</p>
-                        <p>Bao Trinh</p>
+                    <div class="game-rules">
+                        <h1>Game Information</h1>
+                        <p>The Trivia Maze is a 5 x 5 game where the player\s
+                        must navigate through entrance to exit.</p>
                     </div>
                 <br><br>
                 <div class="equation">
-                        <h1>Trivia Maze</h1>
-                        <h2>This group assignment is about making\s
-                        a trivia maze using GUI and working from scratch.</h2>
+                        <h1>Game Rules</h1>
+                        <h2>The maze is composed of rooms.  Each room has 5 doors.\s
+                        In order for the user to pass through a door, they must correctly answer a question.\s
+                        There are 3 categories of questions asked consisted of Multiple Choice, Short Answer and True/False.\s
+                        If the user is unable to answer a question, that door is then locked permanently.\s
+                        If the user is unable to make it from the entrance to the exit (due to locked doors), the game is lost.</h2>
                         <br>
                 </div>
                 </body>
