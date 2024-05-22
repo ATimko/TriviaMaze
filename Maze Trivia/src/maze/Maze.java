@@ -7,19 +7,20 @@ import java.util.Set;
 
 public class Maze {
     private Room[][] grid;
-    private Set<Integer> visitedRooms;
     private Map<String, Integer[]> roomDirections;
     private int currentRoomRow;
     private int currentRoomCol;
+    private Set<String> visitedDoors;
+    private int previousRoomNumber;
 
     public Maze() {
         grid = new Room[5][5];
-        visitedRooms = new HashSet<>();
+        visitedDoors = new HashSet<>();
         initializeRooms();
         initializeRoomDirections();
         currentRoomRow = 0;
         currentRoomCol = 0;
-        visitedRooms.add(getCurrentRoomNumber()); // Mark the starting room as visited
+        previousRoomNumber = -1; // Initialize to an invalid room number
     }
 
     private void initializeRooms() {
@@ -38,23 +39,26 @@ public class Maze {
         roomDirections.put("RIGHT", new Integer[]{0, 1});
     }
 
-    public boolean move(String direction) {
-        Integer[] move = roomDirections.get(direction);
+    public boolean move(int roomNumber) {
+        Integer[] move = getDirectionFromRoomNumber(roomNumber);
         int newRow = currentRoomRow + move[0];
         int newCol = currentRoomCol + move[1];
 
         if (isValidMove(newRow, newCol)) {
-            Door door = getDoor(direction);
+            String doorKey = getCurrentRoomNumber() + "-" + roomNumber;
+            Door door = getDoor(move);
             if (door.isLocked()) {
                 System.out.println("This door is locked.");
                 return false;
-            } else if (door.isUnlocked() || door.askQuestion()) {
+            } else if (roomNumber == previousRoomNumber || visitedDoors.contains(doorKey) || door.isUnlocked() || door.askQuestion()) {
                 if (!door.isUnlocked()) {
                     door.unlock();
                 }
+                previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
-                visitedRooms.add(getCurrentRoomNumber());
+                visitedDoors.add(doorKey);
+                visitedDoors.add(roomNumber + "-" + getCurrentRoomNumber()); // For the reverse path
                 System.out.println("Moved to room: " + getCurrentRoomNumber());
                 return true;
             } else {
@@ -72,20 +76,22 @@ public class Maze {
         return row >= 0 && row < 5 && col >= 0 && col < 5;
     }
 
-    private Door getDoor(String direction) {
+    private Door getDoor(Integer[] move) {
         Room currentRoom = grid[currentRoomRow][currentRoomCol];
-        switch (direction) {
-            case "UP":
-                return currentRoom.getDoors()[0];
-            case "DOWN":
-                return currentRoom.getDoors()[1];
-            case "LEFT":
-                return currentRoom.getDoors()[2];
-            case "RIGHT":
-                return currentRoom.getDoors()[3];
-            default:
-                throw new IllegalArgumentException("Invalid direction");
-        }
+        if (move[0] == -1 && move[1] == 0) return currentRoom.getDoors()[0]; // UP
+        if (move[0] == 1 && move[1] == 0) return currentRoom.getDoors()[1]; // DOWN
+        if (move[0] == 0 && move[1] == -1) return currentRoom.getDoors()[2]; // LEFT
+        if (move[0] == 0 && move[1] == 1) return currentRoom.getDoors()[3]; // RIGHT
+        throw new IllegalArgumentException("Invalid move");
+    }
+
+    private Integer[] getDirectionFromRoomNumber(int roomNumber) {
+        int currentRoomNumber = getCurrentRoomNumber();
+        if (roomNumber == currentRoomNumber - 5) return new Integer[]{-1, 0}; // UP
+        if (roomNumber == currentRoomNumber + 5) return new Integer[]{1, 0}; // DOWN
+        if (roomNumber == currentRoomNumber - 1) return new Integer[]{0, -1}; // LEFT
+        if (roomNumber == currentRoomNumber + 1) return new Integer[]{0, 1}; // RIGHT
+        throw new IllegalArgumentException("Invalid room number");
     }
 
     public int getCurrentRoomNumber() {
@@ -94,5 +100,13 @@ public class Maze {
 
     public boolean isAtExit() {
         return currentRoomRow == 4 && currentRoomCol == 4;
+    }
+
+    public void displayAvailableMoves() {
+        System.out.println("You are in room " + getCurrentRoomNumber() + ". Available moves:");
+        if (currentRoomRow > 0) System.out.println("UP to room " + (getCurrentRoomNumber() - 5));
+        if (currentRoomRow < 4) System.out.println("DOWN to room " + (getCurrentRoomNumber() + 5));
+        if (currentRoomCol > 0) System.out.println("LEFT to room " + (getCurrentRoomNumber() - 1));
+        if (currentRoomCol < 4) System.out.println("RIGHT to room " + (getCurrentRoomNumber() + 1));
     }
 }
