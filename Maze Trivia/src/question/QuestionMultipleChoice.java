@@ -2,17 +2,14 @@ package question;
 /**
  * The QuestionMultipleChoice class represents a multiple-choice question.
  * It extends the AbstractedQuestion class.
- * <p>
  * Instances of this class are used to create multiple-choice questions
  * with specified subjects, choices, and correct answer.
- * </p>
- * <pre>
+ *
  * Example usage:
  * String[] subjects = {"Math", "Science"};
  * String[] choices = {"A", "B", "C", "D"};
  * String answer = "A";
  * QuestionMultipleChoice question = new QuestionMultipleChoice("What is 2 + 2?", subjects, choices, answer);
- * </pre>
  */
 public class QuestionMultipleChoice extends AbstractQuestion {
     private String[] choices;

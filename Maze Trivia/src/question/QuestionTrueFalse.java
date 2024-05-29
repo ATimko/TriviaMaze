@@ -2,17 +2,15 @@ package question;
 /**
  * The QuestionTrueFalse class represents a true/false question.
  * It extends the AbstractedQuestion class.
- * <p>
+ *
  * Instances of this class are used to create true/false questions
  * with specified subjects and correct answer.
- * </p>
- * <pre>
+ *
  * Example usage:
  * String[] subjects = {"Math", "Science"};
  * String[] choices = {"True", "False"};
  * String answer = "True";
  * QuestionTrueFalse question = new QuestionTrueFalse("Is the sky blue?", subjects, choices, answer);
- * </pre>
  */
 
 public class QuestionTrueFalse extends AbstractQuestion {

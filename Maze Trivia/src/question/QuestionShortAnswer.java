@@ -2,17 +2,15 @@ package question;
 /**
  * The QuestionShortAnswer class represents a short answer question.
  * It extends the AbstractedQuestion class.
- * <p>
+ *
  * Instances of this class are used to create short answer questions
  * with specified subjects and correct answer.
- * </p>
- * <pre>
+ *
  * Example usage:
  * String[] subjects = {"Literature", "History"};
  * String[] choices = {}; // Choices are typically not needed for short answer questions
  * String answer = "Shakespeare";
  * QuestionShortAnswer question = new QuestionShortAnswer("Who wrote Hamlet?", subjects, choices, answer);
- * </pre>
  */
 public class QuestionShortAnswer extends AbstractQuestion {
     /**
