@@ -28,3 +28,7 @@
 ### Discussed issues in the project:
 - Fixed previous issues
 - None at the moment
+
+# Sixth Iteration Deliverables [May/22/2024, May/23/2024, May/28/2024]
+### Discussed issues in the project:
+- None at the moment
