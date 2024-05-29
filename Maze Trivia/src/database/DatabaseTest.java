@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class databaseTest {
+public class DatabaseTest {
     public static void main(String[] args) {
         // Ensure the table is created
         DatabaseManager.createTable();
