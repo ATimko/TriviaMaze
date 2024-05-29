@@ -10,6 +10,9 @@ public class databaseTest {
         // Ensure the table is created
         DatabaseManager.createTable();
 
+        // Clear the table to avoid duplicates
+        clearTable();
+
         // Import questions to populate the table
         QuestionImporter.importQuestions("questions.txt");
 
@@ -30,6 +33,17 @@ public class databaseTest {
                 System.out.printf("ID: %d, Type: %s, Subject: %s, Question: %s, Choices: %s, Answer: %s%n",
                         id, type, subject, question, choices, answer);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void clearTable() {
+        try (Connection connection = DatabaseManager.connect();
+             Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate("DELETE FROM questions");
+            System.out.println("Table cleared successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
