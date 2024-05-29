@@ -1,7 +1,9 @@
 package question;
 
 public class QuestionShortAnswer extends AbstractedQuestion {
-    public QuestionShortAnswer(int id, String subject, String question, String answer) {
-        super(subject, question, answer);
+
+    public QuestionShortAnswer(String[] subject, String question, String[] choices, String answer) {
+        super(questionType.shortAnswer, subject, question, choices, answer);
     }
+
 }

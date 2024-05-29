@@ -1,16 +1,9 @@
 package question;
 
 public class QuestionMultipleChoice extends AbstractedQuestion {
-    private String[] choices;
 
-    public QuestionMultipleChoice(String subject, String question, String[] choices, String answer) {
-        super(subject, question, answer);
-        this.choices = choices;
+    public QuestionMultipleChoice(String[] subject, String question, String[] choices, String answer) {
+        super(questionType.multipleChoice, subject, question, choices, answer);
     }
 
-    // Getters and setters
-
-    public String[] getChoices() {
-        return choices;
-    }
 }
