@@ -1,0 +1,17 @@
+type=multipleChoice
+subject=math
+question=What is 2+2?
+choices=4,3,2,1
+answer=4
+
+type=trueFalse
+subject=science
+question=The Element "Fe"  on the Periodic Table is Iron.
+choices=True,False
+answer=True
+
+type=shortAnswer
+subject=history
+question=Who was the first President of the United States?
+choices=
+answer=George Washington

@@ -23,11 +23,12 @@ public class QuestionImporter {
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                String type = line.split("=")[1];
-                String subject = br.readLine().split("=")[1];
-                String question = br.readLine().split("=")[1];
-                String choices = br.readLine().split("=")[1];
-                String answer = br.readLine().split("=")[1];
+
+                String type = extractValue(line, "type");
+                String subject = extractValue(br.readLine(), "subject");
+                String question = extractValue(br.readLine(), "question");
+                String choices = extractValue(br.readLine(), "choices");
+                String answer = extractValue(br.readLine(), "answer");
 
                 prep.setString(1, type);
                 prep.setString(2, subject);
@@ -45,5 +46,16 @@ public class QuestionImporter {
         } catch (IOException | SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static String extractValue(String line, String expectedKey) throws IOException {
+        if (line == null || !line.startsWith(expectedKey + "=")) {
+            throw new IOException("Invalid or missing line for " + expectedKey + ": " + line);
+        }
+        String[] parts = line.split("=", 2);
+        if (parts.length < 2) {
+            throw new IOException("Invalid format for " + expectedKey + ": " + line);
+        }
+        return parts[1];
     }
 }
