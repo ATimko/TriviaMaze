@@ -2,10 +2,7 @@ package controller;
 
 import database.DatabaseManager;
 import database.QuestionImporter;
-import question.QuestionFactory;
-import question.QuestionMultipleChoice;
-import question.QuestionShortAnswer;
-import question.QuestionTrueFalse;
+import question.*;
 import views.GameWindow;
 import javax.swing.*;
 
@@ -14,5 +11,7 @@ public class Main {
         DatabaseManager.createTable();
         QuestionImporter.importQuestions("questions.txt");
         SwingUtilities.invokeLater(GameWindow::new);
+
+
     }
 }

@@ -1,9 +1,13 @@
 package database;
 
+import question.Question;
+import question.QuestionFactory;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 public class DatabaseTest {
     public static void main(String[] args) {
@@ -30,8 +34,8 @@ public class DatabaseTest {
                 String choices = resultSet.getString("choices");
                 String answer = resultSet.getString("answer");
 
-                System.out.printf("ID: %d, Type: %s, Subject: %s, Question: %s, Choices: %s, Answer: %s%n",
-                        id, type, subject, question, choices, answer);
+                Question test = QuestionFactory.createQuestion(question, new String[]{subject}, new String[]{choices}, answer, type);
+                System.out.println(test.getType());
             }
         } catch (SQLException e) {
             e.printStackTrace();

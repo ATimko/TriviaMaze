@@ -3,7 +3,7 @@ package question;
  * The AbstractedQuestion class represents a question with multiple choices and an answer.
  * It implements the Question interface.
  */
-public class AbstractedQuestion implements Question {
+public class AbstractQuestion implements Question {
     private final questionType type;
     private final String question;
     private final String[] choices;
@@ -20,7 +20,7 @@ public class AbstractedQuestion implements Question {
      * @param answer the correct answer for the question
      * @throws IllegalArgumentException if any of the parameters are null
      */
-    protected AbstractedQuestion(questionType type, String[] subject, String question, String[] choices, String answer) {
+    protected AbstractQuestion(questionType type, String[] subject, String question, String[] choices, String answer) {
         if (type == null || subject == null || question == null || choices == null || answer == null) {
             throw new IllegalArgumentException("The question parameters cannot be null.");
         }
@@ -93,7 +93,7 @@ public class AbstractedQuestion implements Question {
         if (input == null || getClass() != input.getClass()) {
             return false;
         }
-        AbstractedQuestion that = (AbstractedQuestion) input;
+        AbstractQuestion that = (AbstractQuestion) input;
         return type == that.type &&
                 question.equals(that.question) &&
                 answer.equals(that.answer) &&
