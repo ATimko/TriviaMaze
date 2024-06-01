@@ -8,27 +8,24 @@ public class AbstractQuestion implements Question {
     private final String question;
     private final String[] choices;
     private final String answer;
-    private final String[] subject;
 
     /**
      * Constructs an AbstractedQuestion with the specified type, subject, question, choices, and answer.
      *
      * @param type the type of the question
-     * @param subject the subjects related to the question
      * @param question the question text
      * @param choices the possible choices for the question
      * @param answer the correct answer for the question
      * @throws IllegalArgumentException if any of the parameters are null
      */
-    protected AbstractQuestion(questionType type, String[] subject, String question, String[] choices, String answer) {
-        if (type == null || subject == null || question == null || choices == null || answer == null) {
+    protected AbstractQuestion(questionType type, String question, String[] choices, String answer) {
+        if (type == null || question == null || choices == null || answer == null) {
             throw new IllegalArgumentException("The question parameters cannot be null.");
         }
         this.type = type;
         this.question = question;
         this.choices = choices;
         this.answer = answer;
-        this.subject = subject;
     }
 
     /**
@@ -38,15 +35,6 @@ public class AbstractQuestion implements Question {
      */
     public questionType getType() {
         return type;
-    }
-
-    /**
-     * Returns the subjects related to the question.
-     *
-     * @return an array of subjects related to this question
-     */
-    public String[] getSubjects() {
-        return subject;
     }
 
     /**
@@ -73,6 +61,11 @@ public class AbstractQuestion implements Question {
      * @param answer the answer to check
      * @return true if the given answer is correct, false otherwise
      */
+
+    public String getAnswer() {
+        return answer;
+    }
+
     public boolean correctAnswer(String answer) {
         return answer.equalsIgnoreCase(this.answer);
     }
@@ -97,8 +90,7 @@ public class AbstractQuestion implements Question {
         return type == that.type &&
                 question.equals(that.question) &&
                 answer.equals(that.answer) &&
-                java.util.Arrays.equals(choices, that.choices) &&
-                java.util.Arrays.equals(subject, that.subject);
+                java.util.Arrays.equals(choices, that.choices);
     }
 
     /**
@@ -110,7 +102,6 @@ public class AbstractQuestion implements Question {
     public int hashCode() {
         int result = java.util.Objects.hash(type, question, answer);
         result = 31 * result + java.util.Arrays.hashCode(choices);
-        result = 31 * result + java.util.Arrays.hashCode(subject);
         return result;
     }
 }

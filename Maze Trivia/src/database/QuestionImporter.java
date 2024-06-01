@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class QuestionImporter {
 
     private static final String INSERT_SQL = """
-        INSERT INTO questions(type, subject, question, choices, answer) VALUES(?, ?, ?, ?, ?)
+        INSERT INTO questions(type, question, choices, answer) VALUES(?, ?, ?, ?)
         """;
 
     public static void importQuestions(String filePath) {
@@ -25,16 +25,14 @@ public class QuestionImporter {
                 }
 
                 String type = extractValue(line, "type");
-                String subject = extractValue(br.readLine(), "subject");
                 String question = extractValue(br.readLine(), "question");
                 String choices = extractValue(br.readLine(), "choices");
                 String answer = extractValue(br.readLine(), "answer");
 
                 prep.setString(1, type);
-                prep.setString(2, subject);
-                prep.setString(3, question);
-                prep.setString(4, choices);
-                prep.setString(5, answer);
+                prep.setString(2, question);
+                prep.setString(3, choices);
+                prep.setString(4, answer);
 
                 prep.addBatch();
 

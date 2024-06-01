@@ -7,6 +7,6 @@ public interface Question extends Serializable {
     questionType getType();
     String getQuestion();
     String[] getChoices();
-    String[] getSubjects();
+    String getAnswer();
     boolean correctAnswer(String answer);
 }

@@ -24,9 +24,8 @@ public class DatabaseManager {
             CREATE TABLE IF NOT EXISTS questions (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 type TEXT NOT NULL,
-                subject TEXT NOT NULL,
                 question TEXT NOT NULL,
-                choices TEXT NOT NULL,
+                choices TEXT,
                 answer TEXT NOT NULL
             );
             """;
@@ -35,6 +34,18 @@ public class DatabaseManager {
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
             System.out.println("Table created successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void dropTable() {
+        String sql = "DROP TABLE IF EXISTS questions";
+
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            System.out.println("Table dropped successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
