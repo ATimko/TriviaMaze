@@ -55,16 +55,18 @@ public class AbstractQuestion implements Question {
         return choices;
     }
 
+    // new method no javadoc
+
+    public String getAnswer() {
+        return answer;
+    }
+
     /**
      * Checks if the given answer is correct.
      *
      * @param answer the answer to check
      * @return true if the given answer is correct, false otherwise
      */
-
-    public String getAnswer() {
-        return answer;
-    }
 
     public boolean correctAnswer(String answer) {
         return answer.equalsIgnoreCase(this.answer);
