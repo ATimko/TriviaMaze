@@ -37,7 +37,7 @@ public class Main {
             System.out.println("No question found for the specified type.");
         }
 
-        // SwingUtilities.invokeLater(GameWindow::new);
+        SwingUtilities.invokeLater(GameWindow::new);
 
 
     }

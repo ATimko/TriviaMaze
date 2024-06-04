@@ -45,17 +45,19 @@ public class Maze {
         int newCol = currentRoomCol + move[1];
 
         if (isValidMove(newRow, newCol)) {
-            String doorKey = getCurrentRoomNumber() + "-" + roomNumber;
+            String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
+            String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
             Door door = getDoor(move);
             if (door.isLocked()) {
                 System.out.println("This door is locked.");
                 return false;
-            } else if (visitedDoors.contains(doorKey) || roomNumber == previousRoomNumber || door.askQuestion()) {
+            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber || door.askQuestion()) {
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
-                visitedDoors.add(doorKey);
-                visitedDoors.add(roomNumber + "-" + getCurrentRoomNumber()); // For the reverse path
+                visitedDoors.add(forwardKey);
+                visitedDoors.add(backwardKey); // For the reverse path
+                door.markVisited(); // Mark the door as visited
                 enterNewRoom();
                 return true;
             } else {
