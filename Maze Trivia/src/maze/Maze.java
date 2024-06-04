@@ -58,7 +58,7 @@ public class Maze {
                 visitedDoors.add(forwardKey);
                 visitedDoors.add(backwardKey); // For the reverse path
                 door.markVisited(); // Mark the door as visited
-                enterNewRoom();
+                //enterNewRoom();
                 return true;
             } else {
                 System.out.println("Incorrect! This door is now locked.");

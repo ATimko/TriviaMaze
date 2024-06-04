@@ -54,6 +54,6 @@ public class Door {
     }
 
     public void enterNewRoom() {
-        System.out.println();
+        System.out.println("NEW ROOM!");
     }
 }
