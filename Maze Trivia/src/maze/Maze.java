@@ -13,30 +13,13 @@ public class Maze {
     private Set<String> visitedDoors;
     private int previousRoomNumber;
 
-    public Maze() {
-        grid = new Room[5][5];
-        visitedDoors = new HashSet<>();
-        initializeRooms();
-        initializeRoomDirections();
-        currentRoomRow = 0;
-        currentRoomCol = 0;
-        previousRoomNumber = -1; // Initialize to an invalid room number
-    }
-
-    private void initializeRooms() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                grid[i][j] = new Room();
-            }
-        }
-    }
-
-    private void initializeRoomDirections() {
-        roomDirections = new HashMap<>();
-        roomDirections.put("UP", new Integer[]{-1, 0});
-        roomDirections.put("DOWN", new Integer[]{1, 0});
-        roomDirections.put("LEFT", new Integer[]{0, -1});
-        roomDirections.put("RIGHT", new Integer[]{0, 1});
+    public Maze(Room[][] grid, Map<String, Integer[]> roomDirections) {
+        this.grid = grid;
+        this.roomDirections = roomDirections;
+        this.visitedDoors = new HashSet<>();
+        this.currentRoomRow = 0;
+        this.currentRoomCol = 0;
+        this.previousRoomNumber = -1;
     }
 
     public boolean move(int roomNumber) {
@@ -56,9 +39,9 @@ public class Maze {
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
                 visitedDoors.add(forwardKey);
-                visitedDoors.add(backwardKey); // For the reverse path
-                door.markVisited(); // Mark the door as visited
-                //enterNewRoom();
+                visitedDoors.add(backwardKey);
+                door.markVisited();
+                enterNewRoom();
                 return true;
             } else {
                 System.out.println("Incorrect! This door is now locked.");

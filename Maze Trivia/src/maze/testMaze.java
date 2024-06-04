@@ -1,10 +1,11 @@
 import maze.Maze;
+import maze.MazeFactory;
 import java.util.Scanner;
 
 public class testMaze {
 
     public static void main(String[] args) {
-        Maze maze = new Maze();
+        Maze maze = MazeFactory.createMaze();
         Scanner scanner = new Scanner(System.in);
 
         while (!maze.isAtExit()) {
