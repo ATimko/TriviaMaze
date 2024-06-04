@@ -1,5 +1,4 @@
 import maze.Maze;
-
 import java.util.Scanner;
 
 public class testMaze {
@@ -19,6 +18,12 @@ public class testMaze {
                 System.out.println("Moved successfully to room " + maze.getCurrentRoomNumber());
             } else {
                 System.out.println("Failed to move.");
+            }
+
+            // Check if there is a path to room 25 after each move
+            if (!maze.isPathToEnd()) {
+                System.out.println("No path to room 25. Game over.");
+                return;
             }
         }
 

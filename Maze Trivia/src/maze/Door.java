@@ -3,38 +3,47 @@ package maze;
 import java.util.Scanner;
 
 public class Door {
-    private boolean isLocked;
-    private boolean isUnlocked;
+    private boolean locked;
+    private boolean questionAnsweredCorrectly;
 
     public Door() {
-        isLocked = false;
-        isUnlocked = false;
+        this.locked = false; // Initially, the door is unlocked
+        this.questionAnsweredCorrectly = false;
     }
 
     public boolean isLocked() {
-        return isLocked;
+        return locked;
     }
 
     public boolean isUnlocked() {
-        return isUnlocked;
+        return !locked;
     }
 
     public void lock() {
-        isLocked = true;
+        this.locked = true;
     }
 
     public void unlock() {
-        isUnlocked = true;
+        this.locked = false;
     }
 
     public boolean askQuestion() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("What is the capital of France?");
-        String answer = scanner.nextLine();
-        return "Paris".equalsIgnoreCase(answer);
+        if (!questionAnsweredCorrectly) {
+            System.out.println("What is the capital of France?");
+            Scanner scanner = new Scanner(System.in);
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("Paris")) {
+                questionAnsweredCorrectly = true;
+                unlock();
+                return true;
+            } else {
+                lock();
+                return false;
+            }
+        }
+        return true; // If the question has already been answered correctly, allow passage
     }
 
     public void enterNewRoom() {
-        System.out.println("You entered a new room!");
     }
 }

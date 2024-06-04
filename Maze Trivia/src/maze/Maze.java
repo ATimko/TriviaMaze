@@ -50,19 +50,15 @@ public class Maze {
             if (door.isLocked()) {
                 System.out.println("This door is locked.");
                 return false;
-            } else if (roomNumber == previousRoomNumber || visitedDoors.contains(doorKey) || door.isUnlocked() || door.askQuestion()) {
-                if (!door.isUnlocked()) {
-                    door.unlock();
-                }
+            } else if (visitedDoors.contains(doorKey) || roomNumber == previousRoomNumber || door.askQuestion()) {
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
                 visitedDoors.add(doorKey);
                 visitedDoors.add(roomNumber + "-" + getCurrentRoomNumber()); // For the reverse path
-                System.out.println("Moved to room: " + getCurrentRoomNumber());
+                enterNewRoom();
                 return true;
             } else {
-                door.lock();
                 System.out.println("Incorrect! This door is now locked.");
                 return false;
             }
@@ -108,5 +104,56 @@ public class Maze {
         if (currentRoomRow < 4) System.out.println("DOWN to room " + (getCurrentRoomNumber() + 5));
         if (currentRoomCol > 0) System.out.println("LEFT to room " + (getCurrentRoomNumber() - 1));
         if (currentRoomCol < 4) System.out.println("RIGHT to room " + (getCurrentRoomNumber() + 1));
+    }
+
+    public boolean isPathToEnd() {
+        boolean[][] visited = new boolean[5][5];
+        return dfs(0, 0, visited); // Start from room 1 (coordinates 0, 0)
+    }
+
+    private boolean dfs(int row, int col, boolean[][] visited) {
+        if (row == 4 && col == 4) {
+            return true; // Reached room 25
+        }
+        if (row < 0 || col < 0 || row >= 5 || col >= 5 || visited[row][col]) {
+            return false;
+        }
+
+        visited[row][col] = true;
+
+        for (String direction : roomDirections.keySet()) {
+            Integer[] move = roomDirections.get(direction);
+            int newRow = row + move[0];
+            int newCol = col + move[1];
+            if (isDirectionAccessible(row, col, direction) && dfs(newRow, newCol, visited)) return true;
+        }
+
+        visited[row][col] = false; // Unmark the node to allow backtracking
+        return false;
+    }
+
+    private boolean isDirectionAccessible(int row, int col, String direction) {
+        Room currentRoom = grid[row][col];
+        int doorIndex = -1;
+        switch (direction) {
+            case "UP":
+                doorIndex = 0;
+                break;
+            case "DOWN":
+                doorIndex = 1;
+                break;
+            case "LEFT":
+                doorIndex = 2;
+                break;
+            case "RIGHT":
+                doorIndex = 3;
+                break;
+        }
+        Door door = currentRoom.getDoors()[doorIndex];
+        return door.isUnlocked();
+    }
+
+    private void enterNewRoom() {
+        // Add any additional logic for entering a new room here
     }
 }
