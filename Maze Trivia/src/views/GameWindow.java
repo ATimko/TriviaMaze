@@ -1,5 +1,8 @@
 package views;
 
+import maze.Maze;
+import maze.MazeFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -8,6 +11,7 @@ public class GameWindow extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
+    private Maze maze;
 
     public GameWindow() {
         setTitle("Trivia Maze");
@@ -15,11 +19,13 @@ public class GameWindow extends JFrame {
         setSize(1200, 900);
         setResizable(false);
 
+        maze = MazeFactory.createMaze(); // Use MazeFactory to create the Maze instance
+
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
         mainPanel.add(createMainMenuPanel(), "Main Menu");
-        mainPanel.add(new RoomUI(), "Game");
+        mainPanel.add(new RoomUI(maze), "Game"); // Pass Maze instance to RoomUI
 
         setJMenuBar(createMenuBar());
 
@@ -119,5 +125,9 @@ public class GameWindow extends JFrame {
         menuBar.add(helpMenu);
 
         return menuBar;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new GameWindow());
     }
 }
