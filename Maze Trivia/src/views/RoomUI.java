@@ -14,8 +14,44 @@ public class RoomUI extends JPanel {
     private JButton[] doorButtons;
 
     public RoomUI() {
+        setLayout(new BorderLayout());
+        // This is how big the panel is going to be
+        JPanel gridPanel = new JPanel(new GridLayout(5, 5));
+        gridPanel.setPreferredSize(new Dimension(200, 200));
+        //gridPanel.setBounds(100,300,300,300);
+
+        // How to make the Grid Panel for the Maze with border colors
+        for (int i = 0; i < 25; i++) {
+            //JPanel roomPanel = new JPanel();
+            JPanel roomPanel = new JPanel(new BorderLayout());
+            roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            roomPanel.setBackground(Color.WHITE);
+            gridPanel.add(roomPanel);
+
+            // This makes a Label for the Grid Panel to display numbers
+            JLabel numberLabel = new JLabel(String.valueOf(i + 1), SwingConstants.CENTER);
+            numberLabel.setFont(new Font("Arial", Font.BOLD, 30));
+            roomPanel.add(numberLabel, BorderLayout.CENTER);
+
+            /*
+            JButton doorButton = new JButton("Door " + (i + 1));
+            doorButton.setActionCommand(String.valueOf(i));
+            doorButton.addActionListener(e -> handleDoorAction(Integer.parseInt(e.getActionCommand())));
+             */
+
+            gridPanel.add(roomPanel);
+        }
+        // The location of where the grid panel goes
+        JPanel bottomLeftPanel = new JPanel(new BorderLayout());
+        bottomLeftPanel.add(gridPanel, BorderLayout.NORTH);
+        bottomLeftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        add(bottomLeftPanel, BorderLayout.EAST);
+
+
         room = new Room();
 
+        /*
         // Load the image
         URL imageUrl = getClass().getClassLoader().getResource("views/fiveDoors.png");
         if (imageUrl == null) {
@@ -25,8 +61,9 @@ public class RoomUI extends JPanel {
             // Resize the image to 1100x800
             backgroundImage = originalImage.getImage().getScaledInstance(1100, 800, Image.SCALE_SMOOTH);
         }
+        */
 
-        setLayout(null);
+        //setLayout(null);
 
         // Initialize the door buttons
         initializeDoorButtons();
@@ -43,9 +80,9 @@ public class RoomUI extends JPanel {
         for (int i = 0; i < doors.length; i++) {
             doorButtons[i] = new JButton();
             doorButtons[i].setBounds(getDoorBounds(i));
-            doorButtons[i].setContentAreaFilled(false); // Make the button invisible
-            doorButtons[i].setBorderPainted(false); // Remove the border
-            doorButtons[i].setFocusPainted(false); // Remove the focus outline
+            doorButtons[i].setContentAreaFilled(true); // Make the button invisible
+            doorButtons[i].setBorderPainted(true); // Remove the border
+            doorButtons[i].setFocusPainted(true); // Remove the focus outline
             doorButtons[i].setActionCommand(String.valueOf(i)); // Set action command to door index
             doorButtons[i].addActionListener(e -> handleDoorAction(Integer.parseInt(e.getActionCommand())));
         }
