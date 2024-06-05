@@ -14,35 +14,6 @@ public class RoomUI extends JPanel {
     private JButton[] doorButtons;
 
     public RoomUI() {
-        setLayout(new BorderLayout());
-        // This is how big the panel is going to be
-        JPanel gridPanel = new JPanel(new GridLayout(5, 5));
-        gridPanel.setPreferredSize(new Dimension(200, 200));
-        //gridPanel.setBounds(100,300,300,300);
-
-        // How to make the Grid Panel for the Maze with border colors
-        for (int i = 0; i < 25; i++) {
-            //JPanel roomPanel = new JPanel();
-            JPanel roomPanel = new JPanel(new BorderLayout());
-            roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            roomPanel.setBackground(Color.WHITE);
-            gridPanel.add(roomPanel);
-
-            // This makes a Label for the Grid Panel to display numbers
-            JLabel numberLabel = new JLabel(String.valueOf(i + 1), SwingConstants.CENTER);
-            numberLabel.setFont(new Font("Arial", Font.BOLD, 30));
-            roomPanel.add(numberLabel, BorderLayout.CENTER);
-
-            gridPanel.add(roomPanel);
-        }
-
-        JPanel bottomLeftPanel = new JPanel(new BorderLayout());
-        bottomLeftPanel.add(gridPanel, BorderLayout.NORTH);
-        bottomLeftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        add(bottomLeftPanel, BorderLayout.EAST);
-
-        /*
         room = new Room();
 
         // Load the image
@@ -115,8 +86,5 @@ public class RoomUI extends JPanel {
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);  // Draw the background image
         }
-    }
-
-         */
     }
 }

@@ -1,4 +1,8 @@
 package maze;
+import java.util.Random;
+import database.DatabaseQuery;
+import database.QuestionImporter;
+import question.Question;
 
 import java.util.Scanner;
 
@@ -30,12 +34,24 @@ public class Door {
     }
 
     public boolean askQuestion() {
-        //System.out.println("DEBUG: Asking question for door, visited=" + visited + ", questionAnsweredCorrectly=" + questionAnsweredCorrectly);
+        Random rand = new Random();
+        int randI = rand.nextInt(3);
+        String questionType;
+
+        if (randI == 0) {
+            questionType = "shortAnswer";
+        } else if (randI == 1) {
+            questionType = "multipleChoice";
+        } else { // randI == 2
+            questionType = "trueFalse";
+        }
+
+        Question question = DatabaseQuery.getRandomQuestionByType(Question.questionType.valueOf(questionType));
         if (!questionAnsweredCorrectly && !visited) { // Modify condition
-            System.out.println("What is the capital of France?");
+            System.out.println(question.getQuestion());
             Scanner scanner = new Scanner(System.in);
             String answer = scanner.nextLine();
-            if (answer.equalsIgnoreCase("Paris")) {
+            if (question.correctAnswer(answer)) {
                 questionAnsweredCorrectly = true;
                 unlock();
                 visited = true; // Mark the door as visited

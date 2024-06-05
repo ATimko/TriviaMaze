@@ -34,14 +34,14 @@ public class Maze {
             if (door.isLocked()) {
                 System.out.println("This door is locked.");
                 return false;
-            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber || door.askQuestion()) {
+            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber || door.askQuestion()) { //THIS IS WHERE THEY ASK QUESTION
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
                 visitedDoors.add(forwardKey);
                 visitedDoors.add(backwardKey);
                 door.markVisited();
-                enterNewRoom();
+                //enterNewRoom();
                 return true;
             } else {
                 System.out.println("Incorrect! This door is now locked.");
@@ -138,7 +138,7 @@ public class Maze {
         return door.isUnlocked();
     }
 
-    private void enterNewRoom() {
+   // private void enterNewRoom() {
         // Add any additional logic for entering a new room here
-    }
+    //}
 }
