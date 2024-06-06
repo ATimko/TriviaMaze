@@ -1,5 +1,7 @@
 package views;
 
+import game.GameLoad;
+import game.GameSave;
 import maze.Maze;
 import maze.MazeFactory;
 
@@ -106,9 +108,14 @@ public class GameWindow extends JFrame {
 
         JMenu gameMenu = new JMenu("File");
         JMenuItem saveGameStatus = new JMenuItem("Save Game");
+        saveGameStatus.addActionListener(e -> new GameSave());
+
         JMenuItem loadSavedGame = new JMenuItem("Load Game");
+        loadSavedGame.addActionListener(e -> new GameLoad());
+
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.addActionListener(e -> System.exit(0));
+
         gameMenu.add(saveGameStatus);
         gameMenu.add(loadSavedGame);
         gameMenu.add(exitMenuItem);
