@@ -3,7 +3,7 @@ package controller;
 import model.DatabaseManager;
 import model.QuestionImporter;
 import model.MazeFactory;
-import views.GameWindow;
+import view.GameWindow;
 import javax.swing.*;
 
 public class Main {
