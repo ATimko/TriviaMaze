@@ -10,6 +10,7 @@ public class Door {
     private boolean locked;
     private boolean questionAnsweredCorrectly;
     private boolean visited; // Add this attribute
+    private static String questionText;
 
     public Door() {
         this.locked = false; // Initially, the door is unlocked
@@ -49,6 +50,7 @@ public class Door {
         Question question = DatabaseQuery.getRandomQuestionByType(Question.questionType.valueOf(questionType));
         if (!questionAnsweredCorrectly && !visited) { // Modify condition
             System.out.println(question.getQuestion());
+            questionText = question.getQuestion();
             Scanner scanner = new Scanner(System.in);
             String answer = scanner.nextLine();
             if (question.correctAnswer(answer)) {
@@ -62,6 +64,9 @@ public class Door {
             }
         }
         return true; // If the question has already been answered correctly or visited, allow passage
+    }
+    public static String getQuestionString(){
+        return questionText;
     }
 
     public void markVisited() {

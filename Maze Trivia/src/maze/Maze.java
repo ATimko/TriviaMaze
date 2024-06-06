@@ -116,7 +116,10 @@ public class Maze {
         visited[row][col] = false; // Unmark the node to allow backtracking
         return false;
     }
-
+    public String getQuestionText(){
+        String questionText = Door.getQuestionString();
+        return questionText;
+    }
     private boolean isDirectionAccessible(int row, int col, String direction) {
         Room currentRoom = grid[row][col];
         int doorIndex = -1;

@@ -9,7 +9,10 @@ public class RoomUI extends JPanel {
 
     private JLabel roomNumberLabel;
     private JLabel questionLabel;
-    private JButton[] answerButtons;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
     private JTextField shortAnswerField;
     private boolean isShortAnswer;
     private JPanel gridPanel;
@@ -24,7 +27,9 @@ public class RoomUI extends JPanel {
         gbc.insets = new Insets(20, 20, 20, 20); // Adjusted padding for larger window
 
         // Initialize components with larger font
-        Font font = new Font("Arial", Font.BOLD, 24); // Larger font for bigger window
+        Font largeFont = new Font("Arial", Font.BOLD, 36); // Larger font for room number and question
+        Font gridFont = new Font("Arial", Font.BOLD, 36); // Larger font for grid numbers
+        Font buttonFont = new Font("Arial", Font.BOLD, 18); // Font for buttons
 
         // Custom Colors
         Color backgroundColor = new Color(60, 63, 65);
@@ -36,40 +41,54 @@ public class RoomUI extends JPanel {
         setBackground(backgroundColor);
 
         roomNumberLabel = new JLabel();
-        roomNumberLabel.setFont(font);
+        roomNumberLabel.setFont(largeFont);
         roomNumberLabel.setForeground(textColor);
         updateRoomNumber();
 
-        questionLabel = new JLabel("Question?");
-        questionLabel.setFont(font);
+        questionLabel = new JLabel();
+        questionLabel.setFont(largeFont);
         questionLabel.setForeground(textColor);
+        displayQuestion();
 
         gridPanel = new JPanel(new GridLayout(5, 5, 5, 5)); // Create a 5x5 grid panel
+        gridPanel.setPreferredSize(new Dimension(1000, 200)); // Adjust the size of the grid panel
+        gridPanel.setMinimumSize(new Dimension(350, 350));
 
         for (int i = 0; i < 25; i++) {
             JPanel roomPanel = new JPanel(new BorderLayout());
             roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             roomPanel.setBackground(Color.WHITE);
+            roomPanel.setPreferredSize(new Dimension(200, 200)); // Adjust the size of each cell
             gridPanel.add(roomPanel);
 
             JLabel numberLabel = new JLabel(String.valueOf(i + 1), SwingConstants.CENTER);
-            numberLabel.setFont(new Font("Arial", Font.BOLD, 30));
+            numberLabel.setFont(gridFont);
             roomPanel.add(numberLabel, BorderLayout.CENTER);
         }
 
-        answerButtons = new JButton[4];
-        for (int i = 0; i < 4; i++) {
-            answerButtons[i] = new JButton("Answer Choices");
-            answerButtons[i].setFont(font);
-            answerButtons[i].setPreferredSize(new Dimension(300, 70)); // Larger buttons
-            answerButtons[i].setBackground(buttonColor);
-            answerButtons[i].setForeground(buttonTextColor);
-            answerButtons[i].setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        // Create buttons explicitly
+        button1 = new JButton("Answer Choices");
+        button2 = new JButton("Answer Choices");
+        button3 = new JButton("Answer Choices");
+        button4 = new JButton("Answer Choices");
+
+        // Set button properties
+        JButton[] buttons = {button1, button2, button3, button4};
+        for (JButton button : buttons) {
+            button.setFont(buttonFont);
+            button.setBackground(buttonColor);
+            button.setForeground(buttonTextColor);
+            button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            Dimension buttonSize = new Dimension(1000, 100); // Adjust the button size here
+            button.setPreferredSize(buttonSize);
+            button.setMinimumSize(buttonSize); // Force the minimum size to be the same as preferred size
+            button.setMaximumSize(buttonSize); // Set the maximum size to ensure height doesn't change
         }
 
         shortAnswerField = new JTextField();
-        shortAnswerField.setFont(font);
-        shortAnswerField.setPreferredSize(new Dimension(600, 70));
+        shortAnswerField.setFont(buttonFont);
+        shortAnswerField.setPreferredSize(new Dimension(600, 30));
+        shortAnswerField.setMinimumSize(new Dimension(600, 30));
         shortAnswerField.setVisible(false); // Initially hidden
 
         // Add components to the panel with adjusted positions
@@ -97,12 +116,28 @@ public class RoomUI extends JPanel {
         add(new JLabel(), gbc); // Empty label for spacing
 
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        for (int i = 0; i < 4; i++) {
-            gbc.gridy = 3 + i / 2;
-            gbc.gridx = i % 2;
-            add(answerButtons[i], gbc);
-        }
+        gbc.fill = GridBagConstraints.NONE; // Prevent buttons from expanding
+        gbc.insets = new Insets(5, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
+
+        // Add buttons to layout without weight on y-axis
+        gbc.weightx = 0.5;
+        gbc.weighty = 0;
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(button1, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        add(button2, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        add(button3, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        add(button4, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -115,30 +150,46 @@ public class RoomUI extends JPanel {
         roomNumberLabel.setText("Room " + currentRoomNumber);
     }
 
+    public void displayQuestion() {
+        String questionText = maze.getQuestionText();
+        if (questionText == null) {
+            questionLabel.setText("Question:");
+        } else {
+            questionLabel.setText("Question: " + questionText);
+        }
+    }
+
     public void updateQuestionUI(String questionType, String questionText, String[] choices) {
         questionLabel.setText(questionText);
 
         if (questionType.equals("multiple_choice")) {
             isShortAnswer = false;
             shortAnswerField.setVisible(false);
-            for (int i = 0; i < answerButtons.length; i++) {
-                answerButtons[i].setText(choices[i]);
-                answerButtons[i].setVisible(true);
-            }
+            button1.setVisible(true);
+            button2.setVisible(true);
+            button3.setVisible(true);
+            button4.setVisible(true);
+            button1.setText(choices[0]);
+            button2.setText(choices[1]);
+            button3.setText(choices[2]);
+            button4.setText(choices[3]);
         } else if (questionType.equals("short_answer")) {
             isShortAnswer = true;
-            for (JButton button : answerButtons) {
-                button.setVisible(false);
-            }
+            button1.setVisible(false);
+            button2.setVisible(false);
+            button3.setVisible(false);
+            button4.setVisible(false);
             shortAnswerField.setVisible(true);
             shortAnswerField.setText("");
         } else if (questionType.equals("true_false")) {
             isShortAnswer = false;
             shortAnswerField.setVisible(false);
-            for (int i = 0; i < answerButtons.length; i++) {
-                answerButtons[i].setVisible(i < 2); // Only show two buttons
-                answerButtons[i].setText(i == 0 ? "True" : "False");
-            }
+            button1.setVisible(true);
+            button2.setVisible(true);
+            button3.setVisible(false);
+            button4.setVisible(false);
+            button1.setText("True");
+            button2.setText("False");
         }
         revalidate();
         repaint();
@@ -148,28 +199,28 @@ public class RoomUI extends JPanel {
         updateQuestionUI(questionType, questionText, new String[4]);
     }
 
-   /** public static void main(String[] args) {
-        // Create the frame to display the UI
-        JFrame frame = new JFrame("Room UI");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    /** public static void main(String[] args) {
+     // Create the frame to display the UI
+     JFrame frame = new JFrame("Room UI");
+     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Adjust the size of the frame to 1200x900
-        frame.setSize(1200, 900);
+     // Adjust the size of the frame to 1200x900
+     frame.setSize(1200, 900);
 
-        //Maze maze = new Maze(); // Assuming Maze class is properly defined
-        RoomUI roomUI = new RoomUI(maze);
-        frame.add(roomUI);
-        frame.setVisible(true);
+     //Maze maze = new Maze(); // Assuming Maze class is properly defined
+     RoomUI roomUI = new RoomUI(maze);
+     frame.add(roomUI);
+     frame.setVisible(true);
 
-        // Example usage
-        String[] choices = {"Choice 1", "Choice 2", "Choice 3", "Choice 4"};
-        roomUI.updateQuestionUI("multiple_choice", "What is 2+2?", choices);
+     // Example usage
+     String[] choices = {"Choice 1", "Choice 2", "Choice 3", "Choice 4"};
+     roomUI.updateQuestionUI("multiple_choice", "What is 2+2?", choices);
 
-        // To test short answer
-        // roomUI.updateQuestionUI("short_answer", "Describe your solution.");
+     // To test short answer
+     // roomUI.updateQuestionUI("short_answer", "Describe your solution.");
 
-        // To test true/false
-        // roomUI.updateQuestionUI("true_false", "Is the sky blue?");
-    }
-    */
+     // To test true/false
+     // roomUI.updateQuestionUI("true_false", "Is the sky blue?");
+     }
+     */
 }
