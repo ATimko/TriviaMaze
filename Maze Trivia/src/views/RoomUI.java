@@ -1,6 +1,6 @@
 package views;
 
-import maze.Maze;
+import model.Maze;
 
 import javax.swing.*;
 import java.awt.*;

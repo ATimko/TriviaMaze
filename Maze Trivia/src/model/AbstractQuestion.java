@@ -1,4 +1,5 @@
-package question;
+package model;
+
 /**
  * The AbstractedQuestion class represents a question with multiple choices and an answer.
  * It implements the Question interface.

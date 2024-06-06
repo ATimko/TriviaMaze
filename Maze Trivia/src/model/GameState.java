@@ -1,7 +1,7 @@
-package game;
+package model;
 
-import maze.Maze;
-import java.io.*;
+import model.Maze;
+
 import java.io.Serializable;
 import java.util.List;
 

@@ -1,8 +1,5 @@
-package maze;
+package model;
 import java.util.Random;
-import database.DatabaseQuery;
-import database.QuestionImporter;
-import question.Question;
 
 import java.util.Scanner;
 

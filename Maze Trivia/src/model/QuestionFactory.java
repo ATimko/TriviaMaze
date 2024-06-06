@@ -1,4 +1,4 @@
-package question;
+package model;
 
 /*
 public QuestionFactory(questionType type, String[] subject, String question, String[] choices, String answer) {

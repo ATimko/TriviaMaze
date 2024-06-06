@@ -1,17 +1,10 @@
 package controller;
 
-import database.DatabaseManager;
-import database.DatabaseQuery;
-import database.QuestionImporter;
-import maze.Maze;
-import maze.MazeFactory;
-import question.Question;
-import question.Question.questionType;
+import model.DatabaseManager;
+import model.QuestionImporter;
+import model.MazeFactory;
 import views.GameWindow;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,9 +1,9 @@
 package views;
 
-import game.GameLoad;
-import game.GameSave;
-import maze.Maze;
-import maze.MazeFactory;
+import model.GameLoad;
+import model.GameSave;
+import model.Maze;
+import model.MazeFactory;
 
 import javax.swing.*;
 import java.awt.*;

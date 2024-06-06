@@ -1,4 +1,6 @@
-package question;
+package model;
+
+import model.AbstractQuestion;
 
 public class QuestionTrueFalse extends AbstractQuestion {
 

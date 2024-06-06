@@ -1,4 +1,5 @@
-package maze;
+package model;
+
 
 /**
  * The Room class represents a room in a maze, which contains an array of Door objects.
