@@ -51,7 +51,7 @@ public class RoomUI extends JPanel {
         displayQuestion();
 
         gridPanel = new JPanel(new GridLayout(5, 5, 5, 5)); // Create a 5x5 grid panel
-        gridPanel.setPreferredSize(new Dimension(1000, 200)); // Adjust the size of the grid panel
+        gridPanel.setPreferredSize(new Dimension(1000, 1000)); // Adjust the size of the grid panel
         gridPanel.setMinimumSize(new Dimension(350, 350));
 
         for (int i = 0; i < 25; i++) {
@@ -79,6 +79,7 @@ public class RoomUI extends JPanel {
             button.setBackground(buttonColor);
             button.setForeground(buttonTextColor);
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            button.setFocusPainted(false); // Disable the focus border
             Dimension buttonSize = new Dimension(1000, 100); // Adjust the button size here
             button.setPreferredSize(buttonSize);
             button.setMinimumSize(buttonSize); // Force the minimum size to be the same as preferred size
@@ -117,7 +118,7 @@ public class RoomUI extends JPanel {
 
         gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.NONE; // Prevent buttons from expanding
-        gbc.insets = new Insets(5, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
+        gbc.insets = new Insets(-50, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
 
         // Add buttons to layout without weight on y-axis
         gbc.weightx = 0.5;
