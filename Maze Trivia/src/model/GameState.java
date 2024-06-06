@@ -1,7 +1,5 @@
 package model;
 
-import model.Maze;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -1,7 +1,5 @@
 package model;
 
-import model.Maze;
-import model.MazeFactory;
 import java.util.Scanner;
 
 public class testMaze {

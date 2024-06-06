@@ -1,7 +1,5 @@
 package model;
 
-import model.AbstractQuestion;
-
 public class QuestionShortAnswer extends AbstractQuestion {
 
     public QuestionShortAnswer(String question, String[] choices, String answer) {

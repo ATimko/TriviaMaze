@@ -1,7 +1,5 @@
 package model;
 
-import model.AbstractQuestion;
-
 public class QuestionTrueFalse extends AbstractQuestion {
 
     public QuestionTrueFalse(String question, String[] choices, String answer) {
