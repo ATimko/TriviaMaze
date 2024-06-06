@@ -115,10 +115,11 @@ public class Maze {
         visited[row][col] = false; // Unmark the node to allow backtracking
         return false;
     }
-    public String getQuestionText(){
-        String questionText = Door.getQuestionString();
-        return questionText;
+
+    public String getQuestionText() {
+        return Door.getQuestionString();
     }
+
     private boolean isDirectionAccessible(int row, int col, String direction) {
         Room currentRoom = grid[row][col];
         int doorIndex = -1;
@@ -140,7 +141,37 @@ public class Maze {
         return door.isUnlocked();
     }
 
-   // private void enterNewRoom() {
-        // Add any additional logic for entering a new room here
-    //}
+    // Methods to support arrow key navigation
+    public void moveUp() {
+        move(getCurrentRoomNumber() - 5);
+    }
+
+    public void moveDown() {
+        move(getCurrentRoomNumber() + 5);
+    }
+
+    public void moveLeft() {
+        move(getCurrentRoomNumber() - 1);
+    }
+
+    public void moveRight() {
+        move(getCurrentRoomNumber() + 1);
+    }
+
+    public boolean canMoveUp() {
+        return currentRoomRow > 0 && !grid[currentRoomRow][currentRoomCol].getDoors()[0].isLocked();
+    }
+
+    public boolean canMoveDown() {
+        return currentRoomRow < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[1].isLocked();
+    }
+
+    public boolean canMoveLeft() {
+        return currentRoomCol > 0 && !grid[currentRoomRow][currentRoomCol].getDoors()[2].isLocked();
+    }
+
+    public boolean canMoveRight() {
+        return currentRoomCol < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[3].isLocked();
+    }
 }
+

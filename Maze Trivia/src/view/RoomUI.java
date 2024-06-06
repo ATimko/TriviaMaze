@@ -4,9 +4,10 @@ import model.Maze;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RoomUI extends JPanel {
-
     private final JLabel roomNumberLabel;
     private final JLabel questionLabel;
     private final JButton button1;
@@ -16,6 +17,7 @@ public class RoomUI extends JPanel {
     private final JTextField shortAnswerField;
     private boolean isShortAnswer;
     private final Maze maze;
+    private final JButton upButton, downButton, leftButton, rightButton;
 
     public RoomUI(Maze maze) {
         this.maze = maze;
@@ -65,6 +67,60 @@ public class RoomUI extends JPanel {
             roomPanel.add(numberLabel, BorderLayout.CENTER);
         }
 
+        // Arrow Buttons Panel
+        JPanel arrowPanel = new JPanel(new GridLayout(3, 3));
+        arrowPanel.setPreferredSize(new Dimension(400, 300));
+
+        upButton = new JButton("↑");
+        upButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                maze.moveUp();
+                updateRoomNumber();
+                updateNavigationButtons();
+            }
+        });
+
+        downButton = new JButton("↓");
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                maze.moveDown();
+                updateRoomNumber();
+                updateNavigationButtons();
+            }
+        });
+
+        leftButton = new JButton("←");
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                maze.moveLeft();
+                updateRoomNumber();
+                updateNavigationButtons();
+            }
+        });
+
+        rightButton = new JButton("→");
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                maze.moveRight();
+                updateRoomNumber();
+                updateNavigationButtons();
+            }
+        });
+
+        arrowPanel.add(new JLabel());
+        arrowPanel.add(upButton);
+        arrowPanel.add(new JLabel());
+        arrowPanel.add(leftButton);
+        arrowPanel.add(new JLabel());
+        arrowPanel.add(rightButton);
+        arrowPanel.add(new JLabel());
+        arrowPanel.add(downButton);
+        arrowPanel.add(new JLabel());
+
         // Create buttons explicitly
         button1 = new JButton("Answer Choices");
         button2 = new JButton("Answer Choices");
@@ -112,12 +168,12 @@ public class RoomUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        add(new JLabel(), gbc); // Empty label for spacing
+        gbc.anchor = GridBagConstraints.NORTH;
+        add(arrowPanel, gbc); // Add arrow panel here
+
 
         gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.NONE; // Prevent buttons from expanding
-        gbc.insets = new Insets(-50, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
+        gbc.insets = new Insets(100, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
 
         // Add buttons to layout without weight on y-axis
         gbc.weightx = 0.5;
@@ -143,6 +199,9 @@ public class RoomUI extends JPanel {
         gbc.gridy = 5;
         gbc.gridwidth = 2;
         add(shortAnswerField, gbc);
+
+        // Initialize navigation buttons state
+        updateNavigationButtons();
     }
 
     public void updateRoomNumber() {
@@ -203,28 +262,15 @@ public class RoomUI extends JPanel {
         updateQuestionUI(questionType, questionText, new String[4]);
     }
 
-    /** public static void main(String[] args) {
-     // Create the frame to display the UI
-     JFrame frame = new JFrame("Room UI");
-     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void updateNavigationButtons() {
+        boolean canMoveUp = maze.canMoveUp();
+        boolean canMoveDown = maze.canMoveDown();
+        boolean canMoveLeft = maze.canMoveLeft();
+        boolean canMoveRight = maze.canMoveRight();
 
-     // Adjust the size of the frame to 1200x900
-     frame.setSize(1200, 900);
-
-     //Maze maze = new Maze(); // Assuming Maze class is properly defined
-     RoomUI roomUI = new RoomUI(maze);
-     frame.add(roomUI);
-     frame.setVisible(true);
-
-     // Example usage
-     String[] choices = {"Choice 1", "Choice 2", "Choice 3", "Choice 4"};
-     roomUI.updateQuestionUI("multiple_choice", "What is 2+2?", choices);
-
-     // To test short answer
-     // roomUI.updateQuestionUI("short_answer", "Describe your solution.");
-
-     // To test true/false
-     // roomUI.updateQuestionUI("true_false", "Is the sky blue?");
-     }
-     */
+        upButton.setEnabled(canMoveUp);
+        downButton.setEnabled(canMoveDown);
+        leftButton.setEnabled(canMoveLeft);
+        rightButton.setEnabled(canMoveRight);
+    }
 }

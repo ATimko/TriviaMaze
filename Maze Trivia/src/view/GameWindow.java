@@ -133,8 +133,4 @@ public class GameWindow extends JFrame {
 
         return menuBar;
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GameWindow());
-    }
 }
