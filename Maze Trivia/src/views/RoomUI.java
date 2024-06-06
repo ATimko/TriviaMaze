@@ -7,16 +7,15 @@ import java.awt.*;
 
 public class RoomUI extends JPanel {
 
-    private JLabel roomNumberLabel;
-    private JLabel questionLabel;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JTextField shortAnswerField;
+    private final JLabel roomNumberLabel;
+    private final JLabel questionLabel;
+    private final JButton button1;
+    private final JButton button2;
+    private final JButton button3;
+    private final JButton button4;
+    private final JTextField shortAnswerField;
     private boolean isShortAnswer;
-    private JPanel gridPanel;
-    private Maze maze;
+    private final Maze maze;
 
     public RoomUI(Maze maze) {
         this.maze = maze;
@@ -50,7 +49,7 @@ public class RoomUI extends JPanel {
         questionLabel.setForeground(textColor);
         displayQuestion();
 
-        gridPanel = new JPanel(new GridLayout(5, 5, 5, 5)); // Create a 5x5 grid panel
+        JPanel gridPanel = new JPanel(new GridLayout(5, 5, 5, 5)); // Create a 5x5 grid panel
         gridPanel.setPreferredSize(new Dimension(1000, 1000)); // Adjust the size of the grid panel
         gridPanel.setMinimumSize(new Dimension(350, 350));
 
@@ -163,34 +162,38 @@ public class RoomUI extends JPanel {
     public void updateQuestionUI(String questionType, String questionText, String[] choices) {
         questionLabel.setText(questionText);
 
-        if (questionType.equals("multiple_choice")) {
-            isShortAnswer = false;
-            shortAnswerField.setVisible(false);
-            button1.setVisible(true);
-            button2.setVisible(true);
-            button3.setVisible(true);
-            button4.setVisible(true);
-            button1.setText(choices[0]);
-            button2.setText(choices[1]);
-            button3.setText(choices[2]);
-            button4.setText(choices[3]);
-        } else if (questionType.equals("short_answer")) {
-            isShortAnswer = true;
-            button1.setVisible(false);
-            button2.setVisible(false);
-            button3.setVisible(false);
-            button4.setVisible(false);
-            shortAnswerField.setVisible(true);
-            shortAnswerField.setText("");
-        } else if (questionType.equals("true_false")) {
-            isShortAnswer = false;
-            shortAnswerField.setVisible(false);
-            button1.setVisible(true);
-            button2.setVisible(true);
-            button3.setVisible(false);
-            button4.setVisible(false);
-            button1.setText("True");
-            button2.setText("False");
+        switch (questionType) {
+            case "multiple_choice" -> {
+                isShortAnswer = false;
+                shortAnswerField.setVisible(false);
+                button1.setVisible(true);
+                button2.setVisible(true);
+                button3.setVisible(true);
+                button4.setVisible(true);
+                button1.setText(choices[0]);
+                button2.setText(choices[1]);
+                button3.setText(choices[2]);
+                button4.setText(choices[3]);
+            }
+            case "short_answer" -> {
+                isShortAnswer = true;
+                button1.setVisible(false);
+                button2.setVisible(false);
+                button3.setVisible(false);
+                button4.setVisible(false);
+                shortAnswerField.setVisible(true);
+                shortAnswerField.setText("");
+            }
+            case "true_false" -> {
+                isShortAnswer = false;
+                shortAnswerField.setVisible(false);
+                button1.setVisible(true);
+                button2.setVisible(true);
+                button3.setVisible(false);
+                button4.setVisible(false);
+                button1.setText("True");
+                button2.setText("False");
+            }
         }
         revalidate();
         repaint();
