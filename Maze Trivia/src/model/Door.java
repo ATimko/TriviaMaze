@@ -36,6 +36,7 @@ public class Door {
 
     public boolean askQuestion(Question question) {
         // Set the question for the door
+        Door.question = question;
 
         // Simulate presenting the question to the player and getting an answer
         boolean answerCorrect = true;
