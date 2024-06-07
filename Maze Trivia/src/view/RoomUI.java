@@ -78,6 +78,7 @@ public class RoomUI extends JPanel {
                 maze.moveUp();
                 updateRoomNumber();
                 updateNavigationButtons();
+                displayQuestion();
             }
         });
 
@@ -88,6 +89,7 @@ public class RoomUI extends JPanel {
                 maze.moveDown();
                 updateRoomNumber();
                 updateNavigationButtons();
+                displayQuestion();
             }
         });
 
@@ -98,6 +100,7 @@ public class RoomUI extends JPanel {
                 maze.moveLeft();
                 updateRoomNumber();
                 updateNavigationButtons();
+                displayQuestion();
             }
         });
 
@@ -108,6 +111,7 @@ public class RoomUI extends JPanel {
                 maze.moveRight();
                 updateRoomNumber();
                 updateNavigationButtons();
+                displayQuestion();
             }
         });
 
