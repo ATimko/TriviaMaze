@@ -11,13 +11,12 @@ public class Door {
     private static String questionText;
     private static String[] answerChoices;
     private static Question question;
-    private String questionType;
 
     public Door() {
         this.locked = false; // Initially, the door is unlocked
         this.questionAnsweredCorrectly = false;
         this.visited = false; // Initially, the door is not visited
-        question = DatabaseQuery.getRandomQuestionByType(Question.questionType.valueOf(questionType));
+        question = QuestionFactory.getRandomQuestion();
     }
 
     public boolean isLocked() {
@@ -37,16 +36,9 @@ public class Door {
     }
 
     public boolean askQuestion() {
-        Random rand = new Random();
-        int randI = rand.nextInt(3);
-        if (randI == 0) {
-            questionType = "shortAnswer";
-        } else if (randI == 1) {
-            questionType = "multipleChoice";
-        } else { // randI == 2
-            questionType = "trueFalse";
-        }
-
+        //question = QuestionFactory.getRandomQuestion();
+        questionText = question.getQuestion();
+        answerChoices = question.getChoices();
         if (!questionAnsweredCorrectly && !visited) { // Modify condition
             System.out.println(question.getQuestion());
             //System.out.println(Arrays.toString(answerChoices));
@@ -73,9 +65,22 @@ public class Door {
         return answerChoices = question.getChoices();
     }
 
+    public String getRandomType() {
+        String questionType;
+        Random rand = new Random();
+        int randI = rand.nextInt(3);
+        if (randI == 0) {
+            questionType = "shortAnswer";
+        } else if (randI == 1) {
+            questionType = "multipleChoice";
+        } else { // randI == 2
+            questionType = "trueFalse";
+        }
+        return questionType;
+    }
+
     public void markVisited() {
         this.visited = true;
-        //System.out.println("DEBUG: Door marked as visited");
     }
 
     public void enterNewRoom() {
