@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -118,6 +119,10 @@ public class Maze {
 
     public String getQuestionText() {
         return Door.getQuestionString();
+    }
+    public String getAnswerChoices(int num) {
+        String[] choices = Door.getAnswerChoices();
+        return choices[num];
     }
 
     private boolean isDirectionAccessible(int row, int col, String direction) {

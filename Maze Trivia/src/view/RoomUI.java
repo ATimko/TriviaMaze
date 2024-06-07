@@ -75,10 +75,11 @@ public class RoomUI extends JPanel {
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                displayQuestion();
                 maze.moveUp();
                 updateRoomNumber();
                 updateNavigationButtons();
-                displayQuestion();
+
             }
         });
 
@@ -126,10 +127,14 @@ public class RoomUI extends JPanel {
         arrowPanel.add(new JLabel());
 
         // Create buttons explicitly
-        button1 = new JButton("Answer Choices");
-        button2 = new JButton("Answer Choices");
-        button3 = new JButton("Answer Choices");
-        button4 = new JButton("Answer Choices");
+        button1 = new JButton(maze.getAnswerChoices(0));
+        //button1.addActionListener(e-> maze.getAnswerChoices(0));
+        button2 = new JButton(maze.getAnswerChoices(1));
+       // button2.addActionListener(e-> maze.getAnswerChoices(1));
+        button3 = new JButton(maze.getAnswerChoices(2));
+       // button3.addActionListener(e-> maze.getAnswerChoices(2));
+        button4 = new JButton(maze.getAnswerChoices(3));
+      //  button4.addActionListener(e-> maze.getAnswerChoices(3));
 
         // Set button properties
         JButton[] buttons = {button1, button2, button3, button4};

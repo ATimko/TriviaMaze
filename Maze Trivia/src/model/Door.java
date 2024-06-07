@@ -1,4 +1,5 @@
 package model;
+import java.util.Arrays;
 import java.util.Random;
 
 import java.util.Scanner;
@@ -8,11 +9,15 @@ public class Door {
     private boolean questionAnsweredCorrectly;
     private boolean visited; // Add this attribute
     private static String questionText;
+    private static String[] answerChoices;
+    private static Question question;
+    private String questionType;
 
     public Door() {
         this.locked = false; // Initially, the door is unlocked
         this.questionAnsweredCorrectly = false;
         this.visited = false; // Initially, the door is not visited
+        question = DatabaseQuery.getRandomQuestionByType(Question.questionType.valueOf(questionType));
     }
 
     public boolean isLocked() {
@@ -34,8 +39,6 @@ public class Door {
     public boolean askQuestion() {
         Random rand = new Random();
         int randI = rand.nextInt(3);
-        String questionType;
-
         if (randI == 0) {
             questionType = "shortAnswer";
         } else if (randI == 1) {
@@ -44,10 +47,11 @@ public class Door {
             questionType = "trueFalse";
         }
 
-        Question question = DatabaseQuery.getRandomQuestionByType(Question.questionType.valueOf(questionType));
         if (!questionAnsweredCorrectly && !visited) { // Modify condition
             System.out.println(question.getQuestion());
+            //System.out.println(Arrays.toString(answerChoices));
             questionText = question.getQuestion();
+            answerChoices = question.getChoices();
             Scanner scanner = new Scanner(System.in);
             String answer = scanner.nextLine();
             if (question.correctAnswer(answer)) {
@@ -63,7 +67,10 @@ public class Door {
         return true; // If the question has already been answered correctly or visited, allow passage
     }
     public static String getQuestionString(){
-        return questionText;
+        return questionText = question.getQuestion();
+    }
+    public static String[] getAnswerChoices(){
+        return answerChoices = question.getChoices();
     }
 
     public void markVisited() {
