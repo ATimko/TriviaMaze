@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.Door;
+
 public class RoomUI extends JPanel {
     private final JLabel roomNumberLabel;
     private final JLabel questionLabel;
@@ -96,10 +98,10 @@ public class RoomUI extends JPanel {
         arrowPanel.add(downButton, gbc);
 
         // Create buttons explicitly
-        button1 = new JButton("maze.getAnswerChoices(0)");
-        button2 = new JButton("maze.getAnswerChoices(1)");
-        button3 = new JButton("maze.getAnswerChoices(2)");
-        button4 = new JButton("maze.getAnswerChoices(3)");
+        button1 = new JButton(maze.getAnswerChoicesAsString(0, 0));
+        button2 = new JButton(maze.getAnswerChoicesAsString(0, 1));
+        button3 = new JButton(maze.getAnswerChoicesAsString(0, 2));
+        button4 = new JButton(maze.getAnswerChoicesAsString(0, 3));
 
         // Set button properties
         JButton[] buttons = {button1, button2, button3, button4};
@@ -250,7 +252,7 @@ public class RoomUI extends JPanel {
     }
     */
 
-    public void updateQuestionUI(String questionType, String questionText, String[] choices) {
+    private void updateQuestionUI(String questionType, String questionText, String[] choices) {
         questionLabel.setText(questionText);
 
         switch (questionType) {

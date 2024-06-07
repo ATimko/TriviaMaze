@@ -60,20 +60,20 @@ public class Maze {
                 // Generate a new question for forward moves
                 Question newQuestion = QuestionFactory.getRandomQuestion();
                 //if (roomUI != null && newQuestion != null) {
-                    // roomUI.displayQuestionUI(newQuestion); // Display the new question in the UI
-                    if (door.askQuestion(newQuestion)) { // Assuming askQuestion method takes a Question parameter
-                        previousRoomNumber = getCurrentRoomNumber();
-                        currentRoomRow = newRow;
-                        currentRoomCol = newCol;
-                        visitedDoors.add(forwardKey);
-                        visitedDoors.add(backwardKey);
-                        door.markVisited();
-                        return true;
-                    } else {
-                        System.out.println("Incorrect! This door is now locked.");
-                        door.lock(); // Lock the door if the question is answered incorrectly
-                        return false;
-                    }
+                // roomUI.displayQuestionUI(newQuestion); // Display the new question in the UI
+                if (door.askQuestion(newQuestion)) { // Assuming askQuestion method takes a Question parameter
+                    previousRoomNumber = getCurrentRoomNumber();
+                    currentRoomRow = newRow;
+                    currentRoomCol = newCol;
+                    visitedDoors.add(forwardKey);
+                    visitedDoors.add(backwardKey);
+                    door.markVisited();
+                    return true;
+                } else {
+                    System.out.println("Incorrect! This door is now locked.");
+                    door.lock(); // Lock the door if the question is answered incorrectly
+                    return false;
+                }
                 //}
                 //return false;
             }
@@ -203,5 +203,15 @@ public class Maze {
 
     public boolean canMoveRight() {
         return currentRoomCol < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[3].isLocked();
+    }
+    public String getAnswerChoicesAsString(int roomNumber, int buttonIndex) {
+        Door[] doors = grid[roomNumber / 5][roomNumber % 5].getDoors();
+        if (doors != null && doors.length > 0 && buttonIndex >= 0 && buttonIndex < doors.length) {
+            String[] choices = doors[buttonIndex].getAnswerChoice();
+            if (choices != null && buttonIndex < choices.length) {
+                return choices[buttonIndex]; // Return the choice corresponding to the button index
+            }
+        }
+        return "No answer available";
     }
 }

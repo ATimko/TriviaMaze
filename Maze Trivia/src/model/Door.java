@@ -1,6 +1,8 @@
 package model;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.Scanner;
 
@@ -10,6 +12,7 @@ public class Door {
     private boolean visited; // Add this attribute
     private static String questionText;
     private static String[] answerChoices;
+    private static String[] getAnswerChoice;
     private static Question question;
 
     public Door() {
@@ -50,6 +53,7 @@ public class Door {
             return false;
         }
     }
+    /*
     public static String getQuestionString() {
         if (question != null) {
             return question.getQuestion();
@@ -58,9 +62,14 @@ public class Door {
         }
     }
 
-    //public static String[] getAnswerChoices(){
-    //    return answerChoices = question.getChoices();
-    //}
+     */
+    public static String getQuestionString() {
+        return question != null ? question.getQuestion() : "";
+    }
+
+    public static String[] getAnswerChoice(){
+        return answerChoices = question.getChoices();
+    }
 
     public void markVisited() {
         this.visited = true;
