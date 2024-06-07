@@ -1,6 +1,7 @@
 package model;
 
-import java.util.Arrays;
+import view.RoomUI;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ public class Maze {
     private int currentRoomCol;
     private Set<String> visitedDoors;
     private int previousRoomNumber;
+    private RoomUI roomUI;
 
     public Maze(Room[][] grid, Map<String, Integer[]> roomDirections) {
         this.grid = grid;
@@ -20,6 +22,10 @@ public class Maze {
         this.currentRoomRow = 0;
         this.currentRoomCol = 0;
         this.previousRoomNumber = -1;
+    }
+
+    public void setRoomUI(RoomUI roomUI) {
+        this.roomUI = roomUI;
     }
 
     public boolean move(int roomNumber) {
@@ -34,18 +40,34 @@ public class Maze {
             if (door.isLocked()) {
                 System.out.println("This door is locked.");
                 return false;
-            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber || door.askQuestion()) { //THIS IS WHERE THEY ASK QUESTION
+            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber) {
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
                 visitedDoors.add(forwardKey);
                 visitedDoors.add(backwardKey);
                 door.markVisited();
-                //enterNewRoom();
                 return true;
             } else {
-                System.out.println("Incorrect! This door is now locked.");
-                return false;
+                // Generate a new question for forward moves
+                Question newQuestion = QuestionFactory.getRandomQuestion();
+                //if (roomUI != null && newQuestion != null) {
+                    // roomUI.displayQuestionUI(newQuestion); // Display the new question in the UI
+                    if (door.askQuestion(newQuestion)) { // Assuming askQuestion method takes a Question parameter
+                        previousRoomNumber = getCurrentRoomNumber();
+                        currentRoomRow = newRow;
+                        currentRoomCol = newCol;
+                        visitedDoors.add(forwardKey);
+                        visitedDoors.add(backwardKey);
+                        door.markVisited();
+                        return true;
+                    } else {
+                        System.out.println("Incorrect! This door is now locked.");
+                        door.lock(); // Lock the door if the question is answered incorrectly
+                        return false;
+                    }
+                //}
+                //return false;
             }
         } else {
             System.out.println("Invalid move.");
@@ -120,10 +142,6 @@ public class Maze {
     public String getQuestionText() {
         return Door.getQuestionString();
     }
-    public String getAnswerChoices(int num) {
-        String[] choices = Door.getAnswerChoices();
-        return choices[num];
-    }
 
     private boolean isDirectionAccessible(int row, int col, String direction) {
         Room currentRoom = grid[row][col];
@@ -179,4 +197,3 @@ public class Maze {
         return currentRoomCol < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[3].isLocked();
     }
 }
-

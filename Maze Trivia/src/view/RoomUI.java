@@ -22,15 +22,10 @@ public class RoomUI extends JPanel {
     public RoomUI(Maze maze) {
         this.maze = maze;
 
-        // Set the layout manager
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20); // Adjusted padding for larger window
-
-        // Initialize components with larger font
-        Font largeFont = new Font("Arial", Font.BOLD, 36); // Larger font for room number and question
-        Font gridFont = new Font("Arial", Font.BOLD, 36); // Larger font for grid numbers
-        Font buttonFont = new Font("Arial", Font.BOLD, 18); // Font for buttons
+        // Initialize components with smaller font
+        Font largeFont = new Font("Arial", Font.BOLD, 24); // Smaller font for room number and question
+        Font gridFont = new Font("Arial", Font.BOLD, 24); // Smaller font for grid numbers
+        Font buttonFont = new Font("Arial", Font.BOLD, 14); // Font for buttons
 
         // Custom Colors
         Color backgroundColor = new Color(60, 63, 65);
@@ -51,15 +46,15 @@ public class RoomUI extends JPanel {
         questionLabel.setForeground(textColor);
         displayQuestion();
 
-        JPanel gridPanel = new JPanel(new GridLayout(5, 5, 5, 5)); // Create a 5x5 grid panel
-        gridPanel.setPreferredSize(new Dimension(1000, 1000)); // Adjust the size of the grid panel
-        gridPanel.setMinimumSize(new Dimension(350, 350));
+        JPanel gridPanel = new JPanel(new GridLayout(5, 5, 3, 3)); // Create a 5x5 grid panel with smaller gaps
+        gridPanel.setPreferredSize(new Dimension(500, 500)); // Smaller size for the grid panel
+        gridPanel.setMinimumSize(new Dimension(300, 300));
 
         for (int i = 0; i < 25; i++) {
             JPanel roomPanel = new JPanel(new BorderLayout());
             roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             roomPanel.setBackground(Color.WHITE);
-            roomPanel.setPreferredSize(new Dimension(200, 200)); // Adjust the size of each cell
+            roomPanel.setPreferredSize(new Dimension(60, 60)); // Smaller size for each cell
             gridPanel.add(roomPanel);
 
             JLabel numberLabel = new JLabel(String.valueOf(i + 1), SwingConstants.CENTER);
@@ -68,8 +63,8 @@ public class RoomUI extends JPanel {
         }
 
         // Arrow Buttons Panel
-        JPanel arrowPanel = new JPanel(new GridLayout(3, 3));
-        arrowPanel.setPreferredSize(new Dimension(400, 300));
+        JPanel arrowPanel = new JPanel(new GridLayout(3, 3, 2, 2));
+        arrowPanel.setPreferredSize(new Dimension(120, 120));
 
         upButton = new JButton("↑");
         upButton.addActionListener(new ActionListener() {
@@ -79,7 +74,6 @@ public class RoomUI extends JPanel {
                 maze.moveUp();
                 updateRoomNumber();
                 updateNavigationButtons();
-
             }
         });
 
@@ -127,14 +121,10 @@ public class RoomUI extends JPanel {
         arrowPanel.add(new JLabel());
 
         // Create buttons explicitly
-        button1 = new JButton(maze.getAnswerChoices(0));
-        //button1.addActionListener(e-> maze.getAnswerChoices(0));
-        button2 = new JButton(maze.getAnswerChoices(1));
-       // button2.addActionListener(e-> maze.getAnswerChoices(1));
-        button3 = new JButton(maze.getAnswerChoices(2));
-       // button3.addActionListener(e-> maze.getAnswerChoices(2));
-        button4 = new JButton(maze.getAnswerChoices(3));
-      //  button4.addActionListener(e-> maze.getAnswerChoices(3));
+        button1 = new JButton("maze.getAnswerChoices(0)");
+        button2 = new JButton("maze.getAnswerChoices(1)");
+        button3 = new JButton("maze.getAnswerChoices(2)");
+        button4 = new JButton("maze.getAnswerChoices(3)");
 
         // Set button properties
         JButton[] buttons = {button1, button2, button3, button4};
@@ -144,7 +134,7 @@ public class RoomUI extends JPanel {
             button.setForeground(buttonTextColor);
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             button.setFocusPainted(false); // Disable the focus border
-            Dimension buttonSize = new Dimension(1000, 100); // Adjust the button size here
+            Dimension buttonSize = new Dimension(200, 50); // Smaller size for buttons
             button.setPreferredSize(buttonSize);
             button.setMinimumSize(buttonSize); // Force the minimum size to be the same as preferred size
             button.setMaximumSize(buttonSize); // Set the maximum size to ensure height doesn't change
@@ -152,62 +142,63 @@ public class RoomUI extends JPanel {
 
         shortAnswerField = new JTextField();
         shortAnswerField.setFont(buttonFont);
-        shortAnswerField.setPreferredSize(new Dimension(600, 30));
-        shortAnswerField.setMinimumSize(new Dimension(600, 30));
+        shortAnswerField.setPreferredSize(new Dimension(300, 30)); // Smaller size for text field
+        shortAnswerField.setMinimumSize(new Dimension(300, 30));
         shortAnswerField.setVisible(false); // Initially hidden
 
-        // Add components to the panel with adjusted positions
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.weightx = 1;
-        gbc.weighty = 0.1;
-        add(roomNumberLabel, gbc);
+        // Set up GroupLayout
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
 
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        add(questionLabel, gbc);
+        // Create horizontal group
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10)
+                                .addComponent(roomNumberLabel)
+                                .addGap(10)
+                                .addComponent(questionLabel))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10)
+                                .addComponent(gridPanel)
+                                .addGap(10)
+                                .addComponent(arrowPanel))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10)
+                                .addComponent(button1)
+                                .addGap(5)
+                                .addComponent(button2)
+                                .addGap(10)
+                                .addComponent(button3)
+                                .addGap(5)
+                                .addComponent(button4))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10)
+                                .addComponent(shortAnswerField)
+                                .addGap(10))
+        );
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTHEAST;
-        gbc.gridheight = 2;
-        add(gridPanel, gbc); // Replaced pictureLabel with gridPanel
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.NORTH;
-        add(arrowPanel, gbc); // Add arrow panel here
-
-
-        gbc.gridwidth = 1;
-        gbc.insets = new Insets(100, 10, 5, 10); // Adjusted gap between buttons (reduce the top and bottom insets)
-
-        // Add buttons to layout without weight on y-axis
-        gbc.weightx = 0.5;
-        gbc.weighty = 0;
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(button1, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        add(button2, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        add(button3, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        add(button4, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
-        add(shortAnswerField, gbc);
+        // Create vertical group
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGap(10)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(roomNumberLabel)
+                                .addComponent(questionLabel))
+                        .addGap(10)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(gridPanel)
+                                .addComponent(arrowPanel))
+                        .addGap(10)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button1)
+                                .addComponent(button2)
+                                .addComponent(button3)
+                                .addComponent(button4))
+                        .addGap(10)
+                        .addComponent(shortAnswerField)
+                        .addGap(10)
+        );
 
         // Initialize navigation buttons state
         updateNavigationButtons();
@@ -238,10 +229,10 @@ public class RoomUI extends JPanel {
                 button2.setVisible(true);
                 button3.setVisible(true);
                 button4.setVisible(true);
-                button1.setText(choices[0]);
-                button2.setText(choices[1]);
-                button3.setText(choices[2]);
-                button4.setText(choices[3]);
+                button1.setText(choices.length > 0 ? choices[0] : "");
+                button2.setText(choices.length > 1 ? choices[1] : "");
+                button3.setText(choices.length > 2 ? choices[2] : "");
+                button4.setText(choices.length > 3 ? choices[3] : "");
             }
             case "short_answer" -> {
                 isShortAnswer = true;
