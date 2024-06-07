@@ -63,62 +63,32 @@ public class RoomUI extends JPanel {
         }
 
         // Arrow Buttons Panel
-        JPanel arrowPanel = new JPanel(new GridLayout(3, 3, 2, 2));
-        arrowPanel.setPreferredSize(new Dimension(120, 120));
+        JPanel arrowPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        upButton = new JButton("↑");
-        upButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayQuestion();
-                maze.moveUp();
-                updateRoomNumber();
-                updateNavigationButtons();
-            }
-        });
+        Dimension arrowButtonSize = new Dimension(60, 60); // Square dimensions for arrow buttons
 
-        downButton = new JButton("↓");
-        downButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                maze.moveDown();
-                updateRoomNumber();
-                updateNavigationButtons();
-                displayQuestion();
-            }
-        });
+        upButton = createArrowButton("↑", arrowButtonSize);
+        downButton = createArrowButton("↓", arrowButtonSize);
+        leftButton = createArrowButton("←", arrowButtonSize);
+        rightButton = createArrowButton("→", arrowButtonSize);
 
-        leftButton = new JButton("←");
-        leftButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                maze.moveLeft();
-                updateRoomNumber();
-                updateNavigationButtons();
-                displayQuestion();
-            }
-        });
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        arrowPanel.add(upButton, gbc);
 
-        rightButton = new JButton("→");
-        rightButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                maze.moveRight();
-                updateRoomNumber();
-                updateNavigationButtons();
-                displayQuestion();
-            }
-        });
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        arrowPanel.add(leftButton, gbc);
 
-        arrowPanel.add(new JLabel());
-        arrowPanel.add(upButton);
-        arrowPanel.add(new JLabel());
-        arrowPanel.add(leftButton);
-        arrowPanel.add(new JLabel());
-        arrowPanel.add(rightButton);
-        arrowPanel.add(new JLabel());
-        arrowPanel.add(downButton);
-        arrowPanel.add(new JLabel());
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        arrowPanel.add(rightButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        arrowPanel.add(downButton, gbc);
 
         // Create buttons explicitly
         button1 = new JButton("maze.getAnswerChoices(0)");
@@ -155,7 +125,8 @@ public class RoomUI extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(10)
-                                .addComponent(roomNumberLabel)
+                                .addComponent(roomNumberLabel))
+                        .addGroup(layout.createSequentialGroup()
                                 .addGap(10)
                                 .addComponent(questionLabel))
                         .addGroup(layout.createSequentialGroup()
@@ -182,9 +153,9 @@ public class RoomUI extends JPanel {
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                         .addGap(10)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(roomNumberLabel)
-                                .addComponent(questionLabel))
+                        .addComponent(roomNumberLabel)
+                        .addGap(10)
+                        .addComponent(questionLabel)
                         .addGap(10)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(gridPanel)
@@ -202,6 +173,33 @@ public class RoomUI extends JPanel {
 
         // Initialize navigation buttons state
         updateNavigationButtons();
+    }
+
+    private JButton createArrowButton(String text, Dimension size) {
+        JButton button = new JButton(text);
+        button.setPreferredSize(size);
+        button.setMinimumSize(size);
+        button.setMaximumSize(size);
+        button.setFocusPainted(false); // Disable the focus border
+        button.setFont(new Font("Arial", Font.BOLD, 24));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (text.equals("↑")) {
+                    maze.moveUp();
+                } else if (text.equals("↓")) {
+                    maze.moveDown();
+                } else if (text.equals("←")) {
+                    maze.moveLeft();
+                } else if (text.equals("→")) {
+                    maze.moveRight();
+                }
+                updateRoomNumber();
+                updateNavigationButtons();
+                displayQuestion();
+            }
+        });
+        return button;
     }
 
     public void updateRoomNumber() {
