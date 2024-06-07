@@ -1,6 +1,9 @@
 package view;
 
 import model.Maze;
+import model.Question;
+import model.QuestionFactory;
+//import model.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,9 +21,11 @@ public class RoomUI extends JPanel {
     private boolean isShortAnswer;
     private final Maze maze;
     private final JButton upButton, downButton, leftButton, rightButton;
+    //private Question currentQuestion;
 
     public RoomUI(Maze maze) {
         this.maze = maze;
+        //this.currentQuestion = QuestionFactory.getRandomQuestion();;
 
         // Initialize components with smaller font
         Font largeFont = new Font("Arial", Font.BOLD, 24); // Smaller font for room number and question
@@ -173,6 +178,7 @@ public class RoomUI extends JPanel {
 
         // Initialize navigation buttons state
         updateNavigationButtons();
+        //displayQuestion();
     }
 
     private JButton createArrowButton(String text, Dimension size) {
@@ -206,7 +212,6 @@ public class RoomUI extends JPanel {
         int currentRoomNumber = maze.getCurrentRoomNumber();
         roomNumberLabel.setText("Room " + currentRoomNumber);
     }
-
     public void displayQuestion() {
         String questionText = maze.getQuestionText();
         if (questionText == null) {
@@ -215,6 +220,35 @@ public class RoomUI extends JPanel {
             questionLabel.setText("Question: " + questionText);
         }
     }
+    /*
+    public void displayQuestion() {
+        // Check if the current question is not null
+        if (currentQuestion != null) {
+            String questionText = currentQuestion.getQuestion();
+            if (questionText == null) {
+                questionLabel.setText("Question: [No question available]");
+            } else {
+                questionLabel.setText("Question: " + questionText);
+            }
+
+            // Depending on the type of question, update the UI accordingly
+            String questionType = currentQuestion.getType().toString();
+            String[] choices = currentQuestion.getChoices();
+            updateQuestionUI(questionType, questionText, choices);
+        }
+        else {
+            questionLabel.setText("Question: [No question available]");
+        }
+
+    }
+     */
+
+    /*
+    public void roomQuestion(Question question){
+        this.currentQuestion = question;
+        displayQuestion();
+    }
+    */
 
     public void updateQuestionUI(String questionType, String questionText, String[] choices) {
         questionLabel.setText(questionText);

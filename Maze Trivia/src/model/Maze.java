@@ -22,6 +22,14 @@ public class Maze {
         this.currentRoomRow = 0;
         this.currentRoomCol = 0;
         this.previousRoomNumber = -1;
+
+        // Generates a question for the first room
+        Question firstQuestion = QuestionFactory.getRandomQuestion();
+        // If the first question is Null
+        if (firstQuestion != null) {
+            // Assumes if there's a door in the first room
+            grid[0][0].getDoors()[0].askQuestion(firstQuestion);
+        }
     }
 
     public void setRoomUI(RoomUI roomUI) {
