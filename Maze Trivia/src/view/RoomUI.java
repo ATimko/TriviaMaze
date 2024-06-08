@@ -16,10 +16,10 @@ public class RoomUI extends JPanel {
     private final JButton button3;
     private final JButton button4;
     private final JTextField shortAnswerField;
-    private boolean isShortAnswer;
     private final Maze maze;
     private final JButton upButton, downButton, leftButton, rightButton;
-    //private Question currentQuestion;
+
+    private String pendingDirection = null;
 
     public RoomUI(Maze maze) {
         this.maze = maze;
@@ -70,10 +70,10 @@ public class RoomUI extends JPanel {
 
         Dimension arrowButtonSize = new Dimension(60, 60); // Square dimensions for arrow buttons
 
-        upButton = createArrowButton("↑", arrowButtonSize);
-        downButton = createArrowButton("↓", arrowButtonSize);
-        leftButton = createArrowButton("←", arrowButtonSize);
-        rightButton = createArrowButton("→", arrowButtonSize);
+        upButton = createArrowButton("↑", "UP", arrowButtonSize);
+        downButton = createArrowButton("↓", "DOWN", arrowButtonSize);
+        leftButton = createArrowButton("←", "LEFT", arrowButtonSize);
+        rightButton = createArrowButton("→", "RIGHT", arrowButtonSize);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -180,10 +180,9 @@ public class RoomUI extends JPanel {
 
         // Initialize navigation buttons state
         updateNavigationButtons();
-        //displayQuestion();
     }
 
-    private JButton createArrowButton(String text, Dimension size) {
+    private JButton createArrowButton(String text, String direction, Dimension size) {
         JButton button = new JButton(text);
         button.setPreferredSize(size);
         button.setMinimumSize(size);
@@ -193,21 +192,66 @@ public class RoomUI extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (text.equals("↑")) {
-                    maze.moveUp();
-                } else if (text.equals("↓")) {
-                    maze.moveDown();
-                } else if (text.equals("←")) {
-                    maze.moveLeft();
-                } else if (text.equals("→")) {
-                    maze.moveRight();
-                }
-                updateRoomNumber();
-                updateNavigationButtons();
-                updateAnswerButtons(); // Update the answer buttons after moving
+                attemptMove(direction);
             }
         });
         return button;
+    }
+
+    private void attemptMove(String direction) {
+        this.pendingDirection = direction;
+        if (maze.isDirectionBlocked(direction)) {
+            JOptionPane.showMessageDialog(this, "The door in this direction is locked due to an incorrect answer.");
+        } else {
+            Question currentQuestion = maze.getCurrentQuestion();
+            if (currentQuestion != null) {
+                String questionType = currentQuestion.getType().name();
+                String questionText = currentQuestion.getQuestion();
+                String[] choices = currentQuestion.getChoices();
+                updateQuestionUI(questionType, questionText, choices);
+            } else {
+                JOptionPane.showMessageDialog(this, "No active question.");
+            }
+        }
+    }
+
+    private void handleAnswer(String answer) {
+        Question currentQuestion = maze.getCurrentQuestion();
+        if (currentQuestion != null) {
+            boolean isCorrect = currentQuestion.getAnswer().equals(answer);
+            if (isCorrect) {
+                JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
+                movePendingDirection();
+                updateRoomNumber();
+                updateNavigationButtons();
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect! The door is locked.");
+                maze.lockCurrentDoor(pendingDirection);
+                updateNavigationButtons();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No active question.");
+        }
+    }
+
+    private void movePendingDirection() {
+        if (pendingDirection != null) {
+            switch (pendingDirection) {
+                case "UP":
+                    maze.moveUp();
+                    break;
+                case "DOWN":
+                    maze.moveDown();
+                    break;
+                case "LEFT":
+                    maze.moveLeft();
+                    break;
+                case "RIGHT":
+                    maze.moveRight();
+                    break;
+            }
+            pendingDirection = null;
+        }
     }
 
     public void updateRoomNumber() {
@@ -219,7 +263,6 @@ public class RoomUI extends JPanel {
         questionLabel.setText("Question: " + questionText);
         switch (questionType) {
             case "multipleChoice" -> {
-                isShortAnswer = false;
                 shortAnswerField.setVisible(false);
                 button1.setVisible(true);
                 button2.setVisible(true);
@@ -231,7 +274,6 @@ public class RoomUI extends JPanel {
                 button4.setText(choices.length > 3 ? choices[3] : "");
             }
             case "shortAnswer" -> {
-                isShortAnswer = true;
                 button1.setVisible(false);
                 button2.setVisible(false);
                 button3.setVisible(false);
@@ -240,7 +282,6 @@ public class RoomUI extends JPanel {
                 shortAnswerField.setText("");
             }
             case "trueFalse" -> {
-                isShortAnswer = false;
                 shortAnswerField.setVisible(false);
                 button1.setVisible(true);
                 button2.setVisible(true);
@@ -252,29 +293,6 @@ public class RoomUI extends JPanel {
         }
         revalidate();
         repaint();
-    }
-
-    public void updateQuestionUI(String questionType, String questionText) {
-        updateQuestionUI(questionType, questionText, new String[4]);
-    }
-
-    public void updateAnswerButtons() {
-        Question currentQuestion = maze.getCurrentQuestion();
-
-        if (currentQuestion != null) {
-            String questionType = currentQuestion.getType().name();
-            String questionText = currentQuestion.getQuestion();
-            String[] choices = currentQuestion.getChoices();
-            updateQuestionUI(questionType, questionText, choices);
-        } else {
-            updateQuestionUI("", "", new String[0]); // Clear the UI if there's no question
-        }
-    }
-
-    private void handleAnswer(String answer) {
-        // Placeholder for handling the answer
-        // In a real implementation, this would involve verifying the answer with the Door's question
-        System.out.println("Answer selected: " + answer);
     }
 
     private void updateNavigationButtons() {

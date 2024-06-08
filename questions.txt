@@ -7,8 +7,3 @@ type=trueFalse
 question=The Element "Fe"  on the Periodic Table is Iron.
 choices=True,False
 answer=True
-
-type=shortAnswer
-question=Who was the first President of the United States?
-choices=
-answer=George Washington

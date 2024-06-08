@@ -1,7 +1,5 @@
 package model;
 
-import view.RoomUI;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -12,29 +10,19 @@ public class Maze {
     private int currentRoomRow;
     private int currentRoomCol;
     private Set<String> visitedDoors;
+    private Set<String> correctlyAnsweredDoors;
     private int previousRoomNumber;
-    private RoomUI roomUI;
     private Question newQuestion;
 
     public Maze(Room[][] grid, Map<String, Integer[]> roomDirections) {
         this.grid = grid;
         this.roomDirections = roomDirections;
         this.visitedDoors = new HashSet<>();
+        this.correctlyAnsweredDoors = new HashSet<>();
         this.currentRoomRow = 0;
         this.currentRoomCol = 0;
         this.previousRoomNumber = -1;
-
-        // Generates a question for the first room
-        //Question firstQuestion = QuestionFactory.getRandomQuestion();
-        // If the first question is Null
-        //if (firstQuestion != null) {
-            // Assumes if there's a door in the first room
-            //grid[0][0].getDoors()[0].askQuestion(firstQuestion);
-        //}
-    }
-
-    public void setRoomUI(RoomUI roomUI) {
-        this.roomUI = roomUI;
+        newQuestion = QuestionFactory.getRandomQuestion();
     }
 
     public boolean move(int roomNumber) {
@@ -46,40 +34,31 @@ public class Maze {
             String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
             String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
             Door door = getDoor(move);
-            if (door.isLocked()) {
-                System.out.println("This door is locked.");
-                return false;
-            } else if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || roomNumber == previousRoomNumber) {
+
+            if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || correctlyAnsweredDoors.contains(forwardKey)) {
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
                 visitedDoors.add(forwardKey);
                 visitedDoors.add(backwardKey);
-                door.markVisited();
                 return true;
             } else {
                 // Generate a new question for forward moves
                 newQuestion = QuestionFactory.getRandomQuestion();
-                //if (roomUI != null && newQuestion != null) {
-                // roomUI.displayQuestionUI(newQuestion); // Display the new question in the UI
-                if (door.askQuestion(newQuestion)) { // Assuming askQuestion method takes a Question parameter
+                if (door.askQuestion(newQuestion)) {
+                    correctlyAnsweredDoors.add(forwardKey);
                     previousRoomNumber = getCurrentRoomNumber();
                     currentRoomRow = newRow;
                     currentRoomCol = newCol;
                     visitedDoors.add(forwardKey);
                     visitedDoors.add(backwardKey);
-                    door.markVisited();
                     return true;
                 } else {
-                    System.out.println("Incorrect! This door is now locked.");
                     door.lock(); // Lock the door if the question is answered incorrectly
                     return false;
                 }
-                //}
-                //return false;
             }
         } else {
-            System.out.println("Invalid move.");
             return false;
         }
     }
@@ -152,10 +131,6 @@ public class Maze {
         return false;
     }
 
-    public String getQuestionText() {
-        return Door.getQuestionString();
-    }
-
     private boolean isDirectionAccessible(int row, int col, String direction) {
         Room currentRoom = grid[row][col];
         int doorIndex = -1;
@@ -195,28 +170,40 @@ public class Maze {
     }
 
     public boolean canMoveUp() {
-        return currentRoomRow > 0 && !grid[currentRoomRow][currentRoomCol].getDoors()[0].isLocked();
+        return currentRoomRow > 0 && !isDirectionBlocked("UP");
     }
 
     public boolean canMoveDown() {
-        return currentRoomRow < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[1].isLocked();
+        return currentRoomRow < 4 && !isDirectionBlocked("DOWN");
     }
 
     public boolean canMoveLeft() {
-        return currentRoomCol > 0 && !grid[currentRoomRow][currentRoomCol].getDoors()[2].isLocked();
+        return currentRoomCol > 0 && !isDirectionBlocked("LEFT");
     }
 
     public boolean canMoveRight() {
-        return currentRoomCol < 4 && !grid[currentRoomRow][currentRoomCol].getDoors()[3].isLocked();
+        return currentRoomCol < 4 && !isDirectionBlocked("RIGHT");
     }
-    public String getAnswerChoicesAsString(int roomNumber, int buttonIndex) {
-        Door[] doors = grid[roomNumber / 5][roomNumber % 5].getDoors();
-        if (doors != null && doors.length > 0 && buttonIndex >= 0 && buttonIndex < doors.length) {
-            String[] choices = doors[buttonIndex].getAnswerChoice();
-            if (choices != null && buttonIndex < choices.length) {
-                return choices[buttonIndex]; // Return the choice corresponding to the button index
-            }
-        }
-        return "";
+
+    public boolean isDirectionBlocked(String direction) {
+        Integer[] move = roomDirections.get(direction);
+        int newRow = currentRoomRow + move[0];
+        int newCol = currentRoomCol + move[1];
+        int newRoomNumber = (newRow * 5) + newCol + 1;
+        String forwardKey = getCurrentRoomNumber() + "-" + newRoomNumber;
+        return visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey);
+    }
+
+    public void lockCurrentDoor(String direction) {
+        Integer[] move = roomDirections.get(direction);
+        Door door = getDoor(move);
+        String forwardKey = getCurrentRoomNumber() + "-" + getRoomNumberFromMove(move);
+        visitedDoors.add(forwardKey);
+    }
+
+    private int getRoomNumberFromMove(Integer[] move) {
+        int newRow = currentRoomRow + move[0];
+        int newCol = currentRoomCol + move[1];
+        return (newRow * 5) + newCol + 1;
     }
 }
