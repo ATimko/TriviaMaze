@@ -8,6 +8,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
+        DatabaseManager.dropTable();
         DatabaseManager.createTable();
         MazeFactory.createMaze();
         QuestionImporter.importQuestions("questions.txt");

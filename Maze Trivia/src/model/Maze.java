@@ -74,7 +74,7 @@ public class Maze {
     }
 
     private boolean isValidMove(int row, int col) {
-        return row >= 0 && row < 5 && col >= 0 && row < 5;
+        return row >= 0 && row < 5 && col >= 0 && col < 5;
     }
 
     private Door getDoor(Integer[] move) {
@@ -86,7 +86,7 @@ public class Maze {
         throw new IllegalArgumentException("Invalid move");
     }
 
-    private Integer[] getDirectionFromRoomNumber(int roomNumber) {
+    public Integer[] getDirectionFromRoomNumber(int roomNumber) {
         int currentRoomNumber = getCurrentRoomNumber();
         if (roomNumber == currentRoomNumber - 5) return new Integer[]{-1, 0}; // UP
         if (roomNumber == currentRoomNumber + 5) return new Integer[]{1, 0}; // DOWN
@@ -212,20 +212,19 @@ public class Maze {
         return (newRow * 5) + newCol + 1;
     }
 
-    // Methods to support arrow key navigation
-    public void moveUp() {
-        move(getCurrentRoomNumber() - 5, true);
-    }
-
-    public void moveDown() {
-        move(getCurrentRoomNumber() + 5, true);
-    }
-
-    public void moveLeft() {
-        move(getCurrentRoomNumber() - 1, true);
-    }
-
-    public void moveRight() {
-        move(getCurrentRoomNumber() + 1, true);
+    public int getTargetRoomNumber(String direction) {
+        int currentRoomNumber = getCurrentRoomNumber();
+        switch (direction) {
+            case "UP":
+                return currentRoomNumber - 5;
+            case "DOWN":
+                return currentRoomNumber + 5;
+            case "LEFT":
+                return currentRoomNumber - 1;
+            case "RIGHT":
+                return currentRoomNumber + 1;
+            default:
+                throw new IllegalArgumentException("Invalid direction");
+        }
     }
 }

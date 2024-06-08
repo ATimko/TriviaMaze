@@ -72,7 +72,7 @@ public class testMaze {
                         }
                     } else {
                         System.out.println("Incorrect! The door is locked.");
-                        maze.lockCurrentDoor(input);
+                        //maze.lockCurrentDoor(input);
                     }
                 }
             } else {

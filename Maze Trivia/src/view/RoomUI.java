@@ -5,8 +5,7 @@ import model.Question;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class RoomUI extends JPanel {
     private final JLabel roomNumberLabel;
@@ -18,11 +17,13 @@ public class RoomUI extends JPanel {
     private final JTextField shortAnswerField;
     private final Maze maze;
     private final JButton upButton, downButton, leftButton, rightButton;
+    private final GameWindow gameWindow;
 
     private String pendingDirection = null;
 
-    public RoomUI(Maze maze) {
+    public RoomUI(Maze maze, GameWindow gameWindow) {
         this.maze = maze;
+        this.gameWindow = gameWindow;
 
         // Initialize components with smaller font
         Font largeFont = new Font("Arial", Font.BOLD, 24); // Smaller font for room number and question
@@ -199,14 +200,18 @@ public class RoomUI extends JPanel {
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(text);
             if (isCorrect) {
-                JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
+                JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
+                clearQuestionUI();
                 movePendingDirection();
                 updateRoomNumber();
                 updateNavigationButtons();
+                checkGameState();
             } else {
-                JOptionPane.showMessageDialog(this, "Incorrect! The door is locked.");
-                maze.lockCurrentDoor(pendingDirection);
+                JOptionPane.showMessageDialog(this, "Incorrect! The door is now locked.");
+                maze.lockCurrentDoor(Arrays.toString(maze.getDirectionFromRoomNumber(maze.getTargetRoomNumber(pendingDirection))));
+                clearQuestionUI();
                 updateNavigationButtons();
+                checkGameState(); // Check game state after answering incorrectly
             }
         } else {
             JOptionPane.showMessageDialog(this, "No active question.");
@@ -215,13 +220,15 @@ public class RoomUI extends JPanel {
 
     private void attemptMove(String direction) {
         this.pendingDirection = direction;
-        if (maze.isVisitedDirection(direction)) {
+        int targetRoomNumber = maze.getTargetRoomNumber(direction);
+        if (maze.attemptMove(targetRoomNumber)) {
             // If direction is already visited, move without asking a question
             movePendingDirection();
             updateRoomNumber();
             updateNavigationButtons();
         } else if (maze.isDirectionBlocked(direction)) {
-            JOptionPane.showMessageDialog(this, "The door in this direction is locked due to an incorrect answer.");
+            JOptionPane.showMessageDialog(this, "This door is now locked.");
+            checkGameState(); // Check game state after showing locked door message
         } else {
             Question currentQuestion = maze.getCurrentQuestion();
             if (currentQuestion != null) {
@@ -229,6 +236,8 @@ public class RoomUI extends JPanel {
                 String questionText = currentQuestion.getQuestion();
                 String[] choices = currentQuestion.getChoices();
                 updateQuestionUI(questionType, questionText, choices);
+                // Disable arrow buttons
+                setArrowButtonsEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(this, "No active question.");
             }
@@ -240,39 +249,43 @@ public class RoomUI extends JPanel {
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(answer);
             if (isCorrect) {
-                JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
+                JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
+                clearQuestionUI();
                 movePendingDirection();
                 updateRoomNumber();
                 updateNavigationButtons();
+                checkGameState();
             } else {
-                JOptionPane.showMessageDialog(this, "Incorrect! The door is locked.");
+                JOptionPane.showMessageDialog(this, "Incorrect! The door is now locked.");
                 maze.lockCurrentDoor(pendingDirection);
+                clearQuestionUI();
                 updateNavigationButtons();
+                checkGameState(); // Check game state after answering incorrectly
             }
         } else {
             JOptionPane.showMessageDialog(this, "No active question.");
         }
     }
 
-
     private void movePendingDirection() {
         if (pendingDirection != null) {
-            switch (pendingDirection) {
-                case "UP":
-                    maze.moveUp();
-                    break;
-                case "DOWN":
-                    maze.moveDown();
-                    break;
-                case "LEFT":
-                    maze.moveLeft();
-                    break;
-                case "RIGHT":
-                    maze.moveRight();
-                    break;
-            }
+            int targetRoomNumber = maze.getTargetRoomNumber(pendingDirection);
+            maze.move(targetRoomNumber, true);
             pendingDirection = null;
         }
+        // Re-enable arrow buttons after movement
+        setArrowButtonsEnabled(true);
+    }
+
+    private void clearQuestionUI() {
+        questionLabel.setText("");
+        button1.setVisible(false);
+        button2.setVisible(false);
+        button3.setVisible(false);
+        button4.setVisible(false);
+        shortAnswerField.setVisible(false);
+        revalidate();
+        repaint();
     }
 
     public void updateRoomNumber() {
@@ -326,5 +339,48 @@ public class RoomUI extends JPanel {
         downButton.setEnabled(canMoveDown);
         leftButton.setEnabled(canMoveLeft);
         rightButton.setEnabled(canMoveRight);
+    }
+
+    private void setArrowButtonsEnabled(boolean enabled) {
+        upButton.setEnabled(enabled);
+        downButton.setEnabled(enabled);
+        leftButton.setEnabled(enabled);
+        rightButton.setEnabled(enabled);
+    }
+
+    private void checkGameState() {
+        if (maze.isAtExit()) {
+            int choice = JOptionPane.showOptionDialog(this, "Congratulations! You've reached the exit. What would you like to do?", "You Win!",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{"Play Again", "Start Menu", "Exit"}, null);
+
+            switch (choice) {
+                case JOptionPane.YES_OPTION:
+                    gameWindow.restartGame();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    gameWindow.showStartMenu();
+                    break;
+                case JOptionPane.CANCEL_OPTION:
+                    System.exit(0);
+                    break;
+            }
+        } else if (!maze.isPathToEnd()) {
+            int choice = JOptionPane.showOptionDialog(this, "There is no path to the end. The game is over. What would you like to do?", "Game Over",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null,
+                    new Object[]{"Play Again", "Start Menu", "Exit"}, null);
+
+            switch (choice) {
+                case JOptionPane.YES_OPTION:
+                    gameWindow.restartGame();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    gameWindow.showStartMenu();
+                    break;
+                case JOptionPane.CANCEL_OPTION:
+                    System.exit(0);
+                    break;
+            }
+        }
     }
 }

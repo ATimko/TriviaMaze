@@ -27,7 +27,7 @@ public class GameWindow extends JFrame {
         mainPanel = new JPanel(cardLayout);
 
         mainPanel.add(createMainMenuPanel(), "Main Menu");
-        mainPanel.add(new RoomUI(maze), "Game"); // Pass Maze instance to RoomUI
+        mainPanel.add(new RoomUI(maze, this), "Game"); // Pass Maze instance to RoomUI
 
         setJMenuBar(createMenuBar());
 
@@ -85,7 +85,7 @@ public class GameWindow extends JFrame {
         loadGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        newGameButton.addActionListener(e -> cardLayout.show(mainPanel, "Game"));
+        newGameButton.addActionListener(e -> restartGame());
         exitButton.addActionListener(e -> System.exit(0));
 
         buttonPanel.add(Box.createVerticalGlue());
@@ -132,5 +132,15 @@ public class GameWindow extends JFrame {
         menuBar.add(helpMenu);
 
         return menuBar;
+    }
+
+    public void restartGame() {
+        maze = MazeFactory.createMaze(); // Create a new Maze instance
+        mainPanel.add(new RoomUI(maze, this), "Game"); // Add new game panel
+        cardLayout.show(mainPanel, "Game"); // Show game panel
+    }
+
+    public void showStartMenu() {
+        cardLayout.show(mainPanel, "Main Menu"); // Show main menu panel
     }
 }
