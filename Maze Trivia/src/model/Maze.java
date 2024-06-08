@@ -14,6 +14,7 @@ public class Maze {
     private Set<String> visitedDoors;
     private int previousRoomNumber;
     private RoomUI roomUI;
+    private Question newQuestion;
 
     public Maze(Room[][] grid, Map<String, Integer[]> roomDirections) {
         this.grid = grid;
@@ -58,7 +59,7 @@ public class Maze {
                 return true;
             } else {
                 // Generate a new question for forward moves
-                Question newQuestion = QuestionFactory.getRandomQuestion();
+                newQuestion = QuestionFactory.getRandomQuestion();
                 //if (roomUI != null && newQuestion != null) {
                 // roomUI.displayQuestionUI(newQuestion); // Display the new question in the UI
                 if (door.askQuestion(newQuestion)) { // Assuming askQuestion method takes a Question parameter
@@ -107,6 +108,10 @@ public class Maze {
 
     public int getCurrentRoomNumber() {
         return currentRoomRow * 5 + currentRoomCol + 1;
+    }
+
+    public Question getCurrentQuestion() {
+        return newQuestion;
     }
 
     public boolean isAtExit() {

@@ -2,15 +2,11 @@ package view;
 
 import model.Maze;
 import model.Question;
-import model.QuestionFactory;
-//import model.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import model.Door;
 
 public class RoomUI extends JPanel {
     private final JLabel roomNumberLabel;
@@ -27,7 +23,6 @@ public class RoomUI extends JPanel {
 
     public RoomUI(Maze maze) {
         this.maze = maze;
-        //this.currentQuestion = QuestionFactory.getRandomQuestion();;
 
         // Initialize components with smaller font
         Font largeFont = new Font("Arial", Font.BOLD, 24); // Smaller font for room number and question
@@ -51,7 +46,6 @@ public class RoomUI extends JPanel {
         questionLabel = new JLabel();
         questionLabel.setFont(largeFont);
         questionLabel.setForeground(textColor);
-        displayQuestion();
 
         JPanel gridPanel = new JPanel(new GridLayout(5, 5, 3, 3)); // Create a 5x5 grid panel with smaller gaps
         gridPanel.setPreferredSize(new Dimension(500, 500)); // Smaller size for the grid panel
@@ -98,10 +92,16 @@ public class RoomUI extends JPanel {
         arrowPanel.add(downButton, gbc);
 
         // Create buttons explicitly
-        button1 = new JButton(maze.getAnswerChoicesAsString(0, 0));
-        button2 = new JButton(maze.getAnswerChoicesAsString(0, 1));
-        button3 = new JButton(maze.getAnswerChoicesAsString(0, 2));
-        button4 = new JButton(maze.getAnswerChoicesAsString(0, 3));
+        button1 = new JButton("");
+        button2 = new JButton("");
+        button3 = new JButton("");
+        button4 = new JButton("");
+
+        // Add action listeners for multiple choice buttons
+        button1.addActionListener(e -> handleAnswer(button1.getText()));
+        button2.addActionListener(e -> handleAnswer(button2.getText()));
+        button3.addActionListener(e -> handleAnswer(button3.getText()));
+        button4.addActionListener(e -> handleAnswer(button4.getText()));
 
         // Set button properties
         JButton[] buttons = {button1, button2, button3, button4};
@@ -204,7 +204,7 @@ public class RoomUI extends JPanel {
                 }
                 updateRoomNumber();
                 updateNavigationButtons();
-                displayQuestion();
+                updateAnswerButtons(); // Update the answer buttons after moving
             }
         });
         return button;
@@ -214,49 +214,11 @@ public class RoomUI extends JPanel {
         int currentRoomNumber = maze.getCurrentRoomNumber();
         roomNumberLabel.setText("Room " + currentRoomNumber);
     }
-    public void displayQuestion() {
-        String questionText = maze.getQuestionText();
-        if (questionText == null) {
-            questionLabel.setText("Question:");
-        } else {
-            questionLabel.setText("Question: " + questionText);
-        }
-    }
-    /*
-    public void displayQuestion() {
-        // Check if the current question is not null
-        if (currentQuestion != null) {
-            String questionText = currentQuestion.getQuestion();
-            if (questionText == null) {
-                questionLabel.setText("Question: [No question available]");
-            } else {
-                questionLabel.setText("Question: " + questionText);
-            }
-
-            // Depending on the type of question, update the UI accordingly
-            String questionType = currentQuestion.getType().toString();
-            String[] choices = currentQuestion.getChoices();
-            updateQuestionUI(questionType, questionText, choices);
-        }
-        else {
-            questionLabel.setText("Question: [No question available]");
-        }
-
-    }
-     */
-
-    /*
-    public void roomQuestion(Question question){
-        this.currentQuestion = question;
-        displayQuestion();
-    }
-    */
 
     private void updateQuestionUI(String questionType, String questionText, String[] choices) {
-        questionLabel.setText(questionText);
-
+        questionLabel.setText("Question: " + questionText);
         switch (questionType) {
-            case "multiple_choice" -> {
+            case "multipleChoice" -> {
                 isShortAnswer = false;
                 shortAnswerField.setVisible(false);
                 button1.setVisible(true);
@@ -268,7 +230,7 @@ public class RoomUI extends JPanel {
                 button3.setText(choices.length > 2 ? choices[2] : "");
                 button4.setText(choices.length > 3 ? choices[3] : "");
             }
-            case "short_answer" -> {
+            case "shortAnswer" -> {
                 isShortAnswer = true;
                 button1.setVisible(false);
                 button2.setVisible(false);
@@ -277,7 +239,7 @@ public class RoomUI extends JPanel {
                 shortAnswerField.setVisible(true);
                 shortAnswerField.setText("");
             }
-            case "true_false" -> {
+            case "trueFalse" -> {
                 isShortAnswer = false;
                 shortAnswerField.setVisible(false);
                 button1.setVisible(true);
@@ -294,6 +256,25 @@ public class RoomUI extends JPanel {
 
     public void updateQuestionUI(String questionType, String questionText) {
         updateQuestionUI(questionType, questionText, new String[4]);
+    }
+
+    public void updateAnswerButtons() {
+        Question currentQuestion = maze.getCurrentQuestion();
+
+        if (currentQuestion != null) {
+            String questionType = currentQuestion.getType().name();
+            String questionText = currentQuestion.getQuestion();
+            String[] choices = currentQuestion.getChoices();
+            updateQuestionUI(questionType, questionText, choices);
+        } else {
+            updateQuestionUI("", "", new String[0]); // Clear the UI if there's no question
+        }
+    }
+
+    private void handleAnswer(String answer) {
+        // Placeholder for handling the answer
+        // In a real implementation, this would involve verifying the answer with the Door's question
+        System.out.println("Answer selected: " + answer);
     }
 
     private void updateNavigationButtons() {
