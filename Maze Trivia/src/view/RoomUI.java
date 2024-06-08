@@ -122,6 +122,7 @@ public class RoomUI extends JPanel {
         shortAnswerField.setPreferredSize(new Dimension(300, 30)); // Smaller size for text field
         shortAnswerField.setMinimumSize(new Dimension(300, 30));
         shortAnswerField.setVisible(false); // Initially hidden
+        shortAnswerField.addActionListener(e-> shortAnswerHandle(shortAnswerField.getText()));
 
         // Set up GroupLayout
         GroupLayout layout = new GroupLayout(this);
@@ -197,7 +198,24 @@ public class RoomUI extends JPanel {
         });
         return button;
     }
-
+    private void shortAnswerHandle(String text) {
+        Question currentQuestion = maze.getCurrentQuestion();
+        if (currentQuestion != null) {
+            boolean isCorrect = currentQuestion.getAnswer().equals(text);
+            if (isCorrect) {
+                JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
+                movePendingDirection();
+                updateRoomNumber();
+                updateNavigationButtons();
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect! The door is locked.");
+                maze.lockCurrentDoor(pendingDirection);
+                updateNavigationButtons();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No active question.");
+        }
+    }
     private void attemptMove(String direction) {
         this.pendingDirection = direction;
         if (maze.isDirectionBlocked(direction)) {
