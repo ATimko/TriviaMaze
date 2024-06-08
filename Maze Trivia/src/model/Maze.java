@@ -66,6 +66,7 @@ public class Maze {
             visitedDoors.add(forwardKey);
             visitedDoors.add(backwardKey);
             correctlyAnsweredDoors.add(forwardKey);
+            newQuestion = QuestionFactory.getRandomQuestion(); // Generate new question
             return true;
         } else {
             return false;
@@ -73,7 +74,7 @@ public class Maze {
     }
 
     private boolean isValidMove(int row, int col) {
-        return row >= 0 && row < 5 && col >= 0 && col < 5;
+        return row >= 0 && row < 5 && col >= 0 && row < 5;
     }
 
     private Door getDoor(Integer[] move) {
@@ -194,9 +195,7 @@ public class Maze {
         int newRoomNumber = (newRow * 5) + newCol + 1;
         String forwardKey = getCurrentRoomNumber() + "-" + newRoomNumber;
         String backwardKey = newRoomNumber + "-" + getCurrentRoomNumber();
-        // Only block the direction if it has been visited but not correctly answered in either direction
-        return (visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey)) ||
-                (visitedDoors.contains(backwardKey) && !correctlyAnsweredDoors.contains(backwardKey));
+        return (visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey)) || (visitedDoors.contains(backwardKey) && !correctlyAnsweredDoors.contains(backwardKey));
     }
 
     public void lockCurrentDoor(String direction) {

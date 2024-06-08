@@ -254,6 +254,7 @@ public class RoomUI extends JPanel {
         }
     }
 
+
     private void movePendingDirection() {
         if (pendingDirection != null) {
             switch (pendingDirection) {
