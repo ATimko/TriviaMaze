@@ -256,13 +256,13 @@ public class RoomUI extends JPanel {
         if (pendingDirection != null) {
             switch (pendingDirection) {
                 case "UP":
-                   // maze.moveUp();
+                    //maze.moveUp();
                     break;
                 case "DOWN":
-                  //  maze.moveDown();
+                    //maze.moveDown();
                     break;
                 case "LEFT":
-                 //   maze.moveLeft();
+                   // maze.moveLeft();
                     break;
                 case "RIGHT":
                   //  maze.moveRight();

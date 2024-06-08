@@ -34,18 +34,13 @@ public class Maze {
             String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
             String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
 
-            if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || correctlyAnsweredDoors.contains(forwardKey)) {
+            if (correctlyAnsweredDoors.contains(forwardKey) || correctlyAnsweredDoors.contains(backwardKey)) {
                 // Room was previously visited or answered correctly, allow free move
-                previousRoomNumber = getCurrentRoomNumber();
-                currentRoomRow = newRow;
-                currentRoomCol = newCol;
-                visitedDoors.add(forwardKey);
-                visitedDoors.add(backwardKey);
                 return true;
             } else {
                 // New question will be asked
                 newQuestion = QuestionFactory.getRandomQuestion();
-                return true; // Indicate that a question needs to be asked
+                return false; // Indicate that a question needs to be asked
             }
         } else {
             return false; // Invalid move

@@ -42,9 +42,11 @@ public class testMaze {
                     continue;
             }
 
-            if (maze.attemptMove(nextRoom)) {
+            boolean needsQuestion = !maze.isVisitedDirection(input);
+
+            if (needsQuestion) {
                 Question currentQuestion = maze.getCurrentQuestion();
-                if (currentQuestion != null && !maze.isVisitedDirection(input)) {
+                if (currentQuestion != null) {
                     System.out.println("Question: " + currentQuestion.getQuestion());
                     String[] choices = currentQuestion.getChoices();
                     String answer = null;
@@ -72,11 +74,13 @@ public class testMaze {
                         System.out.println("Incorrect! The door is locked.");
                         maze.lockCurrentDoor(input);
                     }
-                } else {
-                    System.out.println("You moved to room " + maze.getCurrentRoomNumber());
                 }
             } else {
-                System.out.println("Cannot move " + input + ". Door is locked or invalid move.");
+                if (maze.move(nextRoom, true)) {
+                    System.out.println("You moved to room " + maze.getCurrentRoomNumber());
+                } else {
+                    System.out.println("Cannot move " + input + ". Door is locked or invalid move.");
+                }
             }
 
             // Display available moves after each action
