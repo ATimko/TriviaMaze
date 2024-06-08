@@ -5,13 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class Maze {
-    private Room[][] grid;
-    private Map<String, Integer[]> roomDirections;
+    private final Room[][] grid;
+    private final Map<String, Integer[]> roomDirections;
     private int currentRoomRow;
     private int currentRoomCol;
-    private Set<String> visitedDoors;
-    private Set<String> correctlyAnsweredDoors;
-    private int previousRoomNumber;
+    private final Set<String> visitedDoors;
+    private final Set<String> correctlyAnsweredDoors;
     private Question newQuestion;
 
     public Maze(Room[][] grid, Map<String, Integer[]> roomDirections) {
@@ -21,7 +20,6 @@ public class Maze {
         this.correctlyAnsweredDoors = new HashSet<>();
         this.currentRoomRow = 0;
         this.currentRoomCol = 0;
-        this.previousRoomNumber = -1;
         newQuestion = QuestionFactory.getRandomQuestion();
     }
 
@@ -60,14 +58,12 @@ public class Maze {
             String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
             String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
 
-            previousRoomNumber = getCurrentRoomNumber();
             currentRoomRow = newRow;
             currentRoomCol = newCol;
             visitedDoors.add(forwardKey);
             visitedDoors.add(backwardKey);
             correctlyAnsweredDoors.add(forwardKey);
             newQuestion = QuestionFactory.getRandomQuestion(); // Generate new question
-        } else {
         }
     }
 
@@ -135,18 +131,10 @@ public class Maze {
         Room currentRoom = grid[row][col];
         int doorIndex = -1;
         switch (direction) {
-            case "UP":
-                doorIndex = 0;
-                break;
-            case "DOWN":
-                doorIndex = 1;
-                break;
-            case "LEFT":
-                doorIndex = 2;
-                break;
-            case "RIGHT":
-                doorIndex = 3;
-                break;
+            case "UP" -> doorIndex = 0;
+            case "DOWN" -> doorIndex = 1;
+            case "LEFT" -> doorIndex = 2;
+            case "RIGHT" -> doorIndex = 3;
         }
         Door door = currentRoom.getDoors()[doorIndex];
         return door.isUnlocked();
@@ -205,16 +193,19 @@ public class Maze {
     public int getTargetRoomNumber(String direction) {
         int currentRoomNumber = getCurrentRoomNumber();
         switch (direction) {
-            case "UP":
+            case "UP" -> {
                 return currentRoomNumber - 5;
-            case "DOWN":
+            }
+            case "DOWN" -> {
                 return currentRoomNumber + 5;
-            case "LEFT":
+            }
+            case "LEFT" -> {
                 return currentRoomNumber - 1;
-            case "RIGHT":
+            }
+            case "RIGHT" -> {
                 return currentRoomNumber + 1;
-            default:
-                throw new IllegalArgumentException("Invalid direction");
+            }
+            default -> throw new IllegalArgumentException("Invalid direction");
         }
     }
 }

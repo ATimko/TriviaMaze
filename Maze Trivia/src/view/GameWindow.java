@@ -10,8 +10,8 @@ import java.net.URL;
 
 public class GameWindow extends JFrame {
 
-    private CardLayout cardLayout;
-    private JPanel mainPanel;
+    private final CardLayout cardLayout;
+    private final JPanel mainPanel;
     private Maze maze;
 
     public GameWindow() {

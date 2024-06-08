@@ -199,20 +199,19 @@ public class RoomUI extends JPanel {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(text);
+            // Check game state after answering incorrectly
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
                 clearQuestionUI();
                 movePendingDirection();
                 updateRoomNumber();
-                updateNavigationButtons();
-                checkGameState();
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrect! The door is now locked.");
                 maze.lockCurrentDoor(Arrays.toString(maze.getDirectionFromRoomNumber(maze.getTargetRoomNumber(pendingDirection))));
                 clearQuestionUI();
-                updateNavigationButtons();
-                checkGameState(); // Check game state after answering incorrectly
             }
+            updateNavigationButtons();
+            checkGameState();
         } else {
             JOptionPane.showMessageDialog(this, "No active question.");
         }
@@ -248,20 +247,19 @@ public class RoomUI extends JPanel {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(answer);
+            // Check game state after answering incorrectly
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
                 clearQuestionUI();
                 movePendingDirection();
                 updateRoomNumber();
-                updateNavigationButtons();
-                checkGameState();
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrect! The door is now locked.");
                 maze.lockCurrentDoor(pendingDirection);
                 clearQuestionUI();
-                updateNavigationButtons();
-                checkGameState(); // Check game state after answering incorrectly
             }
+            updateNavigationButtons();
+            checkGameState();
         } else {
             JOptionPane.showMessageDialog(this, "No active question.");
         }

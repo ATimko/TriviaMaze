@@ -10,5 +10,4 @@ public interface Question extends Serializable {
     String getQuestion();
     String[] getChoices();
     String getAnswer();
-    boolean correctAnswer(String answer);
 }

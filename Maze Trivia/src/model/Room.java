@@ -5,8 +5,7 @@ package model;
  * The room is initialized with five doors.
  */
 public class Room {
-    private Door[] doors;
-    private String[] answerChoice;
+    private final Door[] doors;
 
     /**
      * Constructs a Room object and initializes it with five Door objects.
@@ -32,8 +31,5 @@ public class Room {
      */
     public Door[] getDoors() {
         return doors;
-    }
-    public String[] getAnswerChoice() {
-        return answerChoice;
     }
 }

@@ -63,17 +63,6 @@ public class AbstractQuestion implements Question {
     }
 
     /**
-     * Checks if the given answer is correct.
-     *
-     * @param answer the answer to check
-     * @return true if the given answer is correct, false otherwise
-     */
-
-    public boolean correctAnswer(String answer) {
-        return answer.equalsIgnoreCase(this.answer);
-    }
-
-    /**
      * Compares this question to the object input. The result is true if and only if the argument is not
      * null and is an AbstractedQuestion object that represents the same question as this object.
      *
