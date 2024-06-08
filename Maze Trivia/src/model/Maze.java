@@ -24,12 +24,12 @@ public class Maze {
         this.previousRoomNumber = -1;
 
         // Generates a question for the first room
-        Question firstQuestion = QuestionFactory.getRandomQuestion();
+        //Question firstQuestion = QuestionFactory.getRandomQuestion();
         // If the first question is Null
-        if (firstQuestion != null) {
+        //if (firstQuestion != null) {
             // Assumes if there's a door in the first room
-            grid[0][0].getDoors()[0].askQuestion(firstQuestion);
-        }
+            //grid[0][0].getDoors()[0].askQuestion(firstQuestion);
+        //}
     }
 
     public void setRoomUI(RoomUI roomUI) {
@@ -212,6 +212,6 @@ public class Maze {
                 return choices[buttonIndex]; // Return the choice corresponding to the button index
             }
         }
-        return "No answer available";
+        return "";
     }
 }

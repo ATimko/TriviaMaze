@@ -67,8 +67,11 @@ public class Door {
         return question != null ? question.getQuestion() : "";
     }
 
-    public static String[] getAnswerChoice(){
-        return answerChoices = question.getChoices();
+    public String[] getAnswerChoice() {
+        if (question != null) {
+            return question.getChoices();
+        }
+        return new String[0];
     }
 
     public void markVisited() {
