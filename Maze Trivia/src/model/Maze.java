@@ -25,7 +25,7 @@ public class Maze {
         newQuestion = QuestionFactory.getRandomQuestion();
     }
 
-    public boolean move(int roomNumber) {
+    public boolean attemptMove(int roomNumber) {
         Integer[] move = getDirectionFromRoomNumber(roomNumber);
         int newRow = currentRoomRow + move[0];
         int newCol = currentRoomCol + move[1];
@@ -33,9 +33,9 @@ public class Maze {
         if (isValidMove(newRow, newCol)) {
             String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
             String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
-            Door door = getDoor(move);
 
             if (visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey) || correctlyAnsweredDoors.contains(forwardKey)) {
+                // Room was previously visited or answered correctly, allow free move
                 previousRoomNumber = getCurrentRoomNumber();
                 currentRoomRow = newRow;
                 currentRoomCol = newCol;
@@ -43,21 +43,35 @@ public class Maze {
                 visitedDoors.add(backwardKey);
                 return true;
             } else {
-                // Generate a new question for forward moves
+                // New question will be asked
                 newQuestion = QuestionFactory.getRandomQuestion();
-                if (door.askQuestion(newQuestion)) {
-                    correctlyAnsweredDoors.add(forwardKey);
-                    previousRoomNumber = getCurrentRoomNumber();
-                    currentRoomRow = newRow;
-                    currentRoomCol = newCol;
-                    visitedDoors.add(forwardKey);
-                    visitedDoors.add(backwardKey);
-                    return true;
-                } else {
-                    door.lock(); // Lock the door if the question is answered incorrectly
-                    return false;
-                }
+                return true; // Indicate that a question needs to be asked
             }
+        } else {
+            return false; // Invalid move
+        }
+    }
+
+    public boolean move(int roomNumber, boolean isAnswerCorrect) {
+        if (!isAnswerCorrect) {
+            return false; // Answer was incorrect, do not move
+        }
+
+        Integer[] move = getDirectionFromRoomNumber(roomNumber);
+        int newRow = currentRoomRow + move[0];
+        int newCol = currentRoomCol + move[1];
+
+        if (isValidMove(newRow, newCol)) {
+            String forwardKey = getCurrentRoomNumber() + "-" + roomNumber;
+            String backwardKey = roomNumber + "-" + getCurrentRoomNumber();
+
+            previousRoomNumber = getCurrentRoomNumber();
+            currentRoomRow = newRow;
+            currentRoomCol = newCol;
+            visitedDoors.add(forwardKey);
+            visitedDoors.add(backwardKey);
+            correctlyAnsweredDoors.add(forwardKey);
+            return true;
         } else {
             return false;
         }
@@ -152,37 +166,30 @@ public class Maze {
         return door.isUnlocked();
     }
 
-    // Methods to support arrow key navigation
-    public void moveUp() {
-        move(getCurrentRoomNumber() - 5);
-    }
-
-    public void moveDown() {
-        move(getCurrentRoomNumber() + 5);
-    }
-
-    public void moveLeft() {
-        move(getCurrentRoomNumber() - 1);
-    }
-
-    public void moveRight() {
-        move(getCurrentRoomNumber() + 1);
-    }
-
     public boolean canMoveUp() {
-        return currentRoomRow > 0 && !isDirectionBlocked("UP");
+        return currentRoomRow > 0 && (!isDirectionBlocked("UP") || isVisitedDirection("UP"));
     }
 
     public boolean canMoveDown() {
-        return currentRoomRow < 4 && !isDirectionBlocked("DOWN");
+        return currentRoomRow < 4 && (!isDirectionBlocked("DOWN") || isVisitedDirection("DOWN"));
     }
 
     public boolean canMoveLeft() {
-        return currentRoomCol > 0 && !isDirectionBlocked("LEFT");
+        return currentRoomCol > 0 && (!isDirectionBlocked("LEFT") || isVisitedDirection("LEFT"));
     }
 
     public boolean canMoveRight() {
-        return currentRoomCol < 4 && !isDirectionBlocked("RIGHT");
+        return currentRoomCol < 4 && (!isDirectionBlocked("RIGHT") || isVisitedDirection("RIGHT"));
+    }
+
+    public boolean isVisitedDirection(String direction) {
+        Integer[] move = roomDirections.get(direction);
+        int newRow = currentRoomRow + move[0];
+        int newCol = currentRoomCol + move[1];
+        int newRoomNumber = (newRow * 5) + newCol + 1;
+        String forwardKey = getCurrentRoomNumber() + "-" + newRoomNumber;
+        String backwardKey = newRoomNumber + "-" + getCurrentRoomNumber();
+        return visitedDoors.contains(forwardKey) || visitedDoors.contains(backwardKey);
     }
 
     public boolean isDirectionBlocked(String direction) {
@@ -191,12 +198,14 @@ public class Maze {
         int newCol = currentRoomCol + move[1];
         int newRoomNumber = (newRow * 5) + newCol + 1;
         String forwardKey = getCurrentRoomNumber() + "-" + newRoomNumber;
-        return visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey);
+        String backwardKey = newRoomNumber + "-" + getCurrentRoomNumber();
+        return (visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey)) || (visitedDoors.contains(backwardKey) && !correctlyAnsweredDoors.contains(backwardKey));
     }
 
     public void lockCurrentDoor(String direction) {
         Integer[] move = roomDirections.get(direction);
         Door door = getDoor(move);
+        door.lock(); // Lock the door
         String forwardKey = getCurrentRoomNumber() + "-" + getRoomNumberFromMove(move);
         visitedDoors.add(forwardKey);
     }
