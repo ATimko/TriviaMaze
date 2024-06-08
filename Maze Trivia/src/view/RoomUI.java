@@ -122,7 +122,7 @@ public class RoomUI extends JPanel {
         shortAnswerField.setPreferredSize(new Dimension(300, 30)); // Smaller size for text field
         shortAnswerField.setMinimumSize(new Dimension(300, 30));
         shortAnswerField.setVisible(false); // Initially hidden
-        shortAnswerField.addActionListener(e-> shortAnswerHandle(shortAnswerField.getText()));
+        shortAnswerField.addActionListener(e -> shortAnswerHandle(shortAnswerField.getText()));
 
         // Set up GroupLayout
         GroupLayout layout = new GroupLayout(this);
@@ -190,18 +190,14 @@ public class RoomUI extends JPanel {
         button.setMaximumSize(size);
         button.setFocusPainted(false); // Disable the focus border
         button.setFont(new Font("Arial", Font.BOLD, 24));
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                attemptMove(direction);
-            }
-        });
+        button.addActionListener(e -> attemptMove(direction));
         return button;
     }
+
     private void shortAnswerHandle(String text) {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
-            boolean isCorrect = currentQuestion.getAnswer().equals(text);
+            boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(text);
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
                 movePendingDirection();
@@ -216,9 +212,15 @@ public class RoomUI extends JPanel {
             JOptionPane.showMessageDialog(this, "No active question.");
         }
     }
+
     private void attemptMove(String direction) {
         this.pendingDirection = direction;
-        if (maze.isDirectionBlocked(direction)) {
+        if (maze.isVisitedDirection(direction)) {
+            // If direction is already visited, move without asking a question
+            movePendingDirection();
+            updateRoomNumber();
+            updateNavigationButtons();
+        } else if (maze.isDirectionBlocked(direction)) {
             JOptionPane.showMessageDialog(this, "The door in this direction is locked due to an incorrect answer.");
         } else {
             Question currentQuestion = maze.getCurrentQuestion();
@@ -236,7 +238,7 @@ public class RoomUI extends JPanel {
     private void handleAnswer(String answer) {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
-            boolean isCorrect = currentQuestion.getAnswer().equals(answer);
+            boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(answer);
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You can now move to the next room.");
                 movePendingDirection();
@@ -256,16 +258,16 @@ public class RoomUI extends JPanel {
         if (pendingDirection != null) {
             switch (pendingDirection) {
                 case "UP":
-                    //maze.moveUp();
+                    maze.moveUp();
                     break;
                 case "DOWN":
-                    //maze.moveDown();
+                    maze.moveDown();
                     break;
                 case "LEFT":
-                   // maze.moveLeft();
+                    maze.moveLeft();
                     break;
                 case "RIGHT":
-                  //  maze.moveRight();
+                    maze.moveRight();
                     break;
             }
             pendingDirection = null;

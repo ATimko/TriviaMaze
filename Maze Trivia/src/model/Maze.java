@@ -194,7 +194,9 @@ public class Maze {
         int newRoomNumber = (newRow * 5) + newCol + 1;
         String forwardKey = getCurrentRoomNumber() + "-" + newRoomNumber;
         String backwardKey = newRoomNumber + "-" + getCurrentRoomNumber();
-        return (visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey)) || (visitedDoors.contains(backwardKey) && !correctlyAnsweredDoors.contains(backwardKey));
+        // Only block the direction if it has been visited but not correctly answered in either direction
+        return (visitedDoors.contains(forwardKey) && !correctlyAnsweredDoors.contains(forwardKey)) ||
+                (visitedDoors.contains(backwardKey) && !correctlyAnsweredDoors.contains(backwardKey));
     }
 
     public void lockCurrentDoor(String direction) {
@@ -209,5 +211,22 @@ public class Maze {
         int newRow = currentRoomRow + move[0];
         int newCol = currentRoomCol + move[1];
         return (newRow * 5) + newCol + 1;
+    }
+
+    // Methods to support arrow key navigation
+    public void moveUp() {
+        move(getCurrentRoomNumber() - 5, true);
+    }
+
+    public void moveDown() {
+        move(getCurrentRoomNumber() + 5, true);
+    }
+
+    public void moveLeft() {
+        move(getCurrentRoomNumber() - 1, true);
+    }
+
+    public void moveRight() {
+        move(getCurrentRoomNumber() + 1, true);
     }
 }
