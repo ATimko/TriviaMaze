@@ -47,9 +47,9 @@ public class Maze {
         }
     }
 
-    public boolean move(int roomNumber, boolean isAnswerCorrect) {
+    public void move(int roomNumber, boolean isAnswerCorrect) {
         if (!isAnswerCorrect) {
-            return false; // Answer was incorrect, do not move
+            return; // Answer was incorrect, do not move
         }
 
         Integer[] move = getDirectionFromRoomNumber(roomNumber);
@@ -67,9 +67,7 @@ public class Maze {
             visitedDoors.add(backwardKey);
             correctlyAnsweredDoors.add(forwardKey);
             newQuestion = QuestionFactory.getRandomQuestion(); // Generate new question
-            return true;
         } else {
-            return false;
         }
     }
 
@@ -105,14 +103,6 @@ public class Maze {
 
     public boolean isAtExit() {
         return currentRoomRow == 4 && currentRoomCol == 4;
-    }
-
-    public void displayAvailableMoves() {
-        System.out.println("You are in room " + getCurrentRoomNumber() + ". Available moves:");
-        if (currentRoomRow > 0) System.out.println("UP to room " + (getCurrentRoomNumber() - 5));
-        if (currentRoomRow < 4) System.out.println("DOWN to room " + (getCurrentRoomNumber() + 5));
-        if (currentRoomCol > 0) System.out.println("LEFT to room " + (getCurrentRoomNumber() - 1));
-        if (currentRoomCol < 4) System.out.println("RIGHT to room " + (getCurrentRoomNumber() + 1));
     }
 
     public boolean isPathToEnd() {

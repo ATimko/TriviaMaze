@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
 public class GameState implements Serializable {
@@ -65,5 +65,41 @@ public class GameState implements Serializable {
 
     public void setQuestionsAnswered(List<String> questionsAnswered) {
         this.questionsAnswered = questionsAnswered;
+    }
+
+    public static GameState loadGame(String fileName) {
+        GameState gameState = null;
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            gameState = (GameState) in.readObject();
+            System.out.println("Game state loaded from " + fileName);
+            return gameState;
+        }
+        catch (IOException i) {
+            i.printStackTrace();
+        }
+        catch (ClassNotFoundException c) {
+            System.out.println("GameState class not found"  + c.getMessage());
+            c.printStackTrace();
+            return null;
+        }
+        return gameState;
+    }
+
+    public static void saveGame(GameState gameState, String fileName) {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(gameState);
+            System.out.println("Game state saved to " + fileName);
+        }
+        /*
+        catch (IOException i) {
+            i.printStackTrace();
+        }
+         */
+        catch (IOException e) {
+            System.err.println("Error saving game state: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

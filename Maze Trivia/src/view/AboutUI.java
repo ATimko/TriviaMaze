@@ -1,7 +1,5 @@
 package view;
 
-import model.MazeConstants;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +13,7 @@ public class AboutUI extends JFrame {
     public AboutUI() {
         super("About");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.setSize(MazeConstants.Dimensions.ABOUT_PANEL_DIMENSION);
+        this.setSize(700, 700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
