@@ -24,8 +24,8 @@ public class QuestionFactory {
 
             if (rs.next()) {
                 final String type = rs.getString("type");
-                final String questionText = rs.getString("theQuestion");
-                final String choicesStr = rs.getString("theChoices");
+                final String questionText = rs.getString("question");
+                final String choicesStr = rs.getString("choices");
                 final String answer = rs.getString("answer");
 
                 final String[] choices = choicesStr.isEmpty() ? new String[0] : choicesStr.split(",");
