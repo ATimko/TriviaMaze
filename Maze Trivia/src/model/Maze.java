@@ -30,7 +30,7 @@ public class Maze implements Serializable {
         this.myCorrectlyAnsweredDoors = new HashSet<>();
         this.myCurrentRoomRow = 0;
         this.myCurrentRoomCol = 0;
-        myNewQuestion = QuestionFactory.getRandomQuestion();
+        this.myNewQuestion = QuestionFactory.getRandomQuestion();
     }
 
     /**
