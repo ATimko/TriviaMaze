@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
+/**
+ * RoomUI class represents the user interface for the rooms in the Trivia Maze game.
+ * It handles displaying the current room, the question, and the navigation buttons.
+ */
 public class RoomUI extends JPanel {
     private final JLabel roomNumberLabel;
     private final JLabel questionLabel;
@@ -21,6 +25,12 @@ public class RoomUI extends JPanel {
 
     private String pendingDirection = null;
 
+    /**
+     * Constructor for the RoomUI class.
+     *
+     * @param maze       The maze object.
+     * @param gameWindow The game window object.
+     */
     public RoomUI(Maze maze, GameWindow gameWindow) {
         this.maze = maze;
         this.gameWindow = gameWindow;
@@ -183,6 +193,14 @@ public class RoomUI extends JPanel {
         updateNavigationButtons();
     }
 
+    /**
+     * Creates an arrow button for navigating the maze.
+     *
+     * @param text      The text to display on the button.
+     * @param direction The direction the button represents.
+     * @param size      The size of the button.
+     * @return The created JButton.
+     */
     private JButton createArrowButton(String text, String direction, Dimension size) {
         JButton button = new JButton(text);
         button.setPreferredSize(size);
@@ -194,6 +212,11 @@ public class RoomUI extends JPanel {
         return button;
     }
 
+    /**
+     * Handles the event when a short answer is submitted.
+     *
+     * @param text The text of the answer submitted.
+     */
     private void shortAnswerHandle(String text) {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
@@ -215,6 +238,11 @@ public class RoomUI extends JPanel {
         }
     }
 
+    /**
+     * Attempts to move in the specified direction.
+     *
+     * @param direction The direction to move.
+     */
     private void attemptMove(String direction) {
         this.pendingDirection = direction;
         int targetRoomNumber = maze.getTargetRoomNumber(direction);
@@ -239,6 +267,11 @@ public class RoomUI extends JPanel {
         }
     }
 
+    /**
+     * Handles the event when an answer button is pressed.
+     *
+     * @param answer The answer text.
+     */
     private void handleAnswer(String answer) {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
@@ -260,6 +293,9 @@ public class RoomUI extends JPanel {
         }
     }
 
+    /**
+     * Moves to the pending direction if set.
+     */
     private void movePendingDirection() {
         if (pendingDirection != null) {
             int targetRoomNumber = maze.getTargetRoomNumber(pendingDirection);
@@ -269,6 +305,9 @@ public class RoomUI extends JPanel {
         setArrowButtonsEnabled(true);
     }
 
+    /**
+     * Clears the question UI elements.
+     */
     private void clearQuestionUI() {
         questionLabel.setText("");
         button1.setVisible(false);
@@ -280,11 +319,21 @@ public class RoomUI extends JPanel {
         repaint();
     }
 
+    /**
+     * Updates the room number label with the current room number.
+     */
     public void updateRoomNumber() {
         int currentRoomNumber = maze.getCurrentRoomNumber();
         roomNumberLabel.setText("Room " + currentRoomNumber);
     }
 
+    /**
+     * Updates the question UI elements based on the question type and text.
+     *
+     * @param questionType The type of the question.
+     * @param questionText The text of the question.
+     * @param choices      The choices for the question.
+     */
     private void updateQuestionUI(String questionType, String questionText, String[] choices) {
         questionLabel.setText("Question: " + questionText);
         switch (questionType) {
@@ -321,6 +370,9 @@ public class RoomUI extends JPanel {
         repaint();
     }
 
+    /**
+     * Updates the navigation buttons based on the possible moves.
+     */
     private void updateNavigationButtons() {
         boolean canMoveUp = maze.canMoveUp();
         boolean canMoveDown = maze.canMoveDown();
@@ -333,6 +385,11 @@ public class RoomUI extends JPanel {
         rightButton.setEnabled(canMoveRight);
     }
 
+    /**
+     * Enables or disables the arrow buttons.
+     *
+     * @param enabled True to enable the buttons, false to disable.
+     */
     private void setArrowButtonsEnabled(boolean enabled) {
         upButton.setEnabled(enabled);
         downButton.setEnabled(enabled);
@@ -340,6 +397,9 @@ public class RoomUI extends JPanel {
         rightButton.setEnabled(enabled);
     }
 
+    /**
+     * Checks the game state for win or loss conditions.
+     */
     private void checkGameState() {
         if (maze.isAtExit()) {
             int choice = JOptionPane.showOptionDialog(this, "Congratulations! You've reached the exit. What would you like to do?", "You Win!",

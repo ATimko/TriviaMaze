@@ -6,10 +6,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * The AboutUI class is the About window in the application.
+ *
+ */
 public class AboutUI extends JFrame {
 
     private final JPanel myContainer;
 
+    /**
+     * Constructs a new AboutUI window.
+     * Sets up the window properties and initializes the UI components.
+     */
     public AboutUI() {
         super("About");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -24,6 +32,10 @@ public class AboutUI extends JFrame {
         createUI();
     }
 
+    /**
+     * Creates and configures the UI components for the AboutUI window.
+     * Sets the layout and adds the text content.
+     */
     private void createUI() {
         myContainer.setPreferredSize(this.getPreferredSize());
         myContainer.setLayout(new BoxLayout(myContainer, BoxLayout.Y_AXIS));
