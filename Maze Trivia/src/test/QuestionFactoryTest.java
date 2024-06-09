@@ -4,7 +4,7 @@ import model.QuestionFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class TestQuestionFactory {
+public class QuestionFactoryTest {
     @Test
     public void testCreateQuestion() {
         // Test Data
