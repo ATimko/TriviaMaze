@@ -56,33 +56,14 @@ public class AbstractQuestion implements Question {
         return myChoices;
     }
 
-    // new method no javadoc
+    /**
+     * Returns the answer for myQuestion.
+     *
+     * @return an answer for myQuestion
+     */
 
     public String getAnswer() {
         return myAnswer;
-    }
-
-    /**
-     * Compares this myQuestion to the object input. The result is true if and only if the argument is not
-     * null and is an AbstractedQuestion object that represents the same myQuestion as this object.
-     *
-     * @param input the object to compare this AbstractedQuestion
-     * @return true if the given object represents an AbstractedQuestion equivalent to this myQuestion,
-     * false otherwise
-     */
-    @Override
-    public boolean equals(Object input) {
-        if (this == input) {
-            return true;
-        }
-        if (input == null || getClass() != input.getClass()) {
-            return false;
-        }
-        AbstractQuestion that = (AbstractQuestion) input;
-        return myType == that.myType &&
-                myQuestion.equals(that.myQuestion) &&
-                myAnswer.equals(that.myAnswer) &&
-                java.util.Arrays.equals(myChoices, that.myChoices);
     }
 
     /**
