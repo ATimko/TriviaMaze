@@ -8,13 +8,13 @@ public class QuestionFactoryTest {
     @Test
     public void testCreateQuestion() {
         // Test Data
-        String questionText = "What is Scooby Doo's favorite snack?";
-        String[] choices = {"Scooby Snacks", "M&M", "Lays", "Dog Food"};
-        String answer = "Scooby Snacks";
-        String type = "multipleChoice";
+        final String questionText = "What is Scooby Doo's favorite snack?";
+        final String[] choices = {"Scooby Snacks", "M&M", "Lays", "Dog Food"};
+        final String answer = "Scooby Snacks";
+        final String type = "multipleChoice";
 
         // Create the question
-        Question question = QuestionFactory.createQuestion(questionText, choices, answer, type);
+        final Question question = QuestionFactory.createQuestion(questionText, choices, answer, type);
 
         // Verify that the question is not null
         assertNotNull(question);
@@ -23,6 +23,6 @@ public class QuestionFactoryTest {
         assertEquals(questionText, question.getQuestion());
         assertArrayEquals(choices, question.getChoices());
         assertEquals(answer, question.getAnswer());
-        assertEquals(Question.questionType.multipleChoice, question.getType());
+        assertEquals(Question.QUESTIONTYPE.multipleChoice, question.getType());
     }
 }

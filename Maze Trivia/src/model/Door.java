@@ -7,13 +7,13 @@ public class Door implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private boolean locked;
+    private boolean myLocked;
 
     /**
      * Constructs a Door object that is initially unlocked.
      */
     public Door() {
-        this.locked = false;
+        this.myLocked = false;
     }
 
     /**
@@ -22,13 +22,13 @@ public class Door implements Serializable {
      * @return true if the door is unlocked, false otherwise.
      */
     public boolean isUnlocked() {
-        return !locked;
+        return !myLocked;
     }
 
     /**
      * Locks the door.
      */
     public void lock() {
-        this.locked = true;
+        this.myLocked = true;
     }
 }
