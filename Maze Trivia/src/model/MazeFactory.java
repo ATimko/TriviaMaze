@@ -11,14 +11,14 @@ public class MazeFactory {
      * @return A new Maze object.
      */
     public static Maze createMaze() {
-        Room[][] grid = new Room[5][5];
+        final Room[][] grid = new Room[5][5];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 grid[i][j] = new Room();
             }
         }
 
-        Map<String, Integer[]> roomDirections = new HashMap<>();
+        final Map<String, Integer[]> roomDirections = new HashMap<>();
         roomDirections.put("UP", new Integer[]{-1, 0});
         roomDirections.put("DOWN", new Integer[]{1, 0});
         roomDirections.put("LEFT", new Integer[]{0, -1});

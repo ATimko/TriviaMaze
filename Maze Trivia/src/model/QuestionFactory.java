@@ -6,29 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class QuestionFactory {
-    public static Question createQuestion(String question, String[] choices, String answer, String type) {
+    public static Question createQuestion(final String theQuestion, final String[] theChoices, final String theAnswer, final String type) {
         return switch (type) {
-            case "multipleChoice" -> new QuestionMultipleChoice(question, choices, answer) {};
-            case "trueFalse" -> new QuestionTrueFalse(question, choices, answer) {};
-            case "shortAnswer" -> new QuestionShortAnswer(question, choices, answer) {};
+            case "multipleChoice" -> new QuestionMultipleChoice(theQuestion, theChoices, theAnswer) {};
+            case "trueFalse" -> new QuestionTrueFalse(theQuestion, theChoices, theAnswer) {};
+            case "shortAnswer" -> new QuestionShortAnswer(theQuestion, theChoices, theAnswer) {};
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }
     public static Question getRandomQuestion() {
-        String sql = "SELECT * FROM questions ORDER BY RANDOM() LIMIT 1";
+        final String sql = "SELECT * FROM questions ORDER BY RANDOM() LIMIT 1";
 
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            ResultSet rs = pstmt.executeQuery();
+            final ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                String type = rs.getString("type");
-                String questionText = rs.getString("question");
-                String choicesStr = rs.getString("choices");
-                String answer = rs.getString("answer");
+                final String type = rs.getString("type");
+                final String questionText = rs.getString("theQuestion");
+                final String choicesStr = rs.getString("theChoices");
+                final String answer = rs.getString("answer");
 
-                String[] choices = choicesStr.isEmpty() ? new String[0] : choicesStr.split(",");
+                final String[] choices = choicesStr.isEmpty() ? new String[0] : choicesStr.split(",");
 
                 return createQuestion(questionText, choices, answer, type);
             }

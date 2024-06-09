@@ -5,27 +5,27 @@ import java.io.Serializable;
 
 /**
  * The Room class represents a room in a maze, which contains an array of Door objects.
- * The room is initialized with five doors.
+ * The room is initialized with five myDoors.
  */
 public class Room implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final Door[] doors;
+    private final Door[] myDoors;
 
     /**
      * Constructs a Room object and initializes it with five Door objects.
      */
     public Room() {
-        doors = new Door[5];
+        myDoors = new Door[5];
         initializeDoors();
     }
 
     /**
-     * Initializes the doors array with new Door objects.
+     * Initializes the myDoors array with new Door objects.
      */
     private void initializeDoors() {
-        for (int i = 0; i < doors.length; i++) {
-            doors[i] = new Door();
+        for (int i = 0; i < myDoors.length; i++) {
+            myDoors[i] = new Door();
         }
     }
 
@@ -35,6 +35,6 @@ public class Room implements Serializable {
      * @return an array of Door objects
      */
     public Door[] getDoors() {
-        return doors;
+        return myDoors;
     }
 }

@@ -2,8 +2,8 @@ package model;
 
 public class QuestionShortAnswer extends AbstractQuestion {
 
-    public QuestionShortAnswer(String question, String[] choices, String answer) {
-        super(questionType.shortAnswer, question, choices, answer);
+    public QuestionShortAnswer(final String theQuestion, final String[] theChoices, final String theAnswer) {
+        super(QUESTIONTYPE.shortAnswer, theQuestion, theChoices, theAnswer);
     }
 
 }

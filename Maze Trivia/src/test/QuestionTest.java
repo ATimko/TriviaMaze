@@ -25,9 +25,9 @@ public class QuestionTest {
     @Test
     public void getType() {
         assertAll("Tests if the question type is correct.",
-                () -> assertEquals(simpleQuestionTrueFalse.getType(), Question.questionType.trueFalse, "Incorrect question type, it should be trueFalse"),
-                () -> assertEquals(simpleQuestionMultipleChoice.getType(), Question.questionType.multipleChoice, "Incorrect question type, it should be multipleChoice"),
-                () -> assertEquals(simpleQuestionShortAnswer.getType(), Question.questionType.shortAnswer, "Incorrect question type, it should be shortAnswer")
+                () -> assertEquals(simpleQuestionTrueFalse.getType(), Question.QUESTIONTYPE.trueFalse, "Incorrect question type, it should be trueFalse"),
+                () -> assertEquals(simpleQuestionMultipleChoice.getType(), Question.QUESTIONTYPE.multipleChoice, "Incorrect question type, it should be multipleChoice"),
+                () -> assertEquals(simpleQuestionShortAnswer.getType(), Question.QUESTIONTYPE.shortAnswer, "Incorrect question type, it should be shortAnswer")
         );
     }
     @Test

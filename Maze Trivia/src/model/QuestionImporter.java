@@ -13,8 +13,8 @@ public class QuestionImporter {
         INSERT INTO questions(type, question, choices, answer) VALUES(?, ?, ?, ?)
         """;
 
-    public static void importQuestions(String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath));
+    public static void importQuestions(final String theFilePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(theFilePath));
              Connection conn = DatabaseManager.connect();
              PreparedStatement prep = conn.prepareStatement(INSERT_SQL)) {
 
@@ -24,10 +24,10 @@ public class QuestionImporter {
                     continue;
                 }
 
-                String type = extractValue(line, "type");
-                String question = extractValue(br.readLine(), "question");
-                String choices = extractValue(br.readLine(), "choices");
-                String answer = extractValue(br.readLine(), "answer");
+                final String type = extractValue(line, "type");
+                final String question = extractValue(br.readLine(), "question");
+                final String choices = extractValue(br.readLine(), "choices");
+                final String answer = extractValue(br.readLine(), "answer");
 
                 prep.setString(1, type);
                 prep.setString(2, question);
@@ -46,13 +46,13 @@ public class QuestionImporter {
         }
     }
 
-    private static String extractValue(String line, String expectedKey) throws IOException {
-        if (line == null || !line.startsWith(expectedKey + "=")) {
-            throw new IOException("Invalid or missing line for " + expectedKey + ": " + line);
+    private static String extractValue(final String theLine, final String theExpectedKey) throws IOException {
+        if (theLine == null || !theLine.startsWith(theExpectedKey + "=")) {
+            throw new IOException("Invalid or missing theLine for " + theExpectedKey + ": " + theLine);
         }
-        String[] parts = line.split("=", 2);
+        final String[] parts = theLine.split("=", 2);
         if (parts.length < 2) {
-            throw new IOException("Invalid format for " + expectedKey + ": " + line);
+            throw new IOException("Invalid format for " + theExpectedKey + ": " + theLine);
         }
         return parts[1];
     }

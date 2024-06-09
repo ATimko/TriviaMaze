@@ -2,8 +2,8 @@ package model;
 
 public class QuestionTrueFalse extends AbstractQuestion {
 
-    public QuestionTrueFalse(String question, String[] choices, String answer) {
-        super(questionType.trueFalse, question, choices, answer);
+    public QuestionTrueFalse(final String theQuestion, final String[] theChoices, final String theAnswer) {
+        super(QUESTIONTYPE.trueFalse, theQuestion, theChoices, theAnswer);
     }
 
 }

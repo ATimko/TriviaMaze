@@ -2,8 +2,8 @@ package model;
 
 public class QuestionMultipleChoice extends AbstractQuestion {
 
-    public QuestionMultipleChoice(String question, String[] choices, String answer) {
-        super(questionType.multipleChoice, question, choices, answer);
+    public QuestionMultipleChoice(final String theQuestion, final String[] theChoices, final String theAnswer) {
+        super(QUESTIONTYPE.multipleChoice, theQuestion, theChoices, theAnswer);
     }
 
 }

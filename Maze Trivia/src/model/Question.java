@@ -3,10 +3,10 @@ package model;
 import java.io.Serializable;
 
 public interface Question extends Serializable {
-    enum questionType {
+    enum QUESTIONTYPE {
         multipleChoice, trueFalse, shortAnswer
     }
-    questionType getType();
+    QUESTIONTYPE getType();
     String getQuestion();
     String[] getChoices();
     String getAnswer();
