@@ -62,7 +62,7 @@ public class QuestionTest {
 
     @Test
     public void getChoicesMultipleChoice() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{"A", "B", "C", "D"}, "True", "multipleChoice");
+        Question question = QuestionFactory.createQuestion("Testing", new String[]{"A", "B", "C", "D"}, "A", "multipleChoice");
         assertEquals(Arrays.toString(question.getChoices()), Arrays.toString(new String[]{"A", "B", "C", "D"}));
     }
 }
