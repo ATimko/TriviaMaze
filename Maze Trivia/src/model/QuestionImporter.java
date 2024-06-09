@@ -7,12 +7,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Class for importing questions from a file into the database.
+ */
 public class QuestionImporter {
 
     private static final String INSERT_SQL = """
         INSERT INTO questions(type, question, choices, answer) VALUES(?, ?, ?, ?)
         """;
 
+    /**
+     * Imports questions from a specified file into the database.
+     *
+     * @param filePath The path to the file containing the questions.
+     */
     public static void importQuestions(String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath));
              Connection conn = DatabaseManager.connect();
@@ -46,6 +54,14 @@ public class QuestionImporter {
         }
     }
 
+    /**
+     * Extracts the value for a specified key from a line.
+     *
+     * @param line The line to extract the value from.
+     * @param expectedKey The expected key at the start of the line.
+     * @return The extracted value.
+     * @throws IOException If the line is invalid or the expected key is not found.
+     */
     private static String extractValue(String line, String expectedKey) throws IOException {
         if (line == null || !line.startsWith(expectedKey + "=")) {
             throw new IOException("Invalid or missing line for " + expectedKey + ": " + line);

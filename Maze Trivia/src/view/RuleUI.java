@@ -6,10 +6,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * RuleUI class represents the user interface for displaying the rules of the game.
+ */
 public class RuleUI extends JFrame {
 
     private final JPanel myContainer;
 
+    /**
+     * Constructor for the RuleUI class.
+     * Initializes the window settings and calls createUI to set up the UI components.
+     */
     public RuleUI() {
         super("Rules");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -24,6 +31,9 @@ public class RuleUI extends JFrame {
         createUI();
     }
 
+    /**
+     * Sets up the user interface components for the rules window.
+     */
     private void createUI() {
         myContainer.setPreferredSize(this.getPreferredSize());
         myContainer.setLayout(new BoxLayout(myContainer, BoxLayout.Y_AXIS));
@@ -61,10 +71,11 @@ public class RuleUI extends JFrame {
                 <br><br>
                 <div class="equation">
                         <h1>Game Rules</h1>
-                        <h2>The maze is composed of rooms.  Each room has 5 doors.\s
+                        <h2>The maze is composed of rooms. Each room has doors connected to the adjacent rooms.\s
                         In order for the user to pass through a door, they must correctly answer a question.\s
                         There are 3 categories of questions asked consisted of Multiple Choice, Short Answer and True/False.\s
-                        If the user is unable to answer a question, that door is then locked permanently.\s
+                        If the user is unable to answer a question correctly, that door is then locked permanently.\s
+                        If you can make it to the end of the maze, at room 25, you win.\s
                         If the user is unable to make it from the entrance to the exit (due to locked doors), the game is lost.</h2>
                         <br>
                 </div>
