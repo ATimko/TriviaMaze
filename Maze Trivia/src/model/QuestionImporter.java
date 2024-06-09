@@ -7,22 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * Class for importing questions from a file into the database.
- */
 public class QuestionImporter {
 
     private static final String INSERT_SQL = """
         INSERT INTO questions(type, question, choices, answer) VALUES(?, ?, ?, ?)
         """;
 
-    /**
-     * Imports questions from a specified file into the database.
-     *
-     * @param filePath The path to the file containing the questions.
-     */
-    public static void importQuestions(String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath));
+    public static void importQuestions(final String theFilePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(theFilePath));
              Connection conn = DatabaseManager.connect();
              PreparedStatement prep = conn.prepareStatement(INSERT_SQL)) {
 
@@ -32,10 +24,10 @@ public class QuestionImporter {
                     continue;
                 }
 
-                String type = extractValue(line, "type");
-                String question = extractValue(br.readLine(), "question");
-                String choices = extractValue(br.readLine(), "choices");
-                String answer = extractValue(br.readLine(), "answer");
+                final String type = extractValue(line, "type");
+                final String question = extractValue(br.readLine(), "question");
+                final String choices = extractValue(br.readLine(), "choices");
+                final String answer = extractValue(br.readLine(), "answer");
 
                 prep.setString(1, type);
                 prep.setString(2, question);
@@ -54,21 +46,13 @@ public class QuestionImporter {
         }
     }
 
-    /**
-     * Extracts the value for a specified key from a line.
-     *
-     * @param line The line to extract the value from.
-     * @param expectedKey The expected key at the start of the line.
-     * @return The extracted value.
-     * @throws IOException If the line is invalid or the expected key is not found.
-     */
-    private static String extractValue(String line, String expectedKey) throws IOException {
-        if (line == null || !line.startsWith(expectedKey + "=")) {
-            throw new IOException("Invalid or missing line for " + expectedKey + ": " + line);
+    private static String extractValue(final String theLine, final String theExpectedKey) throws IOException {
+        if (theLine == null || !theLine.startsWith(theExpectedKey + "=")) {
+            throw new IOException("Invalid or missing theLine for " + theExpectedKey + ": " + theLine);
         }
-        String[] parts = line.split("=", 2);
+        final String[] parts = theLine.split("=", 2);
         if (parts.length < 2) {
-            throw new IOException("Invalid format for " + expectedKey + ": " + line);
+            throw new IOException("Invalid format for " + theExpectedKey + ": " + theLine);
         }
         return parts[1];
     }

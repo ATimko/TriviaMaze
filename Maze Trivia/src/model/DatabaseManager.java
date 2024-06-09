@@ -29,7 +29,7 @@ public class DatabaseManager {
      * The table contains columns for id, type, question, choices, and answer.
      */
     public static void createTable() {
-        String sql = """
+        final String sql = """
             CREATE TABLE IF NOT EXISTS questions (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 type TEXT NOT NULL,
@@ -52,7 +52,7 @@ public class DatabaseManager {
      * Drops the questions table if it exists.
      */
     public static void dropTable() {
-        String sql = "DROP TABLE IF EXISTS questions";
+        final String sql = "DROP TABLE IF EXISTS questions";
 
         try (Connection conn = connect();
              Statement stmt = conn.createStatement()) {

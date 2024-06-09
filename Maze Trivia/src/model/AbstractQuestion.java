@@ -1,73 +1,73 @@
 package model;
 
 /**
- * The AbstractedQuestion class represents a question with multiple choices and an answer.
+ * The AbstractedQuestion class represents a myQuestion with multiple myChoices and an myAnswer.
  * It implements the Question interface.
  */
 public class AbstractQuestion implements Question {
-    private final questionType type;
-    private final String question;
-    private final String[] choices;
-    private final String answer;
+    private final QUESTIONTYPE myType;
+    private final String myQuestion;
+    private final String[] myChoices;
+    private final String myAnswer;
 
     /**
-     * Constructs an AbstractedQuestion with the specified type, subject, question, choices, and answer.
+     * Constructs an AbstractedQuestion with the specified myType, subject, myQuestion, myChoices, and myAnswer.
      *
-     * @param type the type of the question
-     * @param question the question text
-     * @param choices the possible choices for the question
-     * @param answer the correct answer for the question
+     * @param myType the myType of the myQuestion
+     * @param myQuestion the myQuestion text
+     * @param myChoices the possible myChoices for the myQuestion
+     * @param myAnswer the correct myAnswer for the myQuestion
      * @throws IllegalArgumentException if any of the parameters are null
      */
-    protected AbstractQuestion(questionType type, String question, String[] choices, String answer) {
-        if (type == null || question == null || choices == null || answer == null) {
-            throw new IllegalArgumentException("The question parameters cannot be null.");
+    protected AbstractQuestion(QUESTIONTYPE myType, String myQuestion, String[] myChoices, String myAnswer) {
+        if (myType == null || myQuestion == null || myChoices == null || myAnswer == null) {
+            throw new IllegalArgumentException("The myQuestion parameters cannot be null.");
         }
-        this.type = type;
-        this.question = question;
-        this.choices = choices;
-        this.answer = answer;
+        this.myType = myType;
+        this.myQuestion = myQuestion;
+        this.myChoices = myChoices;
+        this.myAnswer = myAnswer;
     }
 
     /**
-     * Returns the type of question.
+     * Returns the myType of myQuestion.
      *
-     * @return the type of question
+     * @return the myType of myQuestion
      */
-    public questionType getType() {
-        return type;
+    public QUESTIONTYPE getType() {
+        return myType;
     }
 
     /**
-     * Returns the text of the question.
+     * Returns the text of the myQuestion.
      *
-     * @return the text of this question
+     * @return the text of this myQuestion
      */
     public String getQuestion() {
-        return question;
+        return myQuestion;
     }
 
     /**
-     * Returns the possible choices for the question.
+     * Returns the possible myChoices for the myQuestion.
      *
-     * @return an array of possible choices for this question
+     * @return an array of possible myChoices for this myQuestion
      */
     public String[] getChoices() {
-        return choices;
+        return myChoices;
     }
 
     // new method no javadoc
 
     public String getAnswer() {
-        return answer;
+        return myAnswer;
     }
 
     /**
-     * Compares this question to the object input. The result is true if and only if the argument is not
-     * null and is an AbstractedQuestion object that represents the same question as this object.
+     * Compares this myQuestion to the object input. The result is true if and only if the argument is not
+     * null and is an AbstractedQuestion object that represents the same myQuestion as this object.
      *
      * @param input the object to compare this AbstractedQuestion
-     * @return true if the given object represents an AbstractedQuestion equivalent to this question,
+     * @return true if the given object represents an AbstractedQuestion equivalent to this myQuestion,
      * false otherwise
      */
     @Override
@@ -79,21 +79,21 @@ public class AbstractQuestion implements Question {
             return false;
         }
         AbstractQuestion that = (AbstractQuestion) input;
-        return type == that.type &&
-                question.equals(that.question) &&
-                answer.equals(that.answer) &&
-                java.util.Arrays.equals(choices, that.choices);
+        return myType == that.myType &&
+                myQuestion.equals(that.myQuestion) &&
+                myAnswer.equals(that.myAnswer) &&
+                java.util.Arrays.equals(myChoices, that.myChoices);
     }
 
     /**
-     * Returns a hash code value for the question.
+     * Returns a hash code value for the myQuestion.
      *
-     * @return a hash code value for the question
+     * @return a hash code value for the myQuestion
      */
     @Override
     public int hashCode() {
-        int result = java.util.Objects.hash(type, question, answer);
-        result = 31 * result + java.util.Arrays.hashCode(choices);
+        int result = java.util.Objects.hash(myType, myQuestion, myAnswer);
+        result = 31 * result + java.util.Arrays.hashCode(myChoices);
         return result;
     }
 }
