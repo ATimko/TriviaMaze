@@ -11,58 +11,58 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class QuestionTest {
-    private Question simpleQuestionTrueFalse;
-    private Question simpleQuestionMultipleChoice;
-    private Question simpleQuestionShortAnswer;
+    private Question mySimpleQuestionTrueFalse;
+    private Question mySimpleQuestionMultipleChoice;
+    private Question mySimpleQuestionShortAnswer;
 
     @BeforeEach
     public void setUp() {
-        simpleQuestionTrueFalse = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
-        simpleQuestionMultipleChoice = QuestionFactory.createQuestion("Testing", new String[]{"Test1", "Test2", "Test3"}, "Test1", "multipleChoice");
-        simpleQuestionShortAnswer = QuestionFactory.createQuestion("Testing", new String[]{}, "Test", "shortAnswer");
+        mySimpleQuestionTrueFalse = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
+        mySimpleQuestionMultipleChoice = QuestionFactory.createQuestion("Testing", new String[]{"Test1", "Test2", "Test3"}, "Test1", "multipleChoice");
+        mySimpleQuestionShortAnswer = QuestionFactory.createQuestion("Testing", new String[]{}, "Test", "shortAnswer");
     }
 
     @Test
     public void getType() {
         assertAll("Tests if the question type is correct.",
-                () -> assertEquals(simpleQuestionTrueFalse.getType(), Question.QUESTIONTYPE.trueFalse, "Incorrect question type, it should be trueFalse"),
-                () -> assertEquals(simpleQuestionMultipleChoice.getType(), Question.QUESTIONTYPE.multipleChoice, "Incorrect question type, it should be multipleChoice"),
-                () -> assertEquals(simpleQuestionShortAnswer.getType(), Question.QUESTIONTYPE.shortAnswer, "Incorrect question type, it should be shortAnswer")
+                () -> assertEquals(mySimpleQuestionTrueFalse.getType(), Question.QUESTIONTYPE.trueFalse, "Incorrect question type, it should be trueFalse"),
+                () -> assertEquals(mySimpleQuestionMultipleChoice.getType(), Question.QUESTIONTYPE.multipleChoice, "Incorrect question type, it should be multipleChoice"),
+                () -> assertEquals(mySimpleQuestionShortAnswer.getType(), Question.QUESTIONTYPE.shortAnswer, "Incorrect question type, it should be shortAnswer")
         );
     }
     @Test
     public void getQuestion() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
+        final Question question = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
         assertEquals("Testing", question.getQuestion());
     }
 
     @Test
     public void getQuestionEmptyString() {
-        Question question = QuestionFactory.createQuestion("", new String[]{"Testing"}, "Testing", "shortAnswer");
+        final Question question = QuestionFactory.createQuestion("", new String[]{"Testing"}, "Testing", "shortAnswer");
         assertEquals("", question.getQuestion());
     }
 
     @Test
     public void getChoicesTrueFalse() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
+        final Question question = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
         assertEquals(Arrays.toString(question.getChoices()), Arrays.toString(new String[]{"True", "False"}));
     }
 
     @Test
     public void getChoicesShortAnswer() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{""}, "", "shortAnswer");
+        final Question question = QuestionFactory.createQuestion("Testing", new String[]{""}, "", "shortAnswer");
         assertEquals(1, question.getChoices().length);
     }
 
     @Test
     public void getChoicesShortAnswerEmpty() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{}, "True", "shortAnswer");
+        final Question question = QuestionFactory.createQuestion("Testing", new String[]{}, "True", "shortAnswer");
         assertEquals(0, question.getChoices().length);
     }
 
     @Test
     public void getChoicesMultipleChoice() {
-        Question question = QuestionFactory.createQuestion("Testing", new String[]{"A", "B", "C", "D"}, "A", "multipleChoice");
+        final Question question = QuestionFactory.createQuestion("Testing", new String[]{"A", "B", "C", "D"}, "A", "multipleChoice");
         assertEquals(Arrays.toString(question.getChoices()), Arrays.toString(new String[]{"A", "B", "C", "D"}));
     }
 }
