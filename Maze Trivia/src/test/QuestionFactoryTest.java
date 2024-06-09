@@ -23,6 +23,6 @@ public class QuestionFactoryTest {
         assertEquals(questionText, question.getQuestion());
         assertArrayEquals(choices, question.getChoices());
         assertEquals(answer, question.getAnswer());
-        assertEquals(Question.questionType.multipleChoice, question.getType());
+        assertEquals(Question.QUESTIONTYPE.multipleChoice, question.getType());
     }
 }
