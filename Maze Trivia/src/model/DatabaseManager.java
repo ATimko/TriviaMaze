@@ -9,6 +9,11 @@ public class DatabaseManager {
 
     private static final String DB_URL = "jdbc:sqlite:questions.db";
 
+    /**
+     * Establishes a connection to the database.
+     *
+     * @return a Connection object to the database, or null if a connection could not be established.
+     */
     public static Connection connect() {
         Connection conn = null;
         try {
@@ -19,6 +24,10 @@ public class DatabaseManager {
         return conn;
     }
 
+    /**
+     * Creates the questions table if it does not already exist.
+     * The table contains columns for id, type, question, choices, and answer.
+     */
     public static void createTable() {
         String sql = """
             CREATE TABLE IF NOT EXISTS questions (
@@ -39,6 +48,9 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Drops the questions table if it exists.
+     */
     public static void dropTable() {
         String sql = "DROP TABLE IF EXISTS questions";
 
