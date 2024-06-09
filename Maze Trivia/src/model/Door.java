@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Door implements Serializable {
     @Serial

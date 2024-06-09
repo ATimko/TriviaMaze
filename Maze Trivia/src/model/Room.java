@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * The Room class represents a room in a maze, which contains an array of Door objects.
