@@ -2,7 +2,6 @@ package controller;
 
 import model.DatabaseManager;
 import model.QuestionImporter;
-import model.MazeFactory;
 import view.GameWindow;
 import javax.swing.*;
 
