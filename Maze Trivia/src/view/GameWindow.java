@@ -6,6 +6,7 @@ import model.MazeFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class GameWindow extends JFrame {
@@ -13,6 +14,7 @@ public class GameWindow extends JFrame {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private Maze maze;
+    private GameState gameState;
 
     public GameWindow() {
         setTitle("Trivia Maze");
@@ -20,13 +22,14 @@ public class GameWindow extends JFrame {
         setSize(1200, 900);
         setResizable(false);
 
-        maze = MazeFactory.createMaze(); // Use MazeFactory to create the Maze instance
+        maze = MazeFactory.createMaze();
+        gameState = new GameState(maze);
 
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
         mainPanel.add(createMainMenuPanel(), "Main Menu");
-        mainPanel.add(new RoomUI(maze, this), "Game"); // Pass Maze instance to RoomUI
+        mainPanel.add(new RoomUI(maze, this), "Game");
 
         setJMenuBar(createMenuBar());
 
@@ -85,6 +88,7 @@ public class GameWindow extends JFrame {
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         newGameButton.addActionListener(e -> restartGame());
+        loadGameButton.addActionListener(e -> loadGame());
         exitButton.addActionListener(e -> System.exit(0));
 
         buttonPanel.add(Box.createVerticalGlue());
@@ -105,19 +109,7 @@ public class GameWindow extends JFrame {
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu gameMenu = new JMenu("File");
-        JMenuItem saveGameStatus = new JMenuItem("Save Game");
-        //saveGameStatus.addActionListener(e -> GameState.saveGame());
-
-        JMenuItem loadSavedGame = new JMenuItem("Load Game");
-        //loadSavedGame.addActionListener(e -> GameState.loadGame());
-
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
-        exitMenuItem.addActionListener(e -> System.exit(0));
-
-        gameMenu.add(saveGameStatus);
-        gameMenu.add(loadSavedGame);
-        gameMenu.add(exitMenuItem);
+        JMenu gameMenu = getjMenu();
 
         JMenu helpMenu = new JMenu("Help");
         JMenuItem aboutMenuItem = new JMenuItem("About");
@@ -133,13 +125,63 @@ public class GameWindow extends JFrame {
         return menuBar;
     }
 
+    private JMenu getjMenu() {
+        JMenu gameMenu = new JMenu("File");
+        JMenuItem saveGameStatus = new JMenuItem("Save Game");
+        saveGameStatus.addActionListener(e -> saveGame());
+
+        JMenuItem loadSavedGame = new JMenuItem("Load Game");
+        loadSavedGame.addActionListener(e -> loadGame());
+
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(e -> System.exit(0));
+
+        gameMenu.add(saveGameStatus);
+        gameMenu.add(loadSavedGame);
+        gameMenu.add(exitMenuItem);
+        return gameMenu;
+    }
+
     public void restartGame() {
-        maze = MazeFactory.createMaze(); // Create a new Maze instance
-        mainPanel.add(new RoomUI(maze, this), "Game"); // Add new game panel
-        cardLayout.show(mainPanel, "Game"); // Show game panel
+        maze = MazeFactory.createMaze();
+        gameState = new GameState(maze);
+        mainPanel.add(new RoomUI(maze, this), "Game");
+        cardLayout.show(mainPanel, "Game");
     }
 
     public void showStartMenu() {
-        cardLayout.show(mainPanel, "Main Menu"); // Show main menu panel
+        cardLayout.show(mainPanel, "Main Menu");
+    }
+
+    private void saveGame() {
+        JFileChooser fileChooser = new JFileChooser();
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try {
+                GameState.saveGame(gameState, fileChooser.getSelectedFile().getPath());
+                JOptionPane.showMessageDialog(this, "Game saved successfully.");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Failed to save game.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+    }
+
+    private void loadGame() {
+        JFileChooser fileChooser = new JFileChooser();
+        int userSelection = fileChooser.showOpenDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            try {
+                gameState = GameState.loadGame(fileChooser.getSelectedFile().getPath());
+                maze = gameState.maze();
+                // Update the UI with the loaded game state
+                mainPanel.add(new RoomUI(maze, this), "Game");
+                cardLayout.show(mainPanel, "Game"); // Show game panel
+                JOptionPane.showMessageDialog(this, "Game loaded successfully.");
+            } catch (IOException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Failed to load game.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
     }
 }

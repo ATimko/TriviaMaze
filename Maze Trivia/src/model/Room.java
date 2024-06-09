@@ -1,10 +1,15 @@
 package model;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * The Room class represents a room in a maze, which contains an array of Door objects.
  * The room is initialized with five doors.
  */
-public class Room {
+public class Room implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Door[] doors;
 
     /**

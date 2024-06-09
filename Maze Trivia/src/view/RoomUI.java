@@ -26,9 +26,9 @@ public class RoomUI extends JPanel {
         this.gameWindow = gameWindow;
 
         // Initialize components with smaller font
-        Font largeFont = new Font("Arial", Font.BOLD, 24); // Smaller font for room number and question
-        Font gridFont = new Font("Arial", Font.BOLD, 24); // Smaller font for grid numbers
-        Font buttonFont = new Font("Arial", Font.BOLD, 14); // Font for buttons
+        Font largeFont = new Font("Arial", Font.BOLD, 24);
+        Font gridFont = new Font("Arial", Font.BOLD, 24);
+        Font buttonFont = new Font("Arial", Font.BOLD, 14);
 
         // Custom Colors
         Color backgroundColor = new Color(60, 63, 65);
@@ -48,15 +48,15 @@ public class RoomUI extends JPanel {
         questionLabel.setFont(largeFont);
         questionLabel.setForeground(textColor);
 
-        JPanel gridPanel = new JPanel(new GridLayout(5, 5, 3, 3)); // Create a 5x5 grid panel with smaller gaps
-        gridPanel.setPreferredSize(new Dimension(500, 500)); // Smaller size for the grid panel
+        JPanel gridPanel = new JPanel(new GridLayout(5, 5, 3, 3));
+        gridPanel.setPreferredSize(new Dimension(500, 500));
         gridPanel.setMinimumSize(new Dimension(300, 300));
 
         for (int i = 0; i < 25; i++) {
             JPanel roomPanel = new JPanel(new BorderLayout());
             roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             roomPanel.setBackground(Color.WHITE);
-            roomPanel.setPreferredSize(new Dimension(60, 60)); // Smaller size for each cell
+            roomPanel.setPreferredSize(new Dimension(60, 60));
             gridPanel.add(roomPanel);
 
             JLabel numberLabel = new JLabel(String.valueOf(i + 1), SwingConstants.CENTER);
@@ -69,7 +69,7 @@ public class RoomUI extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        Dimension arrowButtonSize = new Dimension(60, 60); // Square dimensions for arrow buttons
+        Dimension arrowButtonSize = new Dimension(60, 60);
 
         upButton = createArrowButton("↑", "UP", arrowButtonSize);
         downButton = createArrowButton("↓", "DOWN", arrowButtonSize);
@@ -112,15 +112,15 @@ public class RoomUI extends JPanel {
             button.setForeground(buttonTextColor);
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
             button.setFocusPainted(false); // Disable the focus border
-            Dimension buttonSize = new Dimension(200, 50); // Smaller size for buttons
+            Dimension buttonSize = new Dimension(200, 50);
             button.setPreferredSize(buttonSize);
-            button.setMinimumSize(buttonSize); // Force the minimum size to be the same as preferred size
-            button.setMaximumSize(buttonSize); // Set the maximum size to ensure height doesn't change
+            button.setMinimumSize(buttonSize);
+            button.setMaximumSize(buttonSize);
         }
 
         shortAnswerField = new JTextField();
         shortAnswerField.setFont(buttonFont);
-        shortAnswerField.setPreferredSize(new Dimension(300, 30)); // Smaller size for text field
+        shortAnswerField.setPreferredSize(new Dimension(300, 30));
         shortAnswerField.setMinimumSize(new Dimension(300, 30));
         shortAnswerField.setVisible(false); // Initially hidden
         shortAnswerField.addActionListener(e -> shortAnswerHandle(shortAnswerField.getText()));
@@ -180,7 +180,6 @@ public class RoomUI extends JPanel {
                         .addGap(10)
         );
 
-        // Initialize navigation buttons state
         updateNavigationButtons();
     }
 
@@ -189,7 +188,7 @@ public class RoomUI extends JPanel {
         button.setPreferredSize(size);
         button.setMinimumSize(size);
         button.setMaximumSize(size);
-        button.setFocusPainted(false); // Disable the focus border
+        button.setFocusPainted(false);
         button.setFont(new Font("Arial", Font.BOLD, 24));
         button.addActionListener(e -> attemptMove(direction));
         return button;
@@ -199,7 +198,6 @@ public class RoomUI extends JPanel {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(text);
-            // Check game state after answering incorrectly
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
                 clearQuestionUI();
@@ -221,13 +219,12 @@ public class RoomUI extends JPanel {
         this.pendingDirection = direction;
         int targetRoomNumber = maze.getTargetRoomNumber(direction);
         if (maze.attemptMove(targetRoomNumber)) {
-            // If direction is already visited, move without asking a question
             movePendingDirection();
             updateRoomNumber();
             updateNavigationButtons();
         } else if (maze.isDirectionBlocked(direction)) {
             JOptionPane.showMessageDialog(this, "This door is now locked.");
-            checkGameState(); // Check game state after showing locked door message
+            checkGameState();
         } else {
             Question currentQuestion = maze.getCurrentQuestion();
             if (currentQuestion != null) {
@@ -235,7 +232,6 @@ public class RoomUI extends JPanel {
                 String questionText = currentQuestion.getQuestion();
                 String[] choices = currentQuestion.getChoices();
                 updateQuestionUI(questionType, questionText, choices);
-                // Disable arrow buttons
                 setArrowButtonsEnabled(false);
             } else {
                 JOptionPane.showMessageDialog(this, "No active question.");
@@ -247,7 +243,6 @@ public class RoomUI extends JPanel {
         Question currentQuestion = maze.getCurrentQuestion();
         if (currentQuestion != null) {
             boolean isCorrect = currentQuestion.getAnswer().equalsIgnoreCase(answer);
-            // Check game state after answering incorrectly
             if (isCorrect) {
                 JOptionPane.showMessageDialog(this, "Correct! You have moved to the next room.");
                 clearQuestionUI();
@@ -271,7 +266,6 @@ public class RoomUI extends JPanel {
             maze.move(targetRoomNumber, true);
             pendingDirection = null;
         }
-        // Re-enable arrow buttons after movement
         setArrowButtonsEnabled(true);
     }
 

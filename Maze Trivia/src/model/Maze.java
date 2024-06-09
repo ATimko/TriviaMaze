@@ -1,10 +1,14 @@
 package model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Maze {
+public class Maze implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Room[][] grid;
     private final Map<String, Integer[]> roomDirections;
     private int currentRoomRow;
