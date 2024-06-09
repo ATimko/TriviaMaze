@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MazeFactory {
+
+    /**
+     * Creates a new Maze instance with a 5x5 grid of rooms and predefined room directions.
+     *
+     * @return A new Maze object.
+     */
     public static Maze createMaze() {
         Room[][] grid = new Room[5][5];
         for (int i = 0; i < 5; i++) {
