@@ -3,26 +3,11 @@ package test;
 import model.Question;
 import model.QuestionFactory;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
-
 import java.util.Arrays;
-
-//import static org.junit.jupiter.api.AssertTrue.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuestionTest {
-    private Question simpleQuestionTrueFalse;
-    private Question simpleQuestionMultipleChoice;
-    private Question simpleQuestionShortAnswer;
-
-    @BeforeEach
-    public void setUp() {
-        simpleQuestionTrueFalse = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
-        simpleQuestionMultipleChoice = QuestionFactory.createQuestion("Testing", new String[]{"Test1", "Test2", "Test3"}, "Test1", "multipleChoice");
-        simpleQuestionShortAnswer = QuestionFactory.createQuestion("Testing", new String[]{}, "Test", "shortAnswer");
-    }
-
     @Test
     public void getQuestion() {
         Question question = QuestionFactory.createQuestion("Testing", new String[]{"True", "False"}, "True", "trueFalse");
