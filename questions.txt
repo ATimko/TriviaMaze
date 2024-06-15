@@ -161,7 +161,7 @@ answer=Na
 type=shortAnswer
 question=What is the largest desert in the world?
 choices=
-answer=Antarctica (or Sahara, depending on the definition)
+answer=Antarctica
 
 type=shortAnswer
 question=Who discovered gravity?
